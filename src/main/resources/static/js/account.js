@@ -13,8 +13,12 @@ var account = {
             func.postcode();
         });
 
-        $('#btn-roleChange').on('click', function () {
-            func.roleChange();
+        $('#btn-userModify').on('click', function () {
+            func.userModify();
+        });
+
+        $('#btn-passwordModify').on('click', function () {
+            func.passwordModify();
         });
 
         $('#id').change(function () {
@@ -56,13 +60,13 @@ var account = {
             alert("휴대폰번호 형식이 잘못되었습니다");
             return;
         }
-        var fullAddress = $('#address').val()+" "+$('#detailAddress').val();
         var data = {
             name: $('#name').val(),
             id: $('#id').val(),
             password: $('#password').val(),
             phone: $('#phone').val(),
-            address: fullAddress
+            address: $('#address').val(),
+            detailAddress: $('#detailAddress').val()
         };
         $.ajax({
             type: 'POST',
@@ -163,33 +167,40 @@ var account = {
         }).open();
     },
 
-    roleChange: function () {
-        if ($('#address').val() == "") {
-            alert("주소를 입력해주세요");
+    userModify: function () {
+        if ($('#name').val() == "") {
+            alert("이름을 입력해주세요");
             return;
         }
-        if ($('#detailAddress').val() == "") {
-            alert("상세주소를 입력해주세요");
-            return;
+        if ($('#address').val() != "") {
+            if ($('#detailAddress').val() == "") {
+                alert("상세주소를 입력해주세요");
+                return;
+            }
         }
-        if ($('#phone').val() == "") {
-            alert("휴대폰번호를 입력해주세요");
-            return;
+        if ($('#phone').val() != "") {
+            var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
+            if(!numTest.test($('#phone').val())) {
+                alert("휴대폰번호 형식이 잘못되었습니다");
+                return;
+            }
         }
-        var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
-        if(!numTest.test($('#phone').val())) {
-            alert("휴대폰번호 형식이 잘못되었습니다");
-            return;
+        if ($('#address').val() == "" || $('#phone').val() == "") {
+            var check = confirm("주소또는 휴대폰번호가 입력되지 않을경우 일부 기능을 사용하실수 없습니다");
+            if (check != true) {
+                return;
+            }
         }
-        var fullAddress = $('#address').val()+" "+$('#detailAddress').val();
         var data = {
             id: $('#id').val(),
+            name: $('#name').val(),
             phone: $('#phone').val(),
-            address: fullAddress
+            address: $('#address').val(),
+            detailAddress: $('#detailAddress').val()
         };
         $.ajax({
             type: 'POST',
-            url: "/roleChange",
+            url: "/userModify",
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(data)
         }).done(function () {
@@ -198,7 +209,44 @@ var account = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+
+    passwordModify: function () {
+        if ($('#password').val() == "") {
+            alert("비밀번호를 입력해주세요");
+            return;
+        }
+        if ($('#password').val() != $('#password2').val()) {
+            alert("비밀번호가 일치하지 않습니다");
+            return;
+        }
+        var data = {
+            id: $('#id').val(),
+            password: $('#password').val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: "/passwordModify",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert('변경되었습니다');
+            window.location.href = "/mypage";
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
     }
 };
 
 account.init();
+
+function readImage(input) {
+    if(input.files && input.files[0]) {
+        var reader = new FileReader()
+        reader.onload = e => {
+            var previewImage = document.getElementById("preview-image")
+            previewImage.src = e.target.result
+        }
+        reader.readAsDataURL(input.files[0])
+    }
+}

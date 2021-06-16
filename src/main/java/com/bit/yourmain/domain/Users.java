@@ -38,6 +38,9 @@ public class Users {
     private String address;
 
     @Column(nullable = true)
+    private String detailAddress;
+
+    @Column(nullable = true)
     private String profile;
 
     @Column(nullable = false)
@@ -45,12 +48,13 @@ public class Users {
     private Role role;
 
     @Builder
-    public Users(String name, String id, String password, String phone, String address, String profile, Role role) {
+    public Users(String name, String id, String password, String phone, String address, String detailAddress, String profile, Role role) {
         this.name = name;
         this.id = id;
         this.password = password;
         this.phone = phone;
         this.address = address;
+        this.detailAddress = detailAddress;
         this.profile = profile;
         this.role = role;
     }

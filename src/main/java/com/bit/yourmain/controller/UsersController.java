@@ -1,13 +1,14 @@
 package com.bit.yourmain.controller;
 
+import com.bit.yourmain.domain.SessionUser;
 import com.bit.yourmain.domain.Users;
-import com.bit.yourmain.dto.UsersRoleChangeDto;
+import com.bit.yourmain.dto.PasswordModifyDto;
+import com.bit.yourmain.dto.UserModifyDto;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -40,8 +41,14 @@ public class UsersController {
         return map;
     }
 
-    @PostMapping("/roleChange")
-    public void roleChange(@RequestBody UsersRoleChangeDto roleChangeDto) {
-        usersService.roleChange(roleChangeDto);
+    @PostMapping("/userModify")
+    public void userModify(@RequestBody UserModifyDto modifyDto) {
+        usersService.userModify(modifyDto);
+    }
+
+
+    @PostMapping("/passwordModify")
+    public void passwordModify(@RequestBody PasswordModifyDto modifyDto) {
+        usersService.passwordModify(modifyDto);
     }
 }

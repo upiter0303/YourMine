@@ -1,15 +1,22 @@
 package com.bit.yourmain.controller;
 
 import com.bit.yourmain.domain.SessionUser;
+import com.bit.yourmain.service.UsersService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
+
+    private final UsersService usersService;
 
     @GetMapping("/loginpage")
     public String loginpage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
@@ -49,9 +56,36 @@ public class MainController {
         return "account/mypage";
     }
 
-    @GetMapping("/roleChange")
-    public String roleChange() {
-        return "account/roleChange";
+    @GetMapping("/userModify")
+    public String userModify() {
+        return "account/modify/userModify";
     }
 
+    @GetMapping("/profileModify")
+    public String profileModify() {
+        return "account/modify/profileModify";
+    }
+
+    @GetMapping("/passwordModify")
+    public String passwordModify() {
+        return "account/modify/passwordModify";
+    }
+
+    @PostMapping("/profileModify")
+    public String profileModify(@RequestParam MultipartFile profile, @RequestParam String id, HttpSession session) {
+        SessionUser users = (SessionUser) session.getAttribute("userInfo");
+        users.setProfile(usersService.profileModify(profile, id));
+        session.removeAttribute("userInfo");
+        session.setAttribute("userInfo" , users);
+        return "account/mypage";
+    }
+
+    @GetMapping("/delProfile")
+    public String delProfile(HttpSession session) {
+        SessionUser users = (SessionUser) session.getAttribute("userInfo");
+        SessionUser sessionUser = new SessionUser(usersService.delProfile(users.getId()));
+        session.removeAttribute("userInfo");
+        session.setAttribute("userInfo" , sessionUser);
+        return "account/mypage";
+    }
 }

@@ -1,5 +1,16 @@
 {{>layout/header}}
+{{#userInfo.profile}}
+    <p><a href="/userModify"><img src="/profile/{{userInfo.profile}}" width=100 height=100/></a></p>
+{{/userInfo.profile}}
+{{^userInfo.profile}}
+    <p><a href="/userModify"><img src="/img/default.jpeg" width=100 height=100/></a></p>
+{{/userInfo.profile}}
 
+<a href="/profileModify" role="button" class="btn btn-secondary">프로필 변경</a>
+<a href="/userModify" role="button" class="btn btn-secondary">개인정보 변경</a>
+{{#userInfo.password}}
+    <a href="/passwordModify" role="button" class="btn btn-secondary">비밀번호 변경</a>
+{{/userInfo.password}}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/js/account.js"></script>
