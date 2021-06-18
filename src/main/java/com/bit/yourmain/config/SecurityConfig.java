@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/") // 로그아웃시 갈 주소
                 .invalidateHttpSession(true)    // 세션 초기화
                 .deleteCookies("JSESSIONID", "remember-me")
-                .and().exceptionHandling().accessDeniedPage("/403")    // 권한오류시 이동페이지
+                .and().exceptionHandling().accessDeniedPage("/accessDenied")    // 권한오류시 이동페이지
                 .and()
                 .oauth2Login().userInfoEndpoint()
                 .userService(customOAuth2UserService);

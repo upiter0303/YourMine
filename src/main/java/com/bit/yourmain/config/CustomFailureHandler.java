@@ -4,6 +4,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
         } else if (exception instanceof BadCredentialsException) {
             errMsg = "err2";
 
+        } else if (exception instanceof SessionAuthenticationException) {
+            errMsg = "err3"; // 중복 로그인
         } else {
             errMsg = "login error";
         }

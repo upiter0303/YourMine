@@ -37,6 +37,8 @@ public class MainController {
                 errCode = "존재하지 않는 아이디입니다";
             } else if (error.equals("err2")) {
                 errCode = "아이디 또는 비밀번호가 틀렸습니다";
+            } else if (error.equals("err3")) {
+                errCode = "이미 접속중인 계정입니다";
             } else {
                 errCode = "로그인 실패";
             }
@@ -82,5 +84,10 @@ public class MainController {
         session.removeAttribute("userInfo");
         session.setAttribute("userInfo" , sessionUser);
         return "account/mypage";
+    }
+
+    @GetMapping("/accessDenied")
+    public String accessDenied() {
+        return "account/accessDenied";
     }
 }
