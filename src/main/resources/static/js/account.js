@@ -85,7 +85,7 @@ var account = {
             alert('회원가입 되었습니다');
             window.location.href = "/";
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert('가입 실패');
         });
     },
 
@@ -215,7 +215,7 @@ var account = {
             alert('수정되었습니다');
             window.location.href = "/mypage";
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert('다시 시도해주세요');
         });
     },
 
@@ -240,8 +240,8 @@ var account = {
         }).done(function () {
             alert('변경되었습니다');
             window.location.href = "/mypage";
-        }).fail(function (error) {
-            alert(JSON.stringify(error));
+        }).fail(function () {
+            alert('다시 시도해주세요');
         });
     },
 
@@ -258,6 +258,7 @@ var account = {
             var con = "<p>해당 번호로 가입된 아이디는 "+result+" 입니다";
             $('#findIdField').append(con);
         }).fail(function (error) {
+            alert('가입 정보가 없습니다');
             console.error(JSON.stringify(error));
         });
     },

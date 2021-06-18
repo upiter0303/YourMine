@@ -1,25 +1,25 @@
 {{>layout/header}}
-
-<form action="/login" method="post">
-    <label for="id">아이디</label>
-    <input type="text" id="id" name="id">
+<div class="account-form">
+    <form action="/login" method="post">
+        <label for="id">아이디</label>
+        <input type="text" id="id" name="id">
+        <br>
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password">
+        <input type="submit" value="로그인" class="btn btn-primary">
+    </form>
+    <button type="button" class="btn btn-secondary" id="btn-modal1">아이디 찾기</button>
+    <button type="button" class="btn btn-secondary" id="btn-modal2">비밀번호 찾기</button>
     <br>
-    <label for="password">비밀번호</label>
-    <input type="password" id="password" name="password">
-    <input type="submit" value="로그인" class="btn btn-primary">
-</form>
-<button type="button" class="btn btn-secondary" id="btn-modal1">아이디 찾기</button>
-<button type="button" class="btn btn-secondary" id="btn-modal2">비밀번호 찾기</button>
-<br>
-{{#error}}
-    <div>{{& error}}</div>
-{{/error}}
-<br>
-<p><a href="/oauth2/authorization/google"><img src="/img/google_login_image.png" width=200 height=50/></a></p>
-<p><a href="/oauth2/authorization/kakao"><img src="/img/kakao_login_image.png" width=200 height=50/></a></p>
-<p><a href="/oauth2/authorization/naver"><img src="/img/naver_login_image.png" width=200 height=50/></a></p>
-<a href="/signup" class="btn btn-success active" role="button">회원가입</a>
-
+    {{#error}}
+        <div>{{& error}}</div>
+    {{/error}}
+    <br>
+    <p><a href="/oauth2/authorization/google"><img src="/img/google_login_image.png" width=200 height=50/></a></p>
+    <p><a href="/oauth2/authorization/kakao"><img src="/img/kakao_login_image.png" width=200 height=50/></a></p>
+    <p><a href="/oauth2/authorization/naver"><img src="/img/naver_login_image.png" width=200 height=50/></a></p>
+    <a href="/signup" class="btn btn-success active" role="button">회원가입</a>
+</div>
 <div id="modal1" class="modal">
     <div class="modal-content">
         <div class="col-md-12" id="findIdField">
@@ -62,5 +62,6 @@
 <script src="/js/account.js"></script>
 <script src="/js/modal.js"></script>
 <link href="/css/modal.css" rel="stylesheet" type="text/css" media="all">
+<link href="/css/account.css" rel="stylesheet" type="text/css" media="all">
 </body>
 </html>

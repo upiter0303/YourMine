@@ -1,0 +1,19 @@
+.header {
+    background-color: rgb(212, 255, 144);
+    text-align: center;
+}
+body {
+    background-color: white;
+}
+.account-form {
+    text-align: center;
+    width: auto;
+    padding: 50px;
+    margin-top: 200px;
+    margin-left: 200px;
+    border-radius: 30px;
+    background-color: antiquewhite;
+}
+btn-modal1:hover {
+
+}
