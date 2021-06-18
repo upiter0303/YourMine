@@ -8,17 +8,59 @@
     <input type="password" id="password" name="password">
     <input type="submit" value="로그인" class="btn btn-primary">
 </form>
-<!--<a href="/findId">아이디 찾기</a><a href="/findPw">비밀번호 찾기</a>-->
+<button type="button" class="btn btn-secondary" id="btn-modal1">아이디 찾기</button>
+<button type="button" class="btn btn-secondary" id="btn-modal2">비밀번호 찾기</button>
+<br>
 {{#error}}
     <div>{{& error}}</div>
 {{/error}}
-<a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
-<a href="/oauth2/authorization/kakao" class="btn btn-success active" role="button">KaKao Login</a>
-<a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">Naver Login</a>
+<br>
+<p><a href="/oauth2/authorization/google"><img src="/img/google_login_image.png" width=200 height=50/></a></p>
+<p><a href="/oauth2/authorization/kakao"><img src="/img/kakao_login_image.png" width=200 height=50/></a></p>
+<p><a href="/oauth2/authorization/naver"><img src="/img/naver_login_image.png" width=200 height=50/></a></p>
 <a href="/signup" class="btn btn-success active" role="button">회원가입</a>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <div class="col-md-12" id="findIdField">
+            <div class="col-md-4">
+                <p>아이디 찾기</p>
+                <p>가입할때 입력한 전화번호를 적어주세요</p>
+                <form>
+                    <div class="form-group">
+                    <label for="phone">전화번호</label>
+                    <input type="tel" id="phone" name="phone"><br>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btn-findId">아이디 찾기</button>
+                    <button type="button" class="close" id="close1">x</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <p>비밀번호 찾기</p>
+                <form>
+                    <div class="form-group">
+                        <label for="phone">전화번호</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <br>
+                    <input type="submit" role="button" class="btn btn-secondary" value="기능없음">
+                    <button type="button" class="close" id="close2">x</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/js/account.js"></script>
+<script src="/js/modal.js"></script>
+<link href="/css/modal.css" rel="stylesheet" type="text/css" media="all">
 </body>
 </html>

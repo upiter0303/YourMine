@@ -61,11 +61,6 @@ public class MainController {
         return "account/modify/userModify";
     }
 
-    @GetMapping("/profileModify")
-    public String profileModify() {
-        return "account/modify/profileModify";
-    }
-
     @GetMapping("/passwordModify")
     public String passwordModify() {
         return "account/modify/passwordModify";

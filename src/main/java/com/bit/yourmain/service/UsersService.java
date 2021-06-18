@@ -1,6 +1,7 @@
 package com.bit.yourmain.service;
 
 import com.bit.yourmain.domain.Role;
+import com.bit.yourmain.domain.SessionUser;
 import com.bit.yourmain.domain.Users;
 import com.bit.yourmain.domain.UsersRepository;
 import com.bit.yourmain.dto.PasswordModifyDto;
@@ -56,22 +57,28 @@ public class UsersService implements UserDetailsService {
         return users;
     }
 
-    public void userModify(UserModifyDto modifyDto) {
+    public SessionUser userModify(UserModifyDto modifyDto, SessionUser sessionUser) {
         Users users = getUsers(modifyDto.getId());
         users.setName(modifyDto.getName());
         if (modifyDto.getPhone() != null) {
             users.setPhone(modifyDto.getPhone());
+            sessionUser.setPhone(modifyDto.getPhone());
         }
         if (modifyDto.getAddress() != null) {
             users.setAddress(modifyDto.getAddress());
             users.setDetailAddress(modifyDto.getDetailAddress());
+            sessionUser.setAddress(modifyDto.getAddress());
+            sessionUser.setDetailAddress(modifyDto.getDetailAddress());
         }
         if (modifyDto.getPhone().equals("") || modifyDto.getAddress().equals("")) {
             users.setRole(Role.SEMI);
+            sessionUser.setRole(Role.SEMI);
         } else {
             users.setRole(Role.USER);
+            sessionUser.setRole(Role.USER);
         }
         usersRepository.save(users);
+        return sessionUser;
     }
 
     public String profileModify(MultipartFile profile, String id) {
@@ -125,5 +132,14 @@ public class UsersService implements UserDetailsService {
         users.setProfile(null);
         usersRepository.save(users);
         return users;
+    }
+
+    public String findId(String phone) {
+        String phoneNum = phone.substring(phone.lastIndexOf("=")+1);
+        return usersRepository.findByPhone(phoneNum).getId();
+    }
+
+    public void leave(String id) {
+        usersRepository.delete(getUsers(id));
     }
 }

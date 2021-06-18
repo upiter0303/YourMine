@@ -21,6 +21,14 @@ var account = {
             func.passwordModify();
         });
 
+        $('#btn-findId').on('click', function () {
+            func.findId();
+        });
+
+        $('#btn-leave').on('click', function () {
+            func.leave();
+        });
+
         $('#id').change(function () {
             $('#idCheck').val("f");
         });
@@ -235,7 +243,44 @@ var account = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+
+    findId: function () {
+        $.ajax({
+            type: 'POST',
+            url: "/findId",
+            contentType: 'application/json; charset=UTF-8',
+            data: {
+                phone: $('#phone').val()
+            }
+        }).done(function (result) {
+            $('#findIdField').empty();
+            var con = "<p>해당 번호로 가입된 아이디는 "+result+" 입니다";
+            $('#findIdField').append(con);
+        }).fail(function (error) {
+            console.error(JSON.stringify(error));
+        });
+    },
+
+    leave: function () {
+        var check = confirm("정말 탈퇴하시겠습니까? 개인정보는 복구되지 않습니다");
+        if (check != true) {
+            return
+        } else {
+            var id = $('#id').val();
+            $.ajax({
+                type: 'get',
+                url: "/leave/"+id,
+                contentType: 'application/json; charset=UTF-8'
+            }).done(function () {
+                alert("정상적으로 탈퇴되었습니다");
+                window.location.href = "/logout";
+            }).fail(function (error) {
+                console.error(JSON.stringify(error));
+            });
+        }
     }
+
 };
 
 account.init();
