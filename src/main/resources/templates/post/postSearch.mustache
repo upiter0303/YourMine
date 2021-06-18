@@ -1,14 +1,14 @@
+
 {{>layout/header}}
 
 <center>
-    <h1>Welcome to YourMine Market</h1>
-
-
+    <h1>Searching Results</h1>
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
                 <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
-                <a href="/" role="button" class="btn btn-secondary">글 목록</a>
+                <a href="/" role="button" class="btn btn-primary">글 목록</a>
+                <a href="/myPage" role="button" class="btn btn-link">마이 페이지</a>
                 {{>post/searchForm}}
             </div>
         </div>
@@ -27,19 +27,18 @@
             </thead>
 
             <tbody id="tbody">
-            {{#posts}}
+            {{#searchList}}
                 <tr>
                     <td>{{id}}</td>
                     <td>{{title}}</a></td>
                     <td>{{author}}</td>
                     <td>{{modifiedDate}}</td>
                 </tr>
-            {{/posts}}
+            {{/searchList}}
             </tbody>
         </table>
     </div>
 </center>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/js/post.js"></script>

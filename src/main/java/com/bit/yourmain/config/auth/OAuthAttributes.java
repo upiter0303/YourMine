@@ -1,7 +1,7 @@
 package com.bit.yourmain.config.auth;
 
-import com.bit.yourmain.domain.Role;
-import com.bit.yourmain.domain.Users;
+import com.bit.yourmain.domain.users.Role;
+import com.bit.yourmain.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.bit.yourmain.config;
 
 import com.bit.yourmain.config.auth.CustomOAuth2UserService;
-import com.bit.yourmain.domain.Role;
+import com.bit.yourmain.domain.users.Role;
 import com.bit.yourmain.service.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

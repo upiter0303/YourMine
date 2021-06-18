@@ -1,4 +1,4 @@
-package com.bit.yourmain.domain;
+package com.bit.yourmain.domain.users;
 
 import lombok.Getter;
 import lombok.Setter;

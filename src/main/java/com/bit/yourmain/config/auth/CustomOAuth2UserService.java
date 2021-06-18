@@ -1,9 +1,8 @@
 package com.bit.yourmain.config.auth;
 
-import com.bit.yourmain.domain.Role;
-import com.bit.yourmain.domain.SessionUser;
-import com.bit.yourmain.domain.Users;
-import com.bit.yourmain.domain.UsersRepository;
+import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.domain.users.Users;
+import com.bit.yourmain.domain.users.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

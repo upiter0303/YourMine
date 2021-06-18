@@ -1,6 +1,8 @@
 package com.bit.yourmain.controller;
 
-import com.bit.yourmain.domain.SessionUser;
+import com.bit.yourmain.domain.posts.Posts;
+import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,12 +13,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MainController {
 
     private final UsersService usersService;
+    private final PostsService postsService;
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("posts", postsService.findAllDesc());
+        return "index";
+    }
 
     @GetMapping("/loginpage")
     public String loginpage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
@@ -89,5 +99,19 @@ public class MainController {
     @GetMapping("/accessDenied")
     public String accessDenied() {
         return "account/accessDenied";
+    }
+
+
+    @GetMapping("/posts/save")
+    public String postsSave() {
+        return "post/postSave";
+    }
+
+    // Posts Searching
+    @GetMapping("/posts/search")
+    public String search(String keyword, Model model) {
+        List<Posts> searchList = postsService.search(keyword);
+        model.addAttribute("searchList", searchList);
+        return "post/postSearch";
     }
 }

@@ -1,10 +1,10 @@
-package com.bit.yourmain.controller;
+package com.bit.yourmain.controller.api;
 
-import com.bit.yourmain.domain.Role;
-import com.bit.yourmain.domain.SessionUser;
-import com.bit.yourmain.domain.Users;
-import com.bit.yourmain.dto.PasswordModifyDto;
-import com.bit.yourmain.dto.UserModifyDto;
+import com.bit.yourmain.domain.users.Role;
+import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.domain.users.Users;
+import com.bit.yourmain.dto.users.PasswordModifyDto;
+import com.bit.yourmain.dto.users.UserModifyDto;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +19,7 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-public class UsersController {
+public class UsersApiController {
     private final UsersService usersService;
 
     @PostMapping("/signup")

@@ -1,6 +1,6 @@
 package com.bit.yourmain.config;
 
-import com.bit.yourmain.domain.SessionUser;
+import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

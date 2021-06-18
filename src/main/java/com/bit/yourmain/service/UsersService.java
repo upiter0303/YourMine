@@ -1,11 +1,11 @@
 package com.bit.yourmain.service;
 
-import com.bit.yourmain.domain.Role;
-import com.bit.yourmain.domain.SessionUser;
-import com.bit.yourmain.domain.Users;
-import com.bit.yourmain.domain.UsersRepository;
-import com.bit.yourmain.dto.PasswordModifyDto;
-import com.bit.yourmain.dto.UserModifyDto;
+import com.bit.yourmain.domain.users.Role;
+import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.domain.users.Users;
+import com.bit.yourmain.domain.users.UsersRepository;
+import com.bit.yourmain.dto.users.PasswordModifyDto;
+import com.bit.yourmain.dto.users.UserModifyDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor

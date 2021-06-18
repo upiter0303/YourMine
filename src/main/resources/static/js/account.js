@@ -266,7 +266,7 @@ var account = {
     leave: function () {
         var check = confirm("정말 탈퇴하시겠습니까? 개인정보는 복구되지 않습니다");
         if (check != true) {
-            return
+
         } else {
             var id = $('#id').val();
             $.ajax({

@@ -1,4 +1,4 @@
-package com.bit.yourmain.dto;
+package com.bit.yourmain.dto.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
