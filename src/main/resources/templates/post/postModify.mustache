@@ -1,0 +1,34 @@
+{{>layout/header}}
+
+<h1>게시글 등록</h1>
+
+<div class="col-md-12">
+    <div class="col-md-4">
+        <form>
+            <input type="hidden" value="{{post.id}}" id="id">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" value="{{post.title}}">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="form-control" id="content">{{post.content}}</textarea>
+            </div>
+            <div class="form-group">
+                <select id="status">
+                    <option value="거래대기" {{#posting}}{{posting}}{{/posting}}>거래대기</option>
+                    <option value="거래중" {{#deal}}{{deal}}{{/deal}}>거래중</option>
+                    <option value="거래완료" {{#end}}{{end}}{{/end}}>거래완료</option>
+                </select>
+            </div>
+        </form>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-postModify">수정</button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/js/post.js"></script>
+</body>
+</html>

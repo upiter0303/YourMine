@@ -1,0 +1,17 @@
+{{>layout/header}}
+<h1>제목 : {{post.title}}</h1>
+<h3>작성자 : {{post.author}}</h3>
+<p>내용 : {{post.content}}</p>
+<p>거래점수 : {{post.users.score}}</p>
+<p>거래상태 : {{post.status}}</p>
+<a href="/">뒤로</a>
+{{#owner}}
+    <a href="/posts/modify/{{post.id}}">수정</a>
+    <a href="/posts/delete/{{post.id}}">삭제</a>
+{{/owner}}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/js/post.js"></script>
+</body>
+</html>

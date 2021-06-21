@@ -8,12 +8,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostsUpdateRequestDto {
 
+    private Long id;
     private String title;
     private String content;
+    private String status;
 
     @Builder
-    public PostsUpdateRequestDto(String title, String content) {
+    public PostsUpdateRequestDto(Long id, String title, String content, String status) {
+        this.id = id;
         this.title = title;
         this.content = content;
+        this.status = status;
     }
 }

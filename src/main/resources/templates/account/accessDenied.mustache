@@ -1,14 +1,14 @@
 {{>layout/header}}
 <div class="account-form">
 {{#userInfo}}
-    <h1>주소 및 전화번호 입력 이후 이용 가능합니다</h1>
-    <a href="/userModify">수정하기</a>
-    <a href="/">돌아가기</a>
+    <h3>주소 및 전화번호 입력 이후 이용 가능합니다</h3>
+    <a href="/userModify"><strong>수정하기</strong></a><br>
+    <a href="/"><strong>돌아가기</strong></a>
 {{/userInfo}}
 {{^userInfo}}
-    <h1>로그인 후 이용가능합니다</h1>
-    <a href="/loginpage">로그인</a>
-    <a href="/">돌아가기</a>
+    <h3>로그인 후 이용가능합니다</h3>
+    <a href="/loginpage"><strong>로그인</strong></a><br>
+    <a href="/"><strong>돌아가기</strong></a>
 {{/userInfo}}
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

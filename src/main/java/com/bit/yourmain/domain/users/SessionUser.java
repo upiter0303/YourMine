@@ -16,6 +16,7 @@ public class SessionUser implements Serializable {
     private String address;
     private String detailAddress;
     private String profile;
+    private Long score;
     private Role role;
     private final String password;
 
@@ -27,6 +28,7 @@ public class SessionUser implements Serializable {
         this.address = users.getAddress();
         this.detailAddress = users.getDetailAddress();
         this.profile = users.getProfile();
+        this.score = users.getScore();
         this.role = users.getRole();
         this.password = users.getPassword();
     }

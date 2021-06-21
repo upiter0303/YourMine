@@ -74,7 +74,7 @@ var account = {
             password: $('#password').val(),
             phone: $('#phone').val(),
             address: $('#address').val(),
-            detailAddress: $('#detailAddress').val()
+            detailAddress: $('#detailAddress').val(),
         };
         $.ajax({
             type: 'POST',
@@ -180,24 +180,21 @@ var account = {
             alert("이름을 입력해주세요");
             return;
         }
-        if ($('#address').val() != "") {
-            if ($('#detailAddress').val() == "") {
-                alert("상세주소를 입력해주세요");
-                return;
-            }
+        if ($('#address').val() == "") {
+            alert("개인정보를 변경하기위해서는 주소를 입력하여야 합니다");
+            return;
         }
-        if ($('#phone').val() != "") {
-            var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
-            if(!numTest.test($('#phone').val())) {
-                alert("휴대폰번호 형식이 잘못되었습니다");
-                return;
-            }
+        if ($('#detailAddress').val() == "") {
+            alert("상세주소를 입력해주세요");
+            return;
         }
-        if ($('#address').val() == "" || $('#phone').val() == "") {
-            var check = confirm("주소또는 휴대폰번호가 입력되지 않을경우 일부 기능을 사용하실수 없습니다");
-            if (check != true) {
-                return;
-            }
+        if ($('#phone').val() == "") {
+            alert("개인정보를 변경하기위해서는 전화번호를 입력하여야 합니다");
+            return;
+        }
+        var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
+        if(!numTest.test($('#phone').val())) {
+            return;
         }
         var data = {
             id: $('#id').val(),

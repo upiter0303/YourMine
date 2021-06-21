@@ -78,6 +78,7 @@ public class OAuthAttributes {
                 .id(id)
                 .name(name)
                 .role(Role.SEMI)
+                .score(50L)
                 .build();
     }
 }

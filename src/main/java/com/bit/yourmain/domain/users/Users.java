@@ -1,8 +1,11 @@
 package com.bit.yourmain.domain.users;
 
+import com.bit.yourmain.domain.posts.Posts;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -44,11 +47,17 @@ public class Users {
     private String profile;
 
     @Column(nullable = false)
+    private Long score;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
+    private List<Posts> posts = new ArrayList<>();
+
     @Builder
-    public Users(String name, String id, String password, String phone, String address, String detailAddress, String profile, Role role) {
+    public Users(String name, String id, String password, String phone, String address, String detailAddress, String profile, Long score, Role role) {
         this.name = name;
         this.id = id;
         this.password = password;
@@ -56,18 +65,12 @@ public class Users {
         this.address = address;
         this.detailAddress = detailAddress;
         this.profile = profile;
+        this.score = score;
         this.role = role;
     }
 
     public Users update(String id) {
         this.id = id;
-        return this;
-    }
-
-    public Users develop(String phone, String address) {
-        this.phone = phone;
-        this.address = address;
-        this.role = Role.USER;
         return this;
     }
 }

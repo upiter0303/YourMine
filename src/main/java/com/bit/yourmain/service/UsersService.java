@@ -7,7 +7,11 @@ import com.bit.yourmain.domain.users.UsersRepository;
 import com.bit.yourmain.dto.users.PasswordModifyDto;
 import com.bit.yourmain.dto.users.UserModifyDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,20 +20,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UsersService implements UserDetailsService {
     private final UsersRepository usersRepository;
+    private final FileService fileService;
 
     public void save(Users users) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         users.setRole(Role.USER);
+        users.setScore(50L);
+
         usersRepository.save(users);
     }
 
@@ -59,64 +64,40 @@ public class UsersService implements UserDetailsService {
     public SessionUser userModify(UserModifyDto modifyDto, SessionUser sessionUser) {
         Users users = getUsers(modifyDto.getId());
         users.setName(modifyDto.getName());
-        if (modifyDto.getPhone() != null) {
-            users.setPhone(modifyDto.getPhone());
-            sessionUser.setPhone(modifyDto.getPhone());
-        }
-        if (modifyDto.getAddress() != null) {
-            users.setAddress(modifyDto.getAddress());
-            users.setDetailAddress(modifyDto.getDetailAddress());
-            sessionUser.setAddress(modifyDto.getAddress());
-            sessionUser.setDetailAddress(modifyDto.getDetailAddress());
-        }
-        if (modifyDto.getPhone().equals("") || modifyDto.getAddress().equals("")) {
-            users.setRole(Role.SEMI);
-            sessionUser.setRole(Role.SEMI);
-        } else {
-            users.setRole(Role.USER);
-            sessionUser.setRole(Role.USER);
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>(authentication.getAuthorities());
+
+        // 번호
+        users.setPhone(modifyDto.getPhone());
+        sessionUser.setPhone(modifyDto.getPhone());
+        // 주소
+        users.setAddress(modifyDto.getAddress());
+        users.setDetailAddress(modifyDto.getDetailAddress());
+        sessionUser.setAddress(modifyDto.getAddress());
+        sessionUser.setDetailAddress(modifyDto.getDetailAddress());
+        // 권한
+        users.setRole(Role.USER);
+        sessionUser.setRole(Role.USER);
+
+        grantedAuthorities.add(new SimpleGrantedAuthority(Role.USER.getValue()));
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                authentication.getPrincipal(), authentication.getCredentials(), grantedAuthorities);
+
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
         usersRepository.save(users);
         return sessionUser;
     }
 
     public String profileModify(MultipartFile profile, String id) {
-        try {
-            String savePath = "C:\\Users\\User\\Documents\\profile";
-            String origin = profile.getOriginalFilename();
-            String nameCut = origin.substring(origin.lastIndexOf("."));
-            String saveFileName = getSaveFileName(nameCut);
 
-            if(!profile.isEmpty())
-            {
-                File file = new File(savePath, saveFileName);
-                profile.transferTo(file);
-                Users users = getUsers(id);
-                users.setProfile(saveFileName);
-                usersRepository.save(users);
-                return saveFileName;
-            }
-        }catch(Exception e)
-        {
-            e.getCause();
-        }
-        return null;
-    }
+        Users users = getUsers(id);
+        String saveFileName = fileService.fileSave(profile, "profile");
+        users.setProfile(saveFileName);
+        usersRepository.save(users);
 
-    private String getSaveFileName(String extName) {
-        String fileName = "profile_";
+        return saveFileName;
 
-        Calendar calendar = Calendar.getInstance();
-        fileName += calendar.get(Calendar.YEAR);
-        fileName += calendar.get(Calendar.MONTH);
-        fileName += calendar.get(Calendar.DATE);
-        fileName += calendar.get(Calendar.HOUR);
-        fileName += calendar.get(Calendar.MINUTE);
-        fileName += calendar.get(Calendar.SECOND);
-        fileName += calendar.get(Calendar.MILLISECOND);
-        fileName += extName.toLowerCase();
-
-        return fileName;
     }
 
     public void passwordModify(PasswordModifyDto modifyDto) {
