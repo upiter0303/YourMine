@@ -19,45 +19,13 @@ var postMain = {
             alert("내용을 입력해주세요");
             return;
         }
+        if (!$('#image').val()) {
+            alert("사진을 하나 이상 첨부하셔야 합니다");
+            return;
+        }
         var form = $('#postForm');
         form.submit();
-        // var data = {
-        //     title: $('#title').val(),
-        //     author: $('#author').val(),
-        //     content: $('#content').val()
-        // };
-        //
-        // var postForm = new FormData();
-        // for(var i=0, filesTempArrLen = filesTempArr.length; i<filesTempArrLen; i++) {
-        //     postForm.append("files", filesTempArr[i]);
-        // }
-        //
-        // postForm.append("testData1", "A");
-        // postForm.append("testData1", "B");
-        // postForm.append("testData1", "C");
-        //
-        // $.ajax({
-        //     type: 'post',
-        //     url: '/posts/save',
-        //     contentType: 'application/json; charset=UTF-8',
-        //     data: JSON.stringify(data)
-        // }).done(function() {
-        //     alert('글이 등록되었습니다');
-        // }).fail(function(error) {
-        //     console.error(JSON.stringify(error));
-        //     alert('다시 시도해주세요');
-        // })
-        // $.ajax({
-        //     type: 'post',
-        //     url: '/posts/imageSave',
-        //     contentType: false,
-        //     processData: false,
-        //     data: postForm
-        // }).done(function () {
-        //     console.log('submit');
-        // }).fail(function (error) {
-        //     console.error(error);
-        // });
+        window.location.href="/";
     },
 
     postModify : function() {
