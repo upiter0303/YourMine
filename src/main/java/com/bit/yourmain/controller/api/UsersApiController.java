@@ -27,7 +27,7 @@ public class UsersApiController {
         try {
             checkUser = usersService.getUsers(users.getId());
         } catch (NoSuchElementException e) {
-            System.out.println("계정 없음");
+            System.out.println("가입된 계정 없음");
         }
 
         boolean check;

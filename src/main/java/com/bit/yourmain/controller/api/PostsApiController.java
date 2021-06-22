@@ -15,11 +15,6 @@ public class PostsApiController {
 
     private final PostsService postsService;
 
-    @PostMapping("/posts/save")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto, @RequestParam List<MultipartFile> image) {
-        return postsService.save(requestDto);
-    }
-
     @PostMapping("/posts/modify")
     public void postModify(@RequestBody PostsUpdateRequestDto requestDto) {
         postsService.update(requestDto);
@@ -30,11 +25,4 @@ public class PostsApiController {
         postsService.delete(id);
     }
 
-    @PostMapping("/posts/imageSave")
-    public void imageSave(@RequestParam List<MultipartFile> files) {
-        System.out.println(files.get(0));
-        if (!files.isEmpty()) {
-            System.out.println("get");
-        }
-    }
 }

@@ -1,5 +1,7 @@
 package com.bit.yourmain.service;
 
+import com.bit.yourmain.domain.files.Files;
+import com.bit.yourmain.domain.files.FilesRepository;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.posts.PostsRepository;
 import com.bit.yourmain.domain.users.Users;
@@ -11,6 +13,7 @@ import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +24,8 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
     private final UsersRepository usersRepository;
+    private final FileService fileService;
+    private final FilesRepository filesRepository;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
@@ -28,6 +33,15 @@ public class PostsService {
         requestDto.setUsers(users);
         requestDto.setStatus("거래대기");
         return postsRepository.save(requestDto.toEntity()).getId();
+    }
+
+    public void imageSave(MultipartFile image, Long id) {
+        Posts posts = postsRepository.findById(id).get();
+        String saveFileName = fileService.fileSave(image, "postImage");
+
+        Files files = new Files(saveFileName, posts);
+        System.out.println(saveFileName);
+        filesRepository.save(files);
     }
 
     @Transactional

@@ -11,8 +11,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String resourcesUriPath = "/profile/**";
         String resourcesLocation = "file:///C:/Users/User/Documents/profile/";
+
+        String resourcesUriPathPost = "/postImage/**";
+        String resourcesLocationPost = "file:///C:/Users/User/Documents/postImage/";
+
         registry.addResourceHandler(resourcesUriPath)
                 .addResourceLocations(resourcesLocation);
+
+        registry.addResourceHandler(resourcesUriPathPost)
+                .addResourceLocations(resourcesLocationPost);
 
     }
 

@@ -3,12 +3,14 @@ package com.bit.yourmain.controller;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
+import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
 import com.bit.yourmain.service.PostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,6 +24,16 @@ public class PostsController {
     @GetMapping("/posts/save")
     public String postsSave() {
         return "post/postSave";
+    }
+
+    @PostMapping("/posts/save")
+    public String save(@ModelAttribute PostsSaveRequestDto requestDto, MultipartHttpServletRequest files) {
+        Long id = postsService.save(requestDto);
+        List<MultipartFile> images = files.getFiles("image");
+        for (MultipartFile image: images) {
+            postsService.imageSave(image, id);
+        }
+        return "index";
     }
 
     // Posts Searching

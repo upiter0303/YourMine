@@ -23,7 +23,7 @@
                     <input type="hidden" value="{{userInfo.id}}" id="id" name="id">
                     <div class="form-group">
                         <label for="profile">프로필 사진</label>
-                        <input type="file" id="profile" name="profile" class="btn btn-info" onchange="readImage(this)">
+                        <input type="file" id="profile" name="profile" onchange="readImage(this)">
                         {{#userInfo.profile}}
                             <img id="preview-image" src="/profile/{{userInfo.profile}}" width=100 height=100 />
                         {{/userInfo.profile}}
@@ -41,11 +41,6 @@
         </div>
     </div>
 </div>
-{{#userInfo.posts}}
-    {{userInfo.posts.title}}
-    asdasd
-{{/userInfo.posts}}
-
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
