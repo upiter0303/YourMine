@@ -37,8 +37,12 @@ public class PostsController {
         PostsResponseDto post = postsService.findById(id);
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
-        if (sessionUser.getId().equals(post.getAuthor())) {
-            model.addAttribute("owner", "owner");
+        try {
+            if (sessionUser.getId().equals(post.getAuthor())) {
+                model.addAttribute("owner", "owner");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("비 로그인");
         }
         return "post/postInfo";
     }

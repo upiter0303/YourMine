@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity) throws Exception {
-        webSecurity.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
+        webSecurity.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/smartEdit/**");
     }
 
     @Override
@@ -41,13 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/mypage", "/userModify", "/passwordModify", "/profileModify"
+                .antMatchers("/myPage", "/userModify", "/passwordModify", "/profileModify"
                             , "/delProfile").authenticated()         // 로그인시 접속가능
                 .antMatchers("/posts/save").hasRole(Role.USER.name()) // user 권한 접속가능
                 .anyRequest().permitAll()                                  // 모두 접속가능
                 .and()
                 .formLogin()
-                .loginPage("/loginpage")
+                .loginPage("/loginPage")
                 .usernameParameter("id")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/") // 로그인시 이동페이지

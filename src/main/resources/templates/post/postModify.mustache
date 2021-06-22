@@ -15,7 +15,7 @@
                 <textarea class="form-control" id="content">{{post.content}}</textarea>
             </div>
             <div class="form-group">
-                <select id="status">
+                <select class="form-select" aria-label="Default select example" id="status">
                     <option value="거래대기" {{#posting}}{{posting}}{{/posting}}>거래대기</option>
                     <option value="거래중" {{#deal}}{{deal}}{{/deal}}>거래중</option>
                     <option value="거래완료" {{#end}}{{end}}{{/end}}>거래완료</option>

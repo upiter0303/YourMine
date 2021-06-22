@@ -1,5 +1,6 @@
 package com.bit.yourmain.domain.files;
 
+import com.bit.yourmain.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,13 @@ public class Files {
     @Column(nullable = false)
     private String fileName;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Posts_no")
+    private Posts posts;
+
     @Builder
-    public Files(String fileName) {
+    public Files(String fileName, Posts posts) {
         this.fileName = fileName;
+        this.posts = posts;
     }
 }

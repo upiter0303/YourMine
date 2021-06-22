@@ -1,7 +1,4 @@
-.header {
-    background-color: rgb(212, 255, 144);
-    text-align: center;
-}
+
 body {
     background-color: white;
 }
@@ -12,11 +9,5 @@ body {
     margin-top: 200px;
     margin-left: 200px;
     border-radius: 30px;
-    background-color: antiquewhite;
-}
-btn-modal1:hover {
-
-}
-.center {
-
+    background-color: #e3f2fd;
 }

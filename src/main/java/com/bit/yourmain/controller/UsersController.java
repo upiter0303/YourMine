@@ -18,8 +18,8 @@ public class UsersController {
 
     private final UsersService usersService;
 
-    @GetMapping("/loginpage")
-    public String loginpage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
+    @GetMapping("/loginPage")
+    public String loginPage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
 
         SessionUser user = null;
         try {
@@ -45,7 +45,7 @@ public class UsersController {
             String content = "<b style=\"color:red;\">" + errCode + "</b>";
             model.addAttribute("error", content);
         }
-        return "account/loginpage";
+        return "account/loginPage";
     }
 
     @GetMapping("/signup")
@@ -53,9 +53,9 @@ public class UsersController {
         return "account/signup";
     }
 
-    @GetMapping("/mypage")
-    public String mypage() {
-        return "account/mypage";
+    @GetMapping("/myPage")
+    public String myPage() {
+        return "account/myPage";
     }
 
     @GetMapping("/userModify")
@@ -74,7 +74,7 @@ public class UsersController {
         users.setProfile(usersService.profileModify(profile, id));
         session.removeAttribute("userInfo");
         session.setAttribute("userInfo" , users);
-        return "account/mypage";
+        return "account/myPage";
     }
 
     @GetMapping("/delProfile")
@@ -83,6 +83,6 @@ public class UsersController {
         SessionUser sessionUser = new SessionUser(usersService.delProfile(users.getId()));
         session.removeAttribute("userInfo");
         session.setAttribute("userInfo" , sessionUser);
-        return "account/mypage";
+        return "account/myPage";
     }
 }

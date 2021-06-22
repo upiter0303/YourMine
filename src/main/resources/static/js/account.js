@@ -97,6 +97,11 @@ var account = {
             $('#msg').append(con);
             return;
         }
+        var idTest = /^[0-9a-z]+$/;
+        if(!idTest.test($('#id').val())) {
+            alert("아이디에는 숫자와 영어만 사용할 수 있습니다");
+            return;
+        }
         var data = {
             id: $('#id').val()
         };

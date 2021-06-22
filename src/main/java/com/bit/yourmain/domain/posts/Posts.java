@@ -1,12 +1,15 @@
 package com.bit.yourmain.domain.posts;
 
 import com.bit.yourmain.domain.BaseTimeEntity;
+import com.bit.yourmain.domain.files.Files;
 import com.bit.yourmain.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -38,6 +41,9 @@ public class Posts extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Users_no")
     private Users users;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "posts")
+    private List<Files> files = new ArrayList<>();
 
     @Builder
     public Posts(String title, String content, String author, String status, Users users) {
