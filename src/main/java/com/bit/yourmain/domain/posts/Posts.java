@@ -52,7 +52,7 @@ public class Posts extends BaseTimeEntity {
     @JoinColumn(name = "Users_no")
     private Users users;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "posts")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "posts", cascade = CascadeType.REMOVE)
     private List<Files> files = new ArrayList<>();
 
     @Builder

@@ -8,6 +8,10 @@ var postMain = {
         $('#btn-postModify').on('click', function() {
             func.postModify();
         });
+
+        $('#btn-postDelete').on('click', function() {
+            func.postDelete();
+        });
     },
 
     save : function() {
@@ -76,6 +80,16 @@ var postMain = {
             console.error(JSON.stringify(error));
             alert('다시 시도해주세요');
         });
+    },
+
+    postDelete: function () {
+        var check = confirm("정말 삭제하시겠습니까?");
+        if (check) {
+            var form = $('#deleteForm');
+            form.submit();
+        } else {
+            return;
+        }
     }
 
 };

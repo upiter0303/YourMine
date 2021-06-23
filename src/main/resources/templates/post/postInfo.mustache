@@ -8,7 +8,10 @@
 <a href="/">뒤로</a>
 {{#owner}}
     <a href="/posts/modify/{{post.id}}">수정</a>
-    <a href="/posts/delete/{{post.id}}">삭제</a>
+<!--    <a href="/posts/delete/{{post.id}}">삭제</a>-->
+    <form id="deleteForm" action="/posts/delete/{{post.id}}" method="get">
+    </form>
+    <button type="button" id="btn-postDelete">삭제</button>
 {{/owner}}
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

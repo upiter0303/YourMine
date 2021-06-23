@@ -16,9 +16,4 @@ public class PostsApiController {
         postsService.update(requestDto);
     }
 
-    @GetMapping("/posts/delete/{id}")
-    public void postDelete(@PathVariable Long id) {
-        postsService.delete(id);
-    }
-
 }
