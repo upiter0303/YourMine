@@ -15,6 +15,28 @@ var postMain = {
             alert("제목을 입력해주세요");
             return;
         }
+        if ($('#price').val() == "") {
+            alert("가격을 입력해주세요");
+            return;
+        }
+        var priceTest = /^[0-9]*$/g;
+        if(!priceTest.test($('#price').val())) {
+            alert("가격에는 숫자만 입력 가능합니다");
+            return;
+        }
+        var checkList = "";
+        if ($('#direct').is(':checked')) {
+            checkList = "A";
+        }
+        if ($('#delivery').is(':checked')) {
+            checkList += "B";
+        }
+        if ($('#direct').is(":checked") == false && $('#delivery').is(':checked') == false) {
+            alert("거래방식은 최소 한개 이상 선택하셔야 합니다");
+            return;
+        } else {
+            $('#way').val(checkList);
+        }
         if ($('#content').val() == "") {
             alert("내용을 입력해주세요");
             return;

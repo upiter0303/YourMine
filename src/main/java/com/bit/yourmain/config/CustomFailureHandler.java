@@ -30,7 +30,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
             errMsg = "login error";
         }
 
-        setDefaultFailureUrl("/loginpage?error="+errMsg);
+        setDefaultFailureUrl("/loginPage?error="+errMsg);
 
         super.onAuthenticationFailure(request,response,exception);
     }

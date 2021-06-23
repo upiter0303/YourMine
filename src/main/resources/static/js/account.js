@@ -215,7 +215,7 @@ var account = {
             data: JSON.stringify(data)
         }).done(function () {
             alert('수정되었습니다');
-            window.location.href = "/mypage";
+            window.location.href = "/myPage";
         }).fail(function (error) {
             alert('다시 시도해주세요');
         });
@@ -241,7 +241,7 @@ var account = {
             data: JSON.stringify(data)
         }).done(function () {
             alert('변경되었습니다');
-            window.location.href = "/mypage";
+            window.location.href = "/myPage";
         }).fail(function () {
             alert('다시 시도해주세요');
         });

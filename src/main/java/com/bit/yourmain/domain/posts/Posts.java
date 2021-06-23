@@ -33,10 +33,20 @@ public class Posts extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    private String author;
-    
     @Column(nullable = false)
     private String status;  //  거래대기, 거래중, 거래완료로 구분
+
+    @Column(nullable = false)
+    private Long price;
+
+    @Column(nullable = true)
+    private String area;
+
+    @Column(nullable = true)
+    private String way;
+
+    @Column(nullable = true)
+    private String ofSize;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Users_no")
@@ -46,11 +56,14 @@ public class Posts extends BaseTimeEntity {
     private List<Files> files = new ArrayList<>();
 
     @Builder
-    public Posts(String title, String content, String author, String status, Users users) {
+    public Posts(String title, String content, String status, Long price, String area, String way, String ofSize, Users users) {
         this.title = title;
         this.content = content;
-        this.author = author;
         this.status = status;
+        this.price = price;
+        this.area = area;
+        this.way = way;
+        this.ofSize = ofSize;
         this.users = users;
     }
 

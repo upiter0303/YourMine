@@ -29,6 +29,7 @@ public class PostsController {
     @PostMapping("/posts/save")
     public String save(@ModelAttribute PostsSaveRequestDto requestDto, MultipartHttpServletRequest files) {
         Long id = postsService.save(requestDto);
+        System.out.println(requestDto.getWay());
         List<MultipartFile> images = files.getFiles("image");
         for (MultipartFile image: images) {
             postsService.imageSave(image, id);
