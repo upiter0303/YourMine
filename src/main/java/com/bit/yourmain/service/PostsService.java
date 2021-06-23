@@ -6,7 +6,6 @@ import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.posts.PostsRepository;
 import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.domain.users.UsersRepository;
-import com.bit.yourmain.dto.posts.PostsListResponseDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
 import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
@@ -77,9 +76,12 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostsListResponseDto> findAllDesc() {
+    public List<PostsResponseDto> findAllDesc() {
         return postsRepository.findAllDesc().stream()
-                .map(PostsListResponseDto::new)
+                .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
+//    public List<Posts> findAllDesc() {
+//        return postsRepository.findAllDesc();
+//    }
 }

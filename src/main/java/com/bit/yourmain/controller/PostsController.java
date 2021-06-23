@@ -33,7 +33,7 @@ public class PostsController {
         for (MultipartFile image: images) {
             postsService.imageSave(image, id);
         }
-        return "index";
+        return "redirect:/";
     }
 
     // Posts Searching

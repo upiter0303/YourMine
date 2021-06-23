@@ -24,7 +24,7 @@
                     <input type="hidden" value="{{userInfo.id}}" id="id" name="id">
                     <div class="form-group">
                         <label for="profile">프로필 사진</label>
-                        <input type="file" id="profile" name="profile" onchange="readImage(this)">
+                        <input type="file" accept=".jpg, .png, .bmp, .jpeg" id="profile" name="profile" onchange="readImage(this)">
                         {{#userInfo.profile}}
                             <img id="preview-image" src="/profile/{{userInfo.profile}}" width=100 height=100 />
                         {{/userInfo.profile}}

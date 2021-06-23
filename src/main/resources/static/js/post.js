@@ -25,7 +25,6 @@ var postMain = {
         }
         var form = $('#postForm');
         form.submit();
-        window.location.href="/";
     },
 
     postModify : function() {
