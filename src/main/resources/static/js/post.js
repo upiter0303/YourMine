@@ -12,6 +12,10 @@ var postMain = {
         $('#btn-postDelete').on('click', function() {
             func.postDelete();
         });
+
+        $('#btn-attention').on('click', function() {
+            func.attention();
+        });
     },
 
     save : function() {
@@ -90,6 +94,36 @@ var postMain = {
         } else {
             return;
         }
+    },
+
+    attention: function () {
+        var info = {
+            userId: $('#userId').val(),
+            postNo: $('#postNo').val()
+        };
+        if (info.userId == "guest") {
+            var login = confirm("로그인한 사용자만 가능합니다. 로그인 하시겠습니까?");
+            if (login) {
+                window.location.href="/loginPage";
+            } else {
+                return;
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/attention/button',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(info)
+        }).done(function(result) {
+            if (result) {
+                alert("찜하기 완료!");
+            } else {
+                alert("찜 목록에서 삭제되었습니다");
+            }
+        }).fail(function(error) {
+            console.error(JSON.stringify(error));
+            alert('다시 시도해주세요');
+        2});
     }
 
 };

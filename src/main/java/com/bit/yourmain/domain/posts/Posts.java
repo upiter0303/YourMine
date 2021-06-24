@@ -1,6 +1,7 @@
 package com.bit.yourmain.domain.posts;
 
 import com.bit.yourmain.domain.BaseTimeEntity;
+import com.bit.yourmain.domain.attention.Attention;
 import com.bit.yourmain.domain.files.Files;
 import com.bit.yourmain.domain.users.Users;
 import lombok.Builder;

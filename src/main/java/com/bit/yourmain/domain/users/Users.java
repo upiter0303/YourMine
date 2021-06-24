@@ -1,5 +1,6 @@
 package com.bit.yourmain.domain.users;
 
+import com.bit.yourmain.domain.attention.Attention;
 import com.bit.yourmain.domain.posts.Posts;
 import lombok.*;
 
@@ -53,8 +54,11 @@ public class Users {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "users", cascade = CascadeType.REMOVE)
     private List<Posts> posts = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.REMOVE)
+    private List<Attention> attentions = new ArrayList<>();
 
     @Builder
     public Users(String name, String id, String password, String phone, String address, String detailAddress, String profile, Long score, Role role) {
