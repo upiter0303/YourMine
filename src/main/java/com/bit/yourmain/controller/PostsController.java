@@ -1,5 +1,6 @@
 package com.bit.yourmain.controller;
 
+import com.bit.yourmain.domain.files.Files;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -55,8 +57,12 @@ public class PostsController {
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
 
-        model.addAttribute("files", post.getFilesList());
-
+        List<Files> withOutThumbnail = new ArrayList<>();
+        withOutThumbnail.addAll(post.getFilesList());
+        withOutThumbnail.remove(0);
+        if (withOutThumbnail.size() >= 1) {
+            model.addAttribute("files", withOutThumbnail);
+        }
         try {
             if (sessionUser.getId().equals(post.getAuthor())) {
                 model.addAttribute("owner", "owner");
