@@ -6,6 +6,7 @@ import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
 import com.bit.yourmain.service.PostsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,12 @@ import java.util.List;
 public class PostsController {
 
     private final PostsService postsService;
+    @Value("${kakao.js.key}")
+    private String kakaoKey;
 
     @GetMapping("/posts/save")
-    public String postsSave() {
+    public String postsSave(Model model) {
+        model.addAttribute("kakaoKey", kakaoKey);
         return "post/postSave";
     }
 

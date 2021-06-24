@@ -23,8 +23,10 @@
                 <form action="/profileModify" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="{{userInfo.id}}" id="id" name="id">
                     <div class="form-group">
-                        <label for="profile">프로필 사진</label>
-                        <input type="file" accept=".jpg, .png, .bmp, .jpeg" id="profile" name="profile" onchange="readImage(this)">
+                        <div class="input-group">
+                            <input type="file" class="form-control" accept=".jpg, .png, .bmp, .jpeg"  id="profile" name="profile" aria-describedby="inputGroupFileAddon04" aria-label="Upload" onchange="readImage(this)">
+                            <input type="submit" role="button" class="btn btn-outline-secondary"></button>
+                        </div>
                         {{#userInfo.profile}}
                             <img id="preview-image" src="/profile/{{userInfo.profile}}" width=100 height=100 />
                         {{/userInfo.profile}}
@@ -33,8 +35,7 @@
                         {{/userInfo.profile}}
                     </div>
                     <br>
-                    <input type="submit" class="btn btn-primary" value="사진바꾸기">
-                    <a href="/delProfile" role="button" class="btn btn-danger">사진 삭제</a>
+                    <a href="/delProfile" role="button" class="btn btn-danger">프로필 사진 삭제</a>
                 </form>
                 <br>
                 <button type="button" class="close" id="close1">x</button>
@@ -45,7 +46,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <script src="/js/account.js"></script>
 <script src="/js/modal.js"></script>
 <link href="/css/modal.css" rel="stylesheet" type="text/css" media="all">

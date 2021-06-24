@@ -1,9 +1,12 @@
 package com.bit.yourmain.dto.posts;
 
+import com.bit.yourmain.domain.files.Files;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.Users;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,6 +23,7 @@ public class PostsResponseDto {
     private final String ofSize;
     private final Users users;
     private final String thumbnail;
+    private final List<Files> filesList;
 
     public PostsResponseDto(Posts entity) {
         this.id = entity.getId();
@@ -33,5 +37,6 @@ public class PostsResponseDto {
         this.ofSize = entity.getOfSize();
         this.users = entity.getUsers();
         this.thumbnail = entity.getFiles().get(0).getFileName();
+        this.filesList = entity.getFiles();
     }
 }
