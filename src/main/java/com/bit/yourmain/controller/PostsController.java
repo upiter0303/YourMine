@@ -54,6 +54,9 @@ public class PostsController {
         PostsResponseDto post = postsService.findById(id);
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
+
+        model.addAttribute("files", post.getFilesList());
+
         try {
             if (sessionUser.getId().equals(post.getAuthor())) {
                 model.addAttribute("owner", "owner");
