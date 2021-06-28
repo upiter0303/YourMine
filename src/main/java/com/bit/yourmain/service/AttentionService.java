@@ -7,6 +7,9 @@ import com.bit.yourmain.dto.attention.AttentionRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AttentionService {
@@ -40,5 +43,14 @@ public class AttentionService {
         Attention attention = attentionRepository.findByUsersNoAndPostNo(users.getNo(), requestDto.getPostNo());
         attentionRepository.delete(attention);
         return false;
+    }
+
+    public List<Long> findAllByUsersNo(Long no) {
+        List<Attention> attentionList = attentionRepository.findAllByUsersNo(no);
+        List<Long> idList = new ArrayList<>();
+        for (Attention attention: attentionList) {
+            idList.add(attention.getPostNo());
+        }
+        return idList;
     }
 }

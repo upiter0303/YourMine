@@ -1,6 +1,11 @@
 package com.bit.yourmain.controller;
 
+import com.bit.yourmain.domain.attention.Attention;
+import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.dto.posts.PostsResponseDto;
+import com.bit.yourmain.service.AttentionService;
+import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class UsersController {
 
     private final UsersService usersService;
+    private final PostsService postsService;
+    private final AttentionService attentionService;
 
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
@@ -54,7 +63,15 @@ public class UsersController {
     }
 
     @GetMapping("/myPage")
-    public String myPage() {
+    public String myPage(HttpSession session, Model model) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
+//        try {
+            List<Long> longList = attentionService.findAllByUsersNo(sessionUser.getNo());
+            List<PostsResponseDto> postsList = postsService.findByAttention(longList);
+            model.addAttribute("attention", postsList);
+//        } catch (Exception e) {
+//            System.out.println("no attention");
+//        }
         return "account/myPage";
     }
 

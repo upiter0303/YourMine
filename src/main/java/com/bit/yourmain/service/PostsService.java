@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,5 +90,33 @@ public class PostsService {
     @Transactional
     public void hitUpdate(Long id) {
         postsRepository.hitUpdate(id);
+    }
+
+    public List<PostsResponseDto> findByCategory(String category) {
+        return postsRepository.findByCategoryOrderByIdDesc(category).stream()
+                .map(PostsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<PostsResponseDto> findByAddress(String area) {
+        int index = area.indexOf(" ",area.indexOf(" ")+1);
+        String address = area.substring(0, index);
+        return postsRepository.findByAddress(address).stream()
+                .map(PostsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<PostsResponseDto> findByHit() {
+        return postsRepository.HitDesc().stream()
+                .map(PostsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<PostsResponseDto> findByAttention(List<Long> idList) {
+        List<PostsResponseDto> responseDtos = new ArrayList<>();
+        for (Long id: idList) {
+            responseDtos.add(new PostsResponseDto(postsRepository.findById(id).get()));
+        }
+        return responseDtos;
     }
 }

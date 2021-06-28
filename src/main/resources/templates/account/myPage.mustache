@@ -43,7 +43,36 @@
         </div>
     </div>
 </div>
-
+<h3>내가 찜한 목록</h3>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {{#attention}}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <a href="/posts/{{id}}">
+                            <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{title}}</h5>
+                                <!-- Product price-->
+                                <p>{{price}}원</p>
+                                <p>{{status}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/attention}}
+            {{^attention}}
+                <p>찜한 게시물이 없습니다</p>
+            {{/attention}}
+        </div>
+    </div>
+</section>
 
 {{>layout/js}}
 <script src="/js/account.js"></script>
