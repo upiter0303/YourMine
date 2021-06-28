@@ -1,7 +1,6 @@
 package com.bit.yourmain.domain.posts;
 
 import com.bit.yourmain.domain.BaseTimeEntity;
-import com.bit.yourmain.domain.attention.Attention;
 import com.bit.yourmain.domain.files.Files;
 import com.bit.yourmain.domain.users.Users;
 import lombok.Builder;
@@ -49,6 +48,12 @@ public class Posts extends BaseTimeEntity {
     @Column(nullable = true)
     private String ofSize;
 
+    @Column(nullable = false)
+    private String category;
+
+    @Column(nullable = false)
+    private Long hit;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Users_no")
     private Users users;
@@ -57,7 +62,7 @@ public class Posts extends BaseTimeEntity {
     private List<Files> files = new ArrayList<>();
 
     @Builder
-    public Posts(String title, String content, String status, Long price, String area, String way, String ofSize, Users users) {
+    public Posts(String title, String content, String status, Long price, String area, String way, String ofSize, String category, Long hit, Users users) {
         this.title = title;
         this.content = content;
         this.status = status;
@@ -65,6 +70,8 @@ public class Posts extends BaseTimeEntity {
         this.area = area;
         this.way = way;
         this.ofSize = ofSize;
+        this.category = category;
+        this.hit = hit;
         this.users = users;
     }
 

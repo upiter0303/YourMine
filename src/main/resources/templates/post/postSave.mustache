@@ -8,14 +8,26 @@
         <form id="postForm" enctype="multipart/form-data" action="/posts/save" method="post">
             <input type="hidden" value="{{userInfo.id}}" id="author" name="author">
             <div class="form-floating input-group mb-3">
-                <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+                <input type="text" class="form-control" id="title" name="title" placeholder="* 제목">
                 <label for="title">* 제목</label>
             </div>
+            <div class="input-group mb-3">
+                <select class="form-select" id="category" name="category" aria-label="Category select">
+                    <option value="x" selected>카테고리 선택</option>
+                    <option value="clothes">의류,잡화</option>
+                    <option value="stationery">문구</option>
+                    <option value="furniture">가구,가전</option>
+                    <option value="book">도서,취미</option>
+                    <option value="digital">디지털</option>
+                    <option value="beauty">미용</option>
+                    <option value="other">기타</option>
+                </select>
+            </div>
             <div class="form-floating input-group mb-3">
-                <input type="text" class="form-control" id="price" name="price" placeholder="단위 : 원">
+                <input type="text" class="form-control" id="price" name="price" placeholder="* 가격/ 단위 : 원">
                 <label for="price">* 가격/ 단위 : 원</label>
             </div>
-            <div class="form-group">
+            <div class="input-group mb-3" id="check1">
                 <input type="hidden" value="" id="way" name="way">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="delivery" id="delivery" name="delivery" checked>
@@ -23,6 +35,7 @@
                         택배 거래
                     </label>
                 </div>
+                <br>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="direct" id="direct" name="direct" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     <label class="form-check-label" for="direct">
@@ -40,10 +53,16 @@
                     <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
                 </div>
             </div>
-            <div class="form-floating input-group mb-3">
-                <input type="text" class="form-control" id="size" name="size" placeholder="가로 * 세로 * 높이">
-                <label for="size">사이즈/ 가로 * 세로 * 높이</label>
-            </div>
+            <input type="hidden" value="" name="ofSize" id="ofSize">
+            <label>사이즈/ 단위: cm
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" id="size1" placeholder="가로">
+                    <span class="input-group-text">*</span>
+                    <input type="number" class="form-control" id="size2" placeholder="세로">
+                    <span class="input-group-text">*</span>
+                    <input type="number" class="form-control" id="size3" placeholder="높이">
+                </div>
+            </label>
             <div class="input-group mb-3">
                 <textarea class="form-control" id="content" name="content" placeholder="내용를 입력하세요"
                 cols="100" rows="20"></textarea>

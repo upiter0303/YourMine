@@ -25,6 +25,7 @@
 <p>내용 : {{{post.content}}}</p>
 <p>거래점수 : {{post.users.score}}</p>
 <p>거래상태 : {{post.status}}</p>
+<p>조회수: {{post.hit}}</p>
 {{^owner}}
     <form>
         <input type="hidden" id="userId" value="{{#userInfo}}{{userInfo.id}}{{/userInfo}}{{^userInfo}}guest{{/userInfo}}">

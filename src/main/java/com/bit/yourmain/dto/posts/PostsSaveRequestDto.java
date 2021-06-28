@@ -19,10 +19,12 @@ public class PostsSaveRequestDto {
     private String area;
     private String way; //  A: 직거래, B: 택배
     private String ofSize;
+    private String category;
+    private Long hit;
     private Users users;
 
     @Builder
-    public PostsSaveRequestDto(String title, String content, String status, String author, Long price, String area, String way, String ofSize) {
+    public PostsSaveRequestDto(String title, String content, String status, String author, Long price, String area, String way, String ofSize, String category, Long hit) {
         this.title = title;
         this.content = content;
         this.status = status;
@@ -31,6 +33,8 @@ public class PostsSaveRequestDto {
         this.area = area;
         this.way = way;
         this.ofSize = ofSize;
+        this.category = category;
+        this.hit = hit;
     }
 
 
@@ -44,6 +48,8 @@ public class PostsSaveRequestDto {
                 .area(area)
                 .way(way)
                 .ofSize(ofSize)
+                .category(category)
+                .hit(hit)
                 .users(users)
                 .build();
     }

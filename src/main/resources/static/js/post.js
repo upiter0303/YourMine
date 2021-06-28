@@ -19,17 +19,25 @@ var postMain = {
     },
 
     save : function() {
-        if ($('#title').val() == "") {
+        if ($('#title').val() === "") {
             alert("제목을 입력해주세요");
+            $('#title').focus();
             return;
         }
-        if ($('#price').val() == "") {
+        if ($('#category').val() === 'x') {
+            alert("카테고리를 선택해주세요");
+            $('#category').focus();
+            return;
+        }
+        if ($('#price').val() === "") {
             alert("가격을 입력해주세요");
+            $('#price').focus();
             return;
         }
         var priceTest = /^[0-9]*$/g;
         if(!priceTest.test($('#price').val())) {
             alert("가격에는 숫자만 입력 가능합니다");
+            $('#price').focus();
             return;
         }
         var checkList = "";
@@ -39,14 +47,33 @@ var postMain = {
         if ($('#delivery').is(':checked')) {
             checkList += "B";
         }
-        if ($('#direct').is(":checked") == false && $('#delivery').is(':checked') == false) {
+        if ($('#direct').is(":checked") === false && $('#delivery').is(':checked') === false) {
             alert("거래방식은 최소 한개 이상 선택하셔야 합니다");
+            $('#check1').focus();
             return;
         } else {
             $('#way').val(checkList);
         }
-        if ($('#content').val() == "") {
+        var ofSize = null;
+        if ($('#size3').val() !== "") {
+            if ($('#size2').val() !== "") {
+                if ($('#size1').val() !== "") {
+                    ofSize = $('#size1').val();
+                } else {
+                    alert("\'가로\'부터 채워주세요");
+                    return;
+                }
+                ofSize += "*"+$('#size2').val();
+            } else {
+                alert("\'세로\'부터 채워주세요");
+                return;
+            }
+            ofSize += "*"+$('#size3').val();
+            $('#ofSize').val(ofSize);
+        }
+        if ($('#content').val() === "") {
             alert("내용을 입력해주세요");
+            $('#content').focus();
             return;
         }
         if (!$('#formFileMultiple').val()) {

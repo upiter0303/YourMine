@@ -70,6 +70,7 @@ public class PostsController {
         } catch (NullPointerException e) {
             System.out.println("비 로그인");
         }
+        postsService.hitUpdate(id);
         return "post/postInfo";
     }
 

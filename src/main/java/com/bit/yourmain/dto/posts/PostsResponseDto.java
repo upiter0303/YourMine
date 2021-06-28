@@ -21,6 +21,8 @@ public class PostsResponseDto {
     private final String area;
     private final String way;
     private final String ofSize;
+    private final String category;
+    private final Long hit;
     private final Users users;
     private final String thumbnail;
     private final List<Files> filesList;
@@ -35,6 +37,8 @@ public class PostsResponseDto {
         this.area = entity.getArea();
         this.way = entity.getWay();
         this.ofSize = entity.getOfSize();
+        this.category = entity.getCategory();
+        this.hit = entity.getHit();
         this.users = entity.getUsers();
         this.thumbnail = entity.getFiles().get(0).getFileName();
         this.filesList = entity.getFiles();

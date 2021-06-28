@@ -31,6 +31,7 @@ public class PostsService {
         Users users = usersRepository.findById(requestDto.getAuthor()).get();
         requestDto.setUsers(users);
         requestDto.setStatus("거래대기");
+        requestDto.setHit(0L);
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
@@ -84,4 +85,9 @@ public class PostsService {
 //    public List<Posts> findAllDesc() {
 //        return postsRepository.findAllDesc();
 //    }
+
+    @Transactional
+    public void hitUpdate(Long id) {
+        postsRepository.hitUpdate(id);
+    }
 }
