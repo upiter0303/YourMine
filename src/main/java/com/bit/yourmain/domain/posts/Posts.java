@@ -75,9 +75,13 @@ public class Posts extends BaseTimeEntity {
         this.users = users;
     }
 
-    public void update(String title, String content, String status) {
+    public void update(String title, String content, Long price, String area, String way, String ofSize, String category) {
         this.title = title;
         this.content = content;
-        this.status = status;
+        this.price = price;
+        this.area = area;
+        this.way = way;
+        this.ofSize = ofSize;
+        this.category = category;
     }
 }

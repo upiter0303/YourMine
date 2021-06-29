@@ -5,10 +5,6 @@ var postMain = {
             func.save();
         });
 
-        $('#btn-postModify').on('click', function() {
-            func.postModify();
-        });
-
         $('#btn-postDelete').on('click', function() {
             func.postDelete();
         });
@@ -82,35 +78,6 @@ var postMain = {
         }
         var form = $('#postForm');
         form.submit();
-    },
-
-    postModify : function() {
-        if ($('#title').val() == "") {
-            alert("제목을 입력해주세요");
-            return;
-        }
-        if ($('#content').val() == "") {
-            alert("내용을 입력해주세요");
-            return;
-        }
-        var data = {
-            title: $('#title').val(),
-            id: $('#id').val(),
-            content: $('#content').val(),
-            status: $('#status').val()
-        }
-        $.ajax({
-            type: 'POST',
-            url: '/posts/modify',
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(data)
-        }).done(function() {
-            alert('글이 수정되었습니다');
-            window.location.href='/';
-        }).fail(function(error) {
-            console.error(JSON.stringify(error));
-            alert('다시 시도해주세요');
-        });
     },
 
     postDelete: function () {

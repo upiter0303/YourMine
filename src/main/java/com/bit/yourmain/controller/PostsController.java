@@ -5,6 +5,7 @@ import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
+import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
 import com.bit.yourmain.service.PostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,12 +36,22 @@ public class PostsController {
     @PostMapping("/posts/save")
     public String save(@ModelAttribute PostsSaveRequestDto requestDto, MultipartHttpServletRequest files) {
         Long id = postsService.save(requestDto);
-        System.out.println(requestDto.getWay());
         List<MultipartFile> images = files.getFiles("image");
         for (MultipartFile image: images) {
             postsService.imageSave(image, id);
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/posts/modify")
+    public String postModify(@ModelAttribute PostsUpdateRequestDto requestDto, MultipartHttpServletRequest files) {
+        System.out.println(requestDto.getCategory());
+        postsService.update(requestDto);
+        List<MultipartFile> images = files.getFiles("image");
+        for (MultipartFile image: images) {
+            postsService.imageSave(image, requestDto.getId());
+        }
+        return "redirect:/posts/"+requestDto.getId();
     }
 
     // Posts Searching
@@ -76,16 +87,36 @@ public class PostsController {
 
     @GetMapping("/posts/modify/{id}")
     public String postModify(@PathVariable Long id, Model model) {
+        model.addAttribute("kakaoKey", kakaoKey);
         PostsResponseDto post = postsService.findById(id);
         model.addAttribute("post", post);
-        String status = post.getStatus();
-        String value = "selected";
-        if (status.equals("거래대기")) {
-            model.addAttribute("posting", value);
-        } else if (status.equals("거래중")) {
-            model.addAttribute("deal", value);
-        } else {
-            model.addAttribute("end", value);
+        model.addAttribute(post.getCategory(), "selected");
+        try {
+            if (post.getOfSize() != null) {
+                String ofSize = post.getOfSize();
+                String size1 = ofSize.substring(0, ofSize.indexOf("*"));
+                String size2 = ofSize.substring(ofSize.indexOf("*")+1, ofSize.lastIndexOf("*"));
+                String size3 = ofSize.substring(ofSize.lastIndexOf("*")+1);
+                System.out.println(size1);
+                System.out.println(size2);
+                System.out.println(size3);
+                model.addAttribute("size1", size1);
+                model.addAttribute("size2", size2);
+                model.addAttribute("size3", size3);
+            }
+        } catch (Exception e) {
+            System.out.println("size null");
+        }
+        try {
+            String way = post.getWay();
+            if (way.contains("A")) {
+                model.addAttribute("A", "A");
+            }
+            if (way.contains("B")) {
+                model.addAttribute("B", "B");
+            }
+        } catch (Exception e) {
+            System.out.println("way null");
         }
         return "post/postModify";
     }

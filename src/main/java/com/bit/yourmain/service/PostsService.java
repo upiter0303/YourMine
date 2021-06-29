@@ -49,7 +49,9 @@ public class PostsService {
     public void update(PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(requestDto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + requestDto));
 
-        posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getStatus());
+        posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getPrice(),
+                requestDto.getArea(), requestDto.getWay(),
+                requestDto.getOfSize(), requestDto.getCategory());
     }
 
     public void delete(Long id) {
