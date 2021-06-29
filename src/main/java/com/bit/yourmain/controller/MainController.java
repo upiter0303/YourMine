@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class MainController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(HttpSession session, Model model) {
+    public String index(HttpSession session, Model model, HttpServletResponse response) {
         List<PostsResponseDto> postsList = postsService.findAllDesc();
         model.addAttribute("posts", postsList);
         List<PostsResponseDto> hitList = postsService.findByHit();
@@ -32,6 +34,9 @@ public class MainController {
         } catch (NullPointerException e) {
             System.out.println("null address");
         }
+        Cookie cookie = new Cookie("hitCheck", null);
+        cookie.setMaxAge(60*60*24);
+        response.addCookie(cookie);
         return "index";
     }
 

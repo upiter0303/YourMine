@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +65,8 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{id}")
-    public String postsInfo(@PathVariable Long id, Model model, HttpSession session) {
+    public String postsInfo(@PathVariable Long id, Model model, HttpSession session,
+                            @CookieValue(name="hitCheck") String cookie, HttpServletResponse response) {
         PostsResponseDto post = postsService.findById(id);
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
@@ -81,7 +84,11 @@ public class PostsController {
         } catch (NullPointerException e) {
             System.out.println("비 로그인");
         }
-        postsService.hitUpdate(id);
+        if (!cookie.contains(String.valueOf(id))) {
+            cookie += id+"/";
+            postsService.hitUpdate(id);
+        }
+        response.addCookie(new Cookie("hitCheck", cookie));
         return "post/postInfo";
     }
 
