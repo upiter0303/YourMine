@@ -43,6 +43,33 @@
         </div>
     </div>
 </div>
+<h3>내가 올린 상품</h3>
+<table class="table table-horizontal table-bordered">
+    <thead class="thead-strong">
+    <tr>
+        <th>제목</th>
+        <th>가격</th>
+        <th>거래상태</th>
+        <th>조회수</th>
+    </tr>
+    </thead>
+
+    <tbody id="tbody">
+    {{#posts}}
+        <tr>
+            <td>{{title}}</td>
+            <td>{{price}}</a></td>
+            <td>{{status}}</td>
+            <td>{{hit}}</td>
+        </tr>
+    {{/posts}}
+    {{^posts}}
+        <tr>
+            내가 올린 상품이 없습니다
+        </tr>
+    {{/posts}}
+    </tbody>
+</table>
 <h3>내가 찜한 목록</h3>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">

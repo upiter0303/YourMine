@@ -3,6 +3,7 @@ package com.bit.yourmain.controller;
 import com.bit.yourmain.domain.attention.Attention;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.service.AttentionService;
 import com.bit.yourmain.service.PostsService;
@@ -65,13 +66,23 @@ public class UsersController {
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
-//        try {
+        try {
+            Users users = usersService.getUsers(sessionUser.getId());
+            List<PostsResponseDto> myPosts = new ArrayList<>();
+            for (Posts posts : users.getPosts()) {
+                myPosts.add(new PostsResponseDto(posts));
+                model.addAttribute("posts", myPosts);
+            }
+        } catch (Exception e) {
+            System.out.println("no posts");
+        }
+        try {
             List<Long> longList = attentionService.findAllByUsersNo(sessionUser.getNo());
             List<PostsResponseDto> postsList = postsService.findByAttention(longList);
             model.addAttribute("attention", postsList);
-//        } catch (Exception e) {
-//            System.out.println("no attention");
-//        }
+        } catch (Exception e) {
+            System.out.println("no attention");
+        }
         return "account/myPage";
     }
 
