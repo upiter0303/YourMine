@@ -9,8 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AttentionRequestDto {
 
-    private String userId;
-    private Long postNo;
+    private final String userId;
+    private final Long postNo;
 
     public Attention toEntity(Users users) {
         return Attention.builder()

@@ -59,7 +59,7 @@ public class Posts extends BaseTimeEntity {
     private Users users;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "posts", cascade = CascadeType.REMOVE)
-    private List<Files> files = new ArrayList<>();
+    private final List<Files> files = new ArrayList<>();
 
     @Builder
     public Posts(String title, String content, String status, Long price, String area, String way, String ofSize, String category, Long hit, Users users) {

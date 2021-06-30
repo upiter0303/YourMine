@@ -47,6 +47,11 @@ dependencies {
     compile group: 'commons-fileupload' , name: 'commons-fileupload', version: '1.3.3'
     // sms
 //    compile group: 'net.nurigo', name: 'javaSDK', version: '2.2'
+    // websocket
+    compile group: 'org.springframework', name: 'spring-websocket', version: '5.2.3.RELEASE'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     testCompile('org.projectlombok:lombok')
     annotationProcessor('org.projectlombok:lombok')

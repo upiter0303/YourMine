@@ -12,6 +12,10 @@ var postMain = {
         $('#btn-attention').on('click', function() {
             func.attention();
         });
+
+        $('#btn-chatOpen').on('click', function() {
+            func.chatOpen();
+        });
     },
 
     save : function() {
@@ -88,7 +92,7 @@ var postMain = {
             var form = $('#deleteForm');
             form.submit();
         } else {
-            return;
+
         }
     },
 
@@ -119,7 +123,21 @@ var postMain = {
         }).fail(function(error) {
             console.error(JSON.stringify(error));
             alert('다시 시도해주세요');
-        2});
+        });
+    },
+
+    chatOpen: function () {
+        var userId = $('#userId').val();
+        var postNo = $('#postNo').val();
+        if (userId == "guest") {
+            var login = confirm("로그인한 사용자만 가능합니다. 로그인 하시겠습니까?");
+            if (login) {
+                window.location.href="/loginPage";
+            } else {
+                return;
+            }
+        }
+        window.open("/chat/" + postNo + "/" + userId, "", "_blank");
     }
 
 };

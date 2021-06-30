@@ -25,11 +25,7 @@ public class AttentionService {
         } catch (NullPointerException e) {
 
         }
-        if (attention == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return attention == null;
     }
 
     public boolean attentionSave(AttentionRequestDto requestDto) {

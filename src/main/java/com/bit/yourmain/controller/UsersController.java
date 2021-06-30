@@ -4,8 +4,11 @@ import com.bit.yourmain.domain.attention.Attention;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
+import com.bit.yourmain.dto.chat.ChatResponseDto;
+import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.service.AttentionService;
+import com.bit.yourmain.service.ChatService;
 import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class UsersController {
     private final UsersService usersService;
     private final PostsService postsService;
     private final AttentionService attentionService;
+    private final ChatService chatService;
 
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
@@ -66,8 +70,8 @@ public class UsersController {
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
+        Users users = usersService.getUsers(sessionUser.getId());
         try {
-            Users users = usersService.getUsers(sessionUser.getId());
             List<PostsResponseDto> myPosts = new ArrayList<>();
             for (Posts posts : users.getPosts()) {
                 myPosts.add(new PostsResponseDto(posts));
@@ -83,6 +87,16 @@ public class UsersController {
         } catch (Exception e) {
             System.out.println("no attention");
         }
+//        try {
+            List<ChatRoomListDto> roomList = new ArrayList<>();
+        List<Posts> myPosts = users.getPosts();
+            for (Posts posts: myPosts) {
+                 roomList.addAll(chatService.getChatList(posts.getId()));
+            }
+            model.addAttribute("chat", roomList);
+//        } catch (Exception e) {
+//            System.out.println("no chat");
+//        }
         return "account/myPage";
     }
 

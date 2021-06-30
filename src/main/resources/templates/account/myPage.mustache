@@ -43,6 +43,15 @@
         </div>
     </div>
 </div>
+<h3>진행중인 거래</h3>
+{{#chat}}
+    <p>게시물 : {{title}}</p>
+    <p>거래 상대 : {{name}}</p>
+    <a href="/chat/{{url}}">채팅</a>
+{{/chat}}
+{{^chat}}
+    <p>진행중인 대화가 없습니다</p>
+{{/chat}}
 <h3>내가 올린 상품</h3>
 <table class="table table-horizontal table-bordered">
     <thead class="thead-strong">
