@@ -2,6 +2,8 @@ package com.bit.yourmain.domain.files;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FilesRepository extends JpaRepository<Files, Long> {
+import java.util.List;
 
+public interface FilesRepository extends JpaRepository<Files, Long> {
+    List<Files> findAllByPostsId(Long id);
 }

@@ -6,6 +6,7 @@
     <div class="col-md-8">
         <p>* 이 붙은 항목은 필수입력</p>
         <form id="postForm" enctype="multipart/form-data" action="/posts/modify" method="post">
+            <input type="hidden" id="subType" value="modify">
             <input type="hidden" name="id" id="id" value="{{post.id}}">
             <div class="form-floating input-group mb-3">
                 <input type="text" class="form-control" id="title" name="title" placeholder="* 제목" value="{{post.title}}">
@@ -71,6 +72,7 @@
             <label for="formFileMultiple" class="form-label">마지막 이미지가 대표 이미지로 설정됩니다</label>
             <input type="file" class="form-control" accept=".jpg, .png, .bmp, .jpeg" id="formFileMultiple" name="image" multiple="multiple"/>
             <div id="att_zone" data-placeholder="드래그로 파일 올리기"></div>
+            <input type="hidden" name="toDelFile" id="toDelFile">
         </div>
         </form>
     <a href="/" role="button" class="btn btn-secondary">취소</a>
@@ -83,5 +85,6 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{kakaoKey}}&libraries=services"></script>
 <script src="/js/post.js"></script>
+<script src="/js/postModify.js"></script>
 </body>
 </html>

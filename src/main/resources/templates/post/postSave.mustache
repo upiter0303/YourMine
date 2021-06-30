@@ -7,6 +7,7 @@
         <p>* 이 붙은 항목은 필수입력</p>
         <form id="postForm" enctype="multipart/form-data" action="/posts/save" method="post">
             <input type="hidden" value="{{userInfo.id}}" id="author" name="author">
+            <input type="hidden" id="subType" value="save">
             <div class="form-floating input-group mb-3">
                 <input type="text" class="form-control" id="title" name="title" placeholder="* 제목">
                 <label for="title">* 제목</label>

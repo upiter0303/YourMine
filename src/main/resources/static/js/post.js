@@ -72,9 +72,11 @@ var postMain = {
             $('#content').focus();
             return;
         }
-        if (!$('#formFileMultiple').val()) {
-            alert("사진을 하나 이상 첨부하셔야 합니다");
-            return;
+        if ($('#subType').val() === "save") {
+            if (!$('#formFileMultiple').val()) {
+                alert("사진을 하나 이상 첨부하셔야 합니다");
+                return;
+            }
         }
         var form = $('#postForm');
         form.submit();
@@ -216,6 +218,9 @@ imageView = function imageView(att_zone, btn) {
     }
 }
 imageView('att_zone', 'formFileMultiple')
+
+
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
         center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표

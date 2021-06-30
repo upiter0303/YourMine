@@ -1,11 +1,8 @@
 package com.bit.yourmain.controller.api;
 
-import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
-import com.bit.yourmain.service.PostsService;
+import com.bit.yourmain.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -13,8 +10,11 @@ import java.util.List;
 @RestController
 public class PostsApiController {
 
-    private final PostsService postsService;
+    private final FileService fileService;
 
-
+    @GetMapping("/post/files/{id}")
+    public List<String> getFiles(@PathVariable Long id) {
+        return fileService.getFiles(id);
+    }
 
 }
