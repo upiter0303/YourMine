@@ -49,6 +49,7 @@ public class MainController {
     @GetMapping("/chat/{no}/{id}")
     public String chat(@PathVariable Long no, @PathVariable String id, Model model) {
         model.addAttribute("roomId", no + "-" + id);
+        model.addAttribute("post", postsService.findById(no));
         return "chat/chat";
     }
 }

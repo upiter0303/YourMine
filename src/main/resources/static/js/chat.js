@@ -1,7 +1,6 @@
 
 window.resizeTo(600,800);
 let ws;
-
 function wsOpen(){
     ws = new WebSocket("ws://" + location.host + "/chatsocket/" + $('#roomId').val());
     wsEvt();
@@ -93,3 +92,55 @@ function textLoad() {
 }
 wsOpen();
 textLoad();
+
+function setStandby() {
+    var now = $('#status').val();
+    if (now === "거래대기") {
+    } else {
+        var check = confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?");
+        if (check) {
+            $('#statusDropdown').val("거래 대기");
+            $('#status').val("거래대기");
+            putStatus("거래대기");
+        }
+    }
+}
+
+function setProgress() {
+    var now = $('#status').val();
+    if (now === "거래중") {
+    } else {
+        var check = confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?");
+        if (check) {
+            $('#statusDropdown').val("거래 중");
+            $('#status').val("거래중");
+            putStatus("거래중");
+        }
+    }
+}
+
+function setDone() {
+    var now = $('#status').val();
+    if (now === "거래완료") {
+    } else {
+        var check = confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?");
+        if (check) {
+            $('#statusDropdown').val("거래 완료");
+            $('#status').val("거래완료");
+            putStatus("거래완료");
+            $('#statusDropdown').attr("disabled", true);
+        }
+    }
+}
+
+function putStatus(item) {
+    var no = $('#postNo').val();
+    $.ajax({
+        type: 'put',
+        url: "/post/status/"+no+"/"+item
+    }).done(function () {
+        console.log("done");
+    }).fail(function (error) {
+        console.error(error);
+    });
+}

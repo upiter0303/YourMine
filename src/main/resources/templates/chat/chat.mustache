@@ -47,6 +47,17 @@
                     <th><button onclick="send()" id="sendBtn">보내기</button></th>
                 </tr>
             </table>
+            <div class="dropdown">
+                <input type="hidden" id="status" value="{{post.status}}">
+                <input type="hidden" id="postNo" value="{{post.id}}">
+                <input role="button" class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false" value="{{post.status}}">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><button class="dropdown-item" type="button" onclick="setStandby()">거래대기</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="setProgress()">거래중</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="setDone()">거래완료</button></li>
+                </ul>
+            </div>
         </div>
     </div>
 </center>

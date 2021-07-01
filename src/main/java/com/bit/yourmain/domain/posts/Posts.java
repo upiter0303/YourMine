@@ -84,4 +84,8 @@ public class Posts extends BaseTimeEntity {
         this.ofSize = ofSize;
         this.category = category;
     }
+
+    public void updateStatus(String status) {
+        this.status = status;
+    }
 }

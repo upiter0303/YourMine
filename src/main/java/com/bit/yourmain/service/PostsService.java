@@ -121,4 +121,10 @@ public class PostsService {
         }
         return responseDtos;
     }
+
+    public void SetStatus(Long id, String status) {
+        Posts posts = postsRepository.findById(id).get();
+        posts.updateStatus(status);
+        postsRepository.save(posts);
+    }
 }
