@@ -7,10 +7,7 @@ import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.chat.ChatResponseDto;
 import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
-import com.bit.yourmain.service.AttentionService;
-import com.bit.yourmain.service.ChatService;
-import com.bit.yourmain.service.PostsService;
-import com.bit.yourmain.service.UsersService;
+import com.bit.yourmain.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +28,7 @@ public class UsersController {
     private final PostsService postsService;
     private final AttentionService attentionService;
     private final ChatService chatService;
+    private final ReviewService reviewService;
 
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
@@ -77,26 +75,42 @@ public class UsersController {
                 myPosts.add(new PostsResponseDto(posts));
                 model.addAttribute("posts", myPosts);
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println("no posts");
         }
         try {
             List<Long> longList = attentionService.findAllByUsersNo(sessionUser.getNo());
             List<PostsResponseDto> postsList = postsService.findByAttention(longList);
             model.addAttribute("attention", postsList);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println("no attention");
         }
-//        try {
-            List<ChatRoomListDto> roomList = new ArrayList<>();
-        List<Posts> myPosts = users.getPosts();
+        try {
+            List<ChatRoomListDto> sellRoomList = new ArrayList<>();
+            List<Posts> myPosts = users.getPosts();
             for (Posts posts: myPosts) {
-                 roomList.addAll(chatService.getChatList(posts.getId()));
+                sellRoomList.addAll(chatService.getChatList(posts.getId()));
             }
-            model.addAttribute("chat", roomList);
-//        } catch (Exception e) {
-//            System.out.println("no chat");
-//        }
+            model.addAttribute("sellChat", sellRoomList);
+        } catch (NullPointerException e) {
+            System.out.println("no sellChat");
+        }
+        try {
+            List<ChatRoomListDto> buyRoomList = chatService.getBuyList(sessionUser.getId());
+            model.addAttribute("buyChat", buyRoomList);
+        } catch (NullPointerException e) {
+            System.out.println("no buyChat");
+        }
+        try {
+            model.addAttribute("sellReview", reviewService.getSellReview(sessionUser.getId()));
+        } catch (NullPointerException e) {
+            System.out.println("no SellReview");
+        }
+        try {
+            model.addAttribute("buyReview", reviewService.getBuyReview(sessionUser.getId()));
+        } catch (NullPointerException e) {
+            System.out.println("no BuyReview");
+        }
         return "account/myPage";
     }
 

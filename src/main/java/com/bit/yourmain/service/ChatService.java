@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,10 +55,24 @@ public class ChatService {
             ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
             listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
             String data = listDto.getIdentify();
-            System.out.println(data.substring(data.indexOf("-")+1));
             listDto.setName(data.substring(data.indexOf("-")+1));
             roomListDtos.add(listDto);
         }
         return roomListDtos;
+    }
+
+    public List<ChatRoomListDto> getBuyList(String id) {
+        List<ChatRoom> chatRooms = roomRepository.findBuyList("-" + id);
+        List<ChatRoomListDto> roomListDtos = new ArrayList<>();
+        for (ChatRoom chatRoom : chatRooms) {
+            ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
+            listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
+            roomListDtos.add(listDto);
+        }
+        return roomListDtos;
+    }
+
+    public void delRoom(Long id) {
+        roomRepository.delete(roomRepository.findById(id).get());
     }
 }

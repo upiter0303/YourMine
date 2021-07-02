@@ -47,6 +47,7 @@
                     <th><button onclick="send()" id="sendBtn">보내기</button></th>
                 </tr>
             </table>
+            {{#owner}}
             <div class="dropdown">
                 <input type="hidden" id="status" value="{{post.status}}">
                 <input type="hidden" id="postNo" value="{{post.id}}">
@@ -58,6 +59,7 @@
                     <li><button class="dropdown-item" type="button" onclick="setDone()">거래완료</button></li>
                 </ul>
             </div>
+            {{/owner}}
         </div>
     </div>
 </center>

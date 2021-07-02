@@ -1,0 +1,17 @@
+{{>layout/header}}
+{{>layout/nav}}
+<h1>리뷰페이지</h1>
+<form>
+    <input type="hidden" id="no" name="no" value="{{review.no}}">
+    <input type="hidden" id="id" name="id" value="{{review.id}}">
+    <input type="hidden" id="position" name="position" value="{{review.position}}">
+    <input type="number" id="score" name="score" value="score">
+</form>
+<a href="/myPage">
+    <button class="btn btn-outline-secondary">취소</button>
+</a>
+<button class="btn btn-outline-primary" id="btn-setReview">확인</button>
+{{>layout/js}}
+<script src="/js/post.js"></script>
+</body>
+</html>

@@ -6,7 +6,10 @@ import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
 import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
+import com.bit.yourmain.dto.reviews.ReviewResponseDto;
+import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.service.PostsService;
+import com.bit.yourmain.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,7 @@ import java.util.List;
 public class PostsController {
 
     private final PostsService postsService;
+    private final ReviewService reviewService;
     @Value("${kakao.js.key}")
     private String kakaoKey;
 
@@ -132,5 +136,25 @@ public class PostsController {
     public String postDelete(@PathVariable Long id) {
         postsService.delete(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/posts/review/{no}/{position}")
+    public String postReview(@PathVariable Long no, @PathVariable String position, Model model) {
+        ReviewResponseDto reviewResponseDto = reviewService.getReview(no);
+        reviewResponseDto.setPosition(position);
+        ReviewScoreSetDto scoreSetDto = new ReviewScoreSetDto(reviewResponseDto);
+        if (position.equals("buyer")) {
+            scoreSetDto.setId(reviewResponseDto.getSeller());
+        } else {
+            scoreSetDto.setId(reviewResponseDto.getBuyer());
+        }
+        model.addAttribute("review", scoreSetDto);
+        return "post/postReview";
+    }
+
+    @PutMapping("/post/review/set")
+    public String setScore(@RequestBody ReviewScoreSetDto scoreSetDto) {
+        reviewService.setScore(scoreSetDto);
+        return "account/myPage";
     }
 }

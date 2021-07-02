@@ -1,8 +1,11 @@
 package com.bit.yourmain.controller;
 
+import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
+import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.service.PostsService;
+import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ import java.util.List;
 public class MainController {
 
     private final PostsService postsService;
+    private final UsersService usersService;
 
     @GetMapping("/")
     public String index(HttpSession session, Model model, HttpServletResponse response) {
@@ -47,9 +51,16 @@ public class MainController {
     }
 
     @GetMapping("/chat/{no}/{id}")
-    public String chat(@PathVariable Long no, @PathVariable String id, Model model) {
+    public String chat(@PathVariable Long no, @PathVariable String id, Model model, HttpSession session) {
         model.addAttribute("roomId", no + "-" + id);
         model.addAttribute("post", postsService.findById(no));
+        SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
+        Users users = usersService.getUsers(sessionUser.getId());
+        for (Posts posts: users.getPosts()) {
+            if (posts.getId().equals(no)) {
+                model.addAttribute("owner", "owner");
+            }
+        }
         return "chat/chat";
     }
 }

@@ -298,3 +298,8 @@ function readImage(input) {
         reader.readAsDataURL(input.files[0])
     }
 }
+
+function chat() {
+    var url = $('#url').val();
+    window.open("/chat/" + url, "", "_blank");
+}

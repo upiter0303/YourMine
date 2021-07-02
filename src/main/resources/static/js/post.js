@@ -16,6 +16,10 @@ var postMain = {
         $('#btn-chatOpen').on('click', function() {
             func.chatOpen();
         });
+
+        $('#btn-setReview').on('click', function() {
+            func.setReview();
+        });
     },
 
     save : function() {
@@ -138,6 +142,27 @@ var postMain = {
             }
         }
         window.open("/chat/" + postNo + "/" + userId, "", "_blank");
+    },
+
+    setReview: function () {
+        var info = {
+            id: $('#id').val(),
+            no: $('#no').val(),
+            position: $('#position').val(),
+            score: $('#score').val()
+        };
+        $.ajax({
+            type: 'put',
+            url: '/post/review/set',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(info)
+        }).done(function() {
+            alert("리뷰가 작성되었습니다");
+            window.location.href="/myPage";
+        }).fail(function(error) {
+            console.error(JSON.stringify(error));
+            alert('다시 시도해주세요');
+        });
     }
 
 };

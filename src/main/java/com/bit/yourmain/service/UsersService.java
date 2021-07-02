@@ -4,6 +4,7 @@ import com.bit.yourmain.domain.users.Role;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.domain.users.UsersRepository;
+import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.dto.users.PasswordModifyDto;
 import com.bit.yourmain.dto.users.UserModifyDto;
 import lombok.RequiredArgsConstructor;
@@ -117,6 +118,13 @@ public class UsersService implements UserDetailsService {
     public String findId(String phone) {
         String phoneNum = phone.substring(phone.lastIndexOf("=")+1);
         return usersRepository.findByPhone(phoneNum).getId();
+    }
+
+    public void setScore(ReviewScoreSetDto scoreSetDto) {
+        Users users = getUsers(scoreSetDto.getId());
+        Long change = scoreSetDto.getScore() - 3;
+        users.setScore(users.getScore() + change);
+        usersRepository.save(users);
     }
 
     public void leave(String id) {

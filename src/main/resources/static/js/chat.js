@@ -67,6 +67,11 @@ function send() {
     $('#message').val("");
 }
 function textLoad() {
+    var now = $('#status').val();
+    if (now === "거래완료") {
+        $('#statusDropdown').attr("disabled", true);
+    }
+
     var roomId = $("#roomId").val();
     var userName = $("#userName").val();
     $.ajax({
@@ -135,9 +140,15 @@ function setDone() {
 
 function putStatus(item) {
     var no = $('#postNo').val();
+    var data = {
+        seller: $('#userName').val(),
+        roomId: $('#roomId').val()
+    }
     $.ajax({
         type: 'put',
-        url: "/post/status/"+no+"/"+item
+        url: "/post/status/"+no+"/"+item,
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(data)
     }).done(function () {
         console.log("done");
     }).fail(function (error) {
