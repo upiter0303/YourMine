@@ -85,8 +85,28 @@ var postMain = {
                 alert("사진을 하나 이상 첨부하셔야 합니다");
                 return;
             }
+        } else {
+            var ele = document.getElementById('att_zone');
+            var eleCount = ele.childElementCount;
+            if (!$('#formFileMultiple').val() && eleCount === 0) {
+                alert("사진을 하나 이상 첨부하셔야 합니다");
+                return;
+            }
         }
         var form = $('#postForm');
+        var fileName = $('#toDelFile').val();
+        $.ajax({
+            type: 'delete',
+            url: '/post/files/del',
+            data: {
+                fileName: fileName
+            },
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+        }).done(function() {
+            console.log("del file")
+        }).fail(function(error) {
+            console.error(JSON.stringify(error));
+        });
         form.submit();
     },
 

@@ -1,22 +1,21 @@
-postModify = function postModify() {
-    var attZone = $('#att_zone');
-    var btnAtt = $('#formFileMultiple');
-    let img = document.createElement('img');
-    img.setAttribute('style', 'width:100%;height:100%;z-index:none');
+postModify = function postModify(att_zone) {
+
+    var attZone = document.getElementById(att_zone);
     $.ajax({
         type: "get",
         url: "/post/files/"+$('#id').val(),
         success: function (list) {
             console.log("getList");
             list.forEach(function (item) {
+                let img = document.createElement('img');
+                img.setAttribute('style', 'width:100%;height:100%;z-index:none');
                 img.src = "/postImage/"+item;
-                console.log(item);
-                attZone.appendChild(makeImg(img, item));
+                attZone.appendChild(make(img, item));
             })
         }
     });
 
-    makeImg = function makeImg(img, item) {
+    let make = function make(img, item) {
         var div = document.createElement('div')
         div.setAttribute('style', 'display:inline-block;position:relative;'
             + 'width:150px;height:120px;margin:5px;border:1px solid #00f;z-index:1')
@@ -24,15 +23,16 @@ postModify = function postModify() {
         var btn = document.createElement('input')
         btn.setAttribute('type', 'button')
         btn.setAttribute('value', 'x')
-        btn.setAttribute('delFile', item);
         btn.setAttribute('style', 'width:30px;height:30px;position:absolute;font-size:24px;'
             + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00');
+        let src = img;
         btn.onclick = function (ev) {
-            console.log("!@#");
             var ele = ev.srcElement;
-            var delFile = ele.getAttribute('delFile');
             var p = ele.parentNode;
             attZone.removeChild(p)
+            $("#toDelFile").val(function(i, val) {
+                return val + item + "/";
+            });
         }
 
         div.appendChild(img)
@@ -40,4 +40,4 @@ postModify = function postModify() {
         return div
     }
 };
-postModify();
+postModify('att_zone');

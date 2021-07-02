@@ -61,4 +61,12 @@ public class FileService {
         }
         return fileName;
     }
+
+    public void delFiles(String name) {
+        String[] nameList = name.split("/");;
+        for (String fileName: nameList) {
+            System.out.println(fileName);
+            filesRepository.delete(filesRepository.findByFileName(fileName));
+        }
+    }
 }

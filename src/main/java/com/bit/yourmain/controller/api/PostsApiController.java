@@ -29,4 +29,10 @@ public class PostsApiController {
             reviewService.save(requestDto);
         }
     }
+
+    @DeleteMapping("/post/files/del")
+    public void delFiles(@RequestParam String fileName) {
+        System.out.println("del file");
+        fileService.delFiles(fileName);
+    }
 }

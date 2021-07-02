@@ -51,11 +51,14 @@ public class PostsController {
 
     @PostMapping("/posts/modify")
     public String postModify(@ModelAttribute PostsUpdateRequestDto requestDto, MultipartHttpServletRequest files) {
-        System.out.println(requestDto.getCategory());
         postsService.update(requestDto);
-        List<MultipartFile> images = files.getFiles("image");
-        for (MultipartFile image: images) {
-            postsService.imageSave(image, requestDto.getId());
+        try {
+            List<MultipartFile> images = files.getFiles("image");
+            for (MultipartFile image : images) {
+                postsService.imageSave(image, requestDto.getId());
+            }
+        } catch (Exception e) {
+            System.out.println("no image");
         }
         return "redirect:/posts/"+requestDto.getId();
     }
