@@ -1,6 +1,6 @@
-
 window.resizeTo(600,800);
 let ws;
+
 function wsOpen(){
     ws = new WebSocket("ws://" + location.host + "/chatsocket/" + $('#roomId').val());
     wsEvt();
@@ -14,6 +14,10 @@ function wsEvt() {
     ws.onmessage = function(data) {
         //메시지를 받으면 동작
         var msg = data.data;
+
+        var chatContainer = document.getElementById("chatBoxTheme");
+        var chatContainerMessage = chatContainer.getElementsByClassName("chatting")[0];
+
         if(msg != null && msg.trim() != ''){
             var d = JSON.parse(msg);
             if(d.type == "getId"){
@@ -23,15 +27,17 @@ function wsEvt() {
                 }
             }else if(d.type == "message"){
                 if(d.sessionId == $("#sessionId").val()){
-                    $("#chatting").append("<p class='me'>나 :" + d.msg + "</p>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + d.msg + "</p></div></div>");
                 }else{
-                    $("#chatting").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + d.userName + "</div><div class='a'></div><div class='b'><p class='others'>" + d.msg + "</p></div></div></div>");
                 }
 
             }else{
                 console.warn("unknown type!")
             }
         }
+
+        chatContainerMessage.scrollTop = chatContainerMessage.scrollHeight;
     }
 
     document.addEventListener("keypress", function(e){
@@ -67,11 +73,6 @@ function send() {
     $('#message').val("");
 }
 function textLoad() {
-    var now = $('#status').val();
-    if (now === "거래완료") {
-        $('#statusDropdown').attr("disabled", true);
-    }
-
     var roomId = $("#roomId").val();
     var userName = $("#userName").val();
     $.ajax({
@@ -83,10 +84,10 @@ function textLoad() {
             obj.forEach(function (item) {
                 if (item.speaker === userName) {
                     console.log("my chat");
-                    $("#chatting").append("<p class='me'>나 :" + item.content + "</p>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div></div>");
                 } else {
                     console.log("your chat");
-                    $("#chatting").append("<p class='others'>" + item.speaker + " :" + item.content + "</p>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div></div><div>");
                 }
             })
         },
@@ -97,61 +98,3 @@ function textLoad() {
 }
 wsOpen();
 textLoad();
-
-function setStandby() {
-    var now = $('#status').val();
-    if (now === "거래대기") {
-    } else {
-        var check = confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?");
-        if (check) {
-            $('#statusDropdown').val("거래 대기");
-            $('#status').val("거래대기");
-            putStatus("거래대기");
-        }
-    }
-}
-
-function setProgress() {
-    var now = $('#status').val();
-    if (now === "거래중") {
-    } else {
-        var check = confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?");
-        if (check) {
-            $('#statusDropdown').val("거래 중");
-            $('#status').val("거래중");
-            putStatus("거래중");
-        }
-    }
-}
-
-function setDone() {
-    var now = $('#status').val();
-    if (now === "거래완료") {
-    } else {
-        var check = confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?");
-        if (check) {
-            $('#statusDropdown').val("거래 완료");
-            $('#status').val("거래완료");
-            putStatus("거래완료");
-            $('#statusDropdown').attr("disabled", true);
-        }
-    }
-}
-
-function putStatus(item) {
-    var no = $('#postNo').val();
-    var data = {
-        seller: $('#userName').val(),
-        roomId: $('#roomId').val()
-    }
-    $.ajax({
-        type: 'put',
-        url: "/post/status/"+no+"/"+item,
-        contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify(data)
-    }).done(function () {
-        console.log("done");
-    }).fail(function (error) {
-        console.error(error);
-    });
-}

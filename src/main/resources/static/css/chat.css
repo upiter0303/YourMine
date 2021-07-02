@@ -1,0 +1,155 @@
+.chatBoxTheme
+{
+	padding: 4px 4px 0px 4px;
+	border: 1px solid #f79d1e;
+	border-radius: 10px;
+}
+
+.chatBoxTheme .clear
+{
+	clear: both;
+}
+
+.chatBoxTheme .blank
+{
+	clear: both;
+	height: 4px;
+}
+
+.chatBoxTheme .chatting
+{
+	height: calc(100% - 72px);
+	overflow-y: scroll;
+	font-size: 12px;
+}
+
+.chatBoxTheme .chatting .time
+{
+	font-size: 10px;
+}
+
+.chatBoxTheme .chatting .me
+{
+	float: right;
+	width: 100%;
+}
+
+.chatBoxTheme .chatting .time .me
+{
+	float: right;
+	bottom: 0;
+}
+
+.chatBoxTheme .chatting .a .me
+{
+	float: right;
+	position: relative;
+	min-height: 24px;
+	max-width: calc(100% - 64px);
+	left: 2px;
+	background-color: #f79d1e;
+	border-radius: 3px;
+	z-index: 2;
+	padding: 0px 4px 0px 4px;
+	word-break: break-all;
+}
+
+.chatBoxTheme .chatting .b .me
+{
+	float: right;
+	position: relative;
+	width: 8px;
+	height: 22px;
+	background: url(./chat_balloon_right.png) no-repeat;
+	z-index: 1;
+}
+
+.chatBoxTheme .chatting .others
+{
+	float: left;
+	width: 100%;
+}
+
+.chatBoxTheme .chatting .profile_image .others
+{
+	float: left;
+	width: 40px;
+	height: 40px;
+	border-radius: 14px;
+}
+
+.chatBoxTheme .chatting .box .others
+{
+	float: left;
+	width: calc(100% - 48px);
+}
+
+.chatBoxTheme .chatting .box .profile_name .others
+{
+	font-size: 12px;
+}
+
+.chatBoxTheme .chatting .box .a .others
+{
+	float: left;
+	position: relative;
+	width: 8px;
+	height: 22px;
+	background: url(./chat_balloon_white.left.png) no-repeat;
+	z-index: 1;
+}
+
+.chatBoxTheme .chatting .box .b .others
+{
+	float: left;
+	position: relative;
+	min-height: 24px;
+	max-width: calc(100% - 64px);
+	left: -2px;
+	background-color: #d9d9d9;
+	border-radius: 3px;
+	z-index: 2;
+	padding: 0px 4px 0px 4px;
+	word-break: break-all;
+}
+
+.chatBoxTheme .chatting .box .time .others
+{
+	float: left;
+}
+
+.chatBoxTheme .sendForm
+{
+
+}
+
+.chatBoxTheme .sendForm .sendMessage
+{
+	float: left;
+	width: calc(100% - 68px);
+	height: 64px;
+	border-radius: 8px 0px 0px 8px;
+	margin: 0px 0px 0px 0px;
+	padding: 2px 2px 2px 2px;
+	resize: none;
+}
+
+.chatBoxTheme .sendForm .button
+{
+	float: right;
+	width: 62px;
+	height: 68px;
+	background-color: #f79d1e;
+	border-radius: 0px 8px 8px 0px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-align: center;
+	display: table;
+	cursor: pointer;
+}
+
+.chatBoxTheme .sendForm .button p
+{
+  display: table-cell;
+  vertical-align: middle;
+}

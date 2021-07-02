@@ -1,69 +1,23 @@
 {{>layout/header}}
-<style>
-    *{
-        margin:0;
-        padding:0;
-    }
-    .container{
-        width: 500px;
-        margin: 0 auto;
-        padding: 25px
-    }
-    .container h1{
-        text-align: left;
-        padding: 5px 5px 5px 15px;
-        color: #FFBB00;
-        border-left: 3px solid #FFBB00;
-        margin-bottom: 20px;
-    }
-    .chatting{
-        background-color: #000;
-        width: 500px;
-        height: 500px;
-        overflow: auto;
-    }
-    .chatting p{
-        color: #fff;
-        text-align: left;
-    }
-    input{
-        width: 330px;
-        height: 25px;
-    }
-</style>
-<center>
-    <div id="container" class="container">
-        <h1>채팅</h1>
-        <div id="chatting" class="chatting">
-        </div>
-        <input type="hidden" id="sessionId" name="sessionId" value="{{userInfo.id}}">
-        <input type="hidden" id="roomId" name="roomId" value="{{roomId}}">
-        <input type="hidden" id="userName" name="userName" value="{{userInfo.id}}">
-        <div id="yourMsg">
-            <table class="inputTable">
-                <tr>
-                    <th>메시지</th>
-                    <th><input id="message" name="message" placeholder="보내실 메시지를 입력하세요."></th>
-                    <th><button onclick="send()" id="sendBtn">보내기</button></th>
-                </tr>
-            </table>
-            {{#owner}}
-            <div class="dropdown">
-                <input type="hidden" id="status" value="{{post.status}}">
-                <input type="hidden" id="postNo" value="{{post.id}}">
-                <input role="button" class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown"
-                       data-bs-toggle="dropdown" aria-expanded="false" value="{{post.status}}">
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button" onclick="setStandby()">거래대기</button></li>
-                    <li><button class="dropdown-item" type="button" onclick="setProgress()">거래중</button></li>
-                    <li><button class="dropdown-item" type="button" onclick="setDone()">거래완료</button></li>
-                </ul>
-            </div>
-            {{/owner}}
-        </div>
+
+<div class="chatBoxTheme" id="chatBoxTheme" style="width: 320px; height: 480px;">
+
+    <div id="chatting" class="chatting"></div>
+
+    <input type="hidden" id="sessionId" name="sessionId" value="{{userInfo.id}}">
+    <input type="hidden" id="roomId" name="roomId" value="{{roomId}}">
+    <input type="hidden" id="userName" name="userName" value="{{userInfo.id}}">
+
+    <div class="sendForm">
+        <input type="hidden" value="{{userInfo.id}}" id="sender" name="sender">
+        <textarea id="message" class="sendMessage" placeholder="메시지를 입력하세요."></textarea>
+        <div class="button" onclick="send()"><p>전송</p></div>
+        <div class="clear"></div>
     </div>
-</center>
+</div>
+
 {{>layout/js}}
+<link href="/css/chat.css" rel="stylesheet" />
 <script src="/js/chat.js"></script>
 </body>
 </html>
