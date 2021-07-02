@@ -1,16 +1,24 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+<button id="offcanvas" type="button" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasWithBothOptions"
-        aria-controls="offcanvasWithBothOptions">offcanvas</button>
+        aria-controls="offcanvasWithBothOptions"><span></span><span></span><span></span></button>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
             <img src="{{#userInfo.profile}}/profile/{{userInfo.profile}}{{/userInfo.profile}}
                 {{^userInfo.profile}}/img/default.jpeg{{/userInfo.profile}}" width="30" height="30" alt="logo">
             {{userInfo.name}}
-        </h5>
+        </h5>&emsp;
+        <a href="/myPage">my page</a>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <p>Try scrolling the rest of the page to see this option in action.</p>
+        <ul style="list-style-type:none;">
+            <li class="oc-items"><a href="/all">All</a></li><br>    <!-- 전체 게시글 페이지-->
+            <li class="oc-items"><a href="/hit">Top Posts</a></li><br>    <!-- 인기 게시글 페이지-->
+            <li class="oc-items"><a href="/nearby">Nearby Posts</a></li><br>    <!-- 근처 게시글 페이지-->
+            <li class="oc-items"><a href="/recent">Recent Posts</a></li>    <!-- 최근 게시글 페이지-->
+        </ul>
     </div>
 </div>
+<link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+<link href="/css/oc.css" rel="stylesheet" type="text/css" media="all">
