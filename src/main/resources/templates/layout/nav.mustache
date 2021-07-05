@@ -30,10 +30,24 @@
             <li class="nav-item">
                 <a class="nav-link" href="/posts/save">posting</a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    category
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="/request/category/0/clothes">의류,잡화</a></li>
+                    <li><a class="dropdown-item" href="/request/category/0/stationery">문구</a></li>
+                    <li><a class="dropdown-item" href="/request/category/0/furniture">가구,가전</a></li>
+                    <li><a class="dropdown-item" href="/request/category/0/book">도서,취미</a></li>
+                    <li><a class="dropdown-item" href="/request/category/0/digital">디지털</a></li>
+                    <li><a class="dropdown-item" href="/request/category/0/beauty">미용</a></li>
+                    <li><a class="dropdown-item" href="/request/category/0/other">기타</a></li>
+                </ul>
+            </li>
         </ul>
-        <form class="d-flex" action="/posts/search" method="get">
-            <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+        <form class="d-flex">
+            <input class="form-control me-2" id="keyword" placeholder="Search">
+            <input type="button" class="btn btn-outline-success" value="Search" onclick="search()">
         </form>
     </div>
 </nav>

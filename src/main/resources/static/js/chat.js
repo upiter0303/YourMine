@@ -83,10 +83,8 @@ function textLoad() {
             var obj = JSON.parse(result);
             obj.forEach(function (item) {
                 if (item.speaker === userName) {
-                    console.log("my chat");
                     $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div></div>");
                 } else {
-                    console.log("your chat");
                     $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div></div><div>");
                 }
             })

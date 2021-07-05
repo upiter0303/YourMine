@@ -10,6 +10,7 @@ import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
 import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,9 +69,10 @@ public class PostsService {
 
     // Posts Searching in Title and Content
     @Transactional
-    public List<Posts> search(String keyword) {
-        List<Posts> postsList = postsRepository.findAllSearch(keyword);
-        return postsList;
+    public List<PostsResponseDto> search(String keyword, Pageable pageable, Long cursor) {
+        return postsRepository.findAllSearch(keyword, pageable, cursor).stream()
+                .map(PostsResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     public PostsResponseDto findById(Long id) {
@@ -80,8 +82,8 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostsResponseDto> findAllDesc() {
-        return postsRepository.findAllDesc().stream()
+    public List<PostsResponseDto> findAllDesc(Pageable pageable, Long cursor) {
+        return postsRepository.findAllDesc(pageable, cursor).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -94,22 +96,22 @@ public class PostsService {
         postsRepository.hitUpdate(id);
     }
 
-    public List<PostsResponseDto> findByCategory(String category) {
-        return postsRepository.findByCategoryOrderByIdDesc(category).stream()
+    public List<PostsResponseDto> findByCategory(String category, Pageable pageable, Long cursor) {
+        return postsRepository.findByCategory(category, pageable, cursor).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    public List<PostsResponseDto> findByAddress(String area) {
+    public List<PostsResponseDto> findByAddress(String area, Pageable pageable, Long cursor) {
         int index = area.indexOf(" ",area.indexOf(" ")+1);
         String address = area.substring(0, index);
-        return postsRepository.findByAddress(address).stream()
+        return postsRepository.findByAddress(address, pageable, cursor).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    public List<PostsResponseDto> findByHit() {
-        return postsRepository.HitDesc().stream()
+    public List<PostsResponseDto> findByHit(Pageable pageable, Long cursor) {
+        return postsRepository.HitDesc(pageable, cursor).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }

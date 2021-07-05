@@ -9,7 +9,7 @@
 </header>
 {{>layout/nav}}
 <center>
-    <h4>인기 게시물</h4>
+    <a href="/request/hit/0/0"><h4>인기 게시물</h4></a>
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -36,7 +36,8 @@
             </div>
         </div>
     </section>
-    <h4>근처 게시물</h4>
+    {{#userInfo}}
+    <a href="/request/area/0/{{userInfo.address}}"><h4>근처 게시물</h4></a>
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -63,7 +64,8 @@
             </div>
         </div>
     </section>
-    <h4>최근 게시물</h4>
+    {{/userInfo}}
+    <a href="/request/all/0/0"><h4>최근 게시물</h4></a>
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -94,6 +96,5 @@
 {{>layout/js}}
 <script src="/js/post.js"></script>
 <script src="/js/scripts.js"></script>
-<link href="/css/styles.css" rel="stylesheet" />
 </body>
 </html>

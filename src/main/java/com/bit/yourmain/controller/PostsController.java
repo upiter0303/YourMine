@@ -12,6 +12,7 @@ import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,14 +62,6 @@ public class PostsController {
             System.out.println("no image");
         }
         return "redirect:/posts/"+requestDto.getId();
-    }
-
-    // Posts Searching
-    @GetMapping("/posts/search")
-    public String search(String keyword, Model model) {
-        List<Posts> searchList = postsService.search(keyword);
-        model.addAttribute("searchList", searchList);
-        return "post/postSearch";
     }
 
     @GetMapping("/posts/{id}")

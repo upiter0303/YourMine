@@ -31,7 +31,6 @@ public class ChatApiController {
         } catch (Exception e) {
             System.out.println("null db");
         }
-        String json = new Gson().toJson(responseDto);
-        return json;
+        return new Gson().toJson(responseDto);
     }
 }

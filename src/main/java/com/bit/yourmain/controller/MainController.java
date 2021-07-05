@@ -3,10 +3,12 @@ package com.bit.yourmain.controller;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
+import com.bit.yourmain.dto.posts.PostPageDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +29,16 @@ public class MainController {
 
     @GetMapping("/")
     public String index(HttpSession session, Model model, HttpServletResponse response) {
-        List<PostsResponseDto> postsList = postsService.findAllDesc();
+        final PageRequest indexPage = PageRequest.of(0,8);
+        final Long cursor = 0L;
+        List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage, cursor);
         model.addAttribute("posts", postsList);
-        List<PostsResponseDto> hitList = postsService.findByHit();
+        List<PostsResponseDto> hitList = postsService.findByHit(indexPage, cursor);
         model.addAttribute("hitPost", hitList);
 
         try {
             SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
-            List<PostsResponseDto> areaList = postsService.findByAddress(sessionUser.getAddress());
+            List<PostsResponseDto> areaList = postsService.findByAddress(sessionUser.getAddress(), indexPage, cursor);
             model.addAttribute("areaPost", areaList);
         } catch (NullPointerException e) {
             System.out.println("null address");
@@ -43,6 +47,39 @@ public class MainController {
         cookie.setMaxAge(60*60*24);
         response.addCookie(cookie);
         return "index";
+    }
+
+    @GetMapping("/request/{kind}/{cursor}/{value}")
+    public String requestPage(@PathVariable String kind, @PathVariable Long cursor, @PathVariable String value, Model model) {
+        PageRequest indexPage = PageRequest.of(0, 8);
+        switch (kind) {
+            case "category":
+                model.addAttribute("input", "해당 카테고리의 상품 목록");
+                model.addAttribute("Post", postsService.findByCategory(value, indexPage, cursor));
+                break;
+            case "hit":
+                System.out.println("request mapping");
+                model.addAttribute("input", "인기 상품 목록");
+                model.addAttribute("Post", postsService.findByHit(indexPage, cursor));
+                break;
+            case "all":
+                model.addAttribute("input", "최근 상품 목록");
+                model.addAttribute("Post", postsService.findAllDesc(indexPage, cursor));
+                break;
+            case "area":
+                model.addAttribute("input", "근처 상품 목록");
+                model.addAttribute("Post", postsService.findByAddress(value, indexPage, cursor));
+                break;
+            case "search":
+                model.addAttribute("input", "검색어 : " + value);
+                model.addAttribute("Post", postsService.search(value, indexPage, cursor));
+                break;
+        }
+        PostPageDto pageDto = new PostPageDto();
+        pageDto.setKind(kind);
+        pageDto.setValue(value);
+        model.addAttribute("page", pageDto);
+        return "request";
     }
 
     @GetMapping("/accessDenied")

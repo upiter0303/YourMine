@@ -1,0 +1,59 @@
+{{>layout/header}}
+<header class="bg-white py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-black-50">
+            <h1 class="display-4 fw-bolder">Your Mine</h1>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+        </div>
+    </div>
+</header>
+{{>layout/nav}}
+<center>
+    <h4>{{input}}</h4>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="board">
+                {{#Post}}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="/posts/{{id}}">
+                                <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                            </a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{title}}</h5>
+                                    <!-- Product price-->
+                                    <p>{{price}}원</p>
+                                    <p>{{status}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/Post}}
+            </div>
+        </div>
+    </section>
+</center>
+<input type="hidden" id="id" value="0">
+<input type="hidden" id="value" value="{{page.value}}">
+<input type="hidden" id="cursor" value="1">
+<input type="hidden" id="kind" value="{{page.kind}}">
+{{>layout/js}}
+<script src="/js/post.js"></script>
+<script src="/js/scripts.js"></script>
+<script>
+    window.addEventListener('scroll', () => {
+        let scrollLocation = document.documentElement.scrollTop;
+        let windowHeight = window.innerHeight;
+        let fullHeight = document.body.scrollHeight;
+
+        if(scrollLocation + windowHeight >= fullHeight){
+            getter();
+        }
+    })
+</script>
+</body>
+</html>
