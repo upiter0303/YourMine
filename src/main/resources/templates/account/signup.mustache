@@ -5,6 +5,7 @@
         <div class="col-md-4">
             <form>
                 <input type="hidden" id="idCheck" value="f">
+                <input type="hidden" id="mailCheck" value="f">
                 <div class="form-floating input-group mb-3">
                     <input type="text" class="form-control" id="id" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <label for="id">아이디</label>
@@ -23,6 +24,28 @@
                 <div class="form-floating input-group mb-3">
                     <input type="text" class="form-control" id="name" placeholder="이름">
                     <label for="name">이름</label>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="email" aria-label="email" id="email">
+                        <label for="email">이메일</label>
+                    </div>
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" placeholder="웹 주소" aria-label="Server" id="server"  aria-describedby="button-addon2">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" onclick="naver()">naver.com</a></li>
+                        <li><a class="dropdown-item" onclick="google()">gmail.com</a></li>
+                        <li><a class="dropdown-item" onclick="hanmail()">hanmail.net</a></li>
+                    </ul>
+                    <button type="button" class="btn btn-outline-secondary" id="btn-email">메일인증</button>
+                </div>
+                <div class="form-floating input-group mb-3">
+                    <input type="text" class="form-control" id="code" placeholder="인증번호" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <label for="code">인증번호</label>
+                    <button class="btn btn-outline-secondary" type="button" id="btn-emailCheck">인증번호 확인</button>
                 </div>
                 <div class="form-floating input-group mb-3">
                     <button class="btn btn-outline-secondary" type="button" id="btn-postcode">주소 찾기</button>

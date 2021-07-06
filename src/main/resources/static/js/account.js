@@ -29,8 +29,20 @@ var account = {
             func.leave();
         });
 
+        $('#btn-email').on('click', function () {
+            func.email();
+        });
+
+        $('#btn-emailCheck').on('click', function () {
+            func.emailCheck();
+        });
+
         $('#id').change(function () {
             $('#idCheck').val("f");
+        });
+
+        $('#email').change(function () {
+            $('#mailCheck').val("f");
         });
     },
 
@@ -49,6 +61,11 @@ var account = {
         }
         if ($('#name').val() == "") {
             alert("이름을 입력해주세요");
+            return;
+        }
+        if ($('#mailCheck').val() != "t"){
+            console.log($('#mailCheck').val())
+            alert("이메일 인증을 해주세요");
             return;
         }
         if ($('#address').val() == "") {
@@ -75,6 +92,7 @@ var account = {
             phone: $('#phone').val(),
             address: $('#address').val(),
             detailAddress: $('#detailAddress').val(),
+            email: $('#email').val() + "@" + $('#server').val()
         };
         $.ajax({
             type: 'POST',
@@ -282,6 +300,94 @@ var account = {
                 console.error(JSON.stringify(error));
             });
         }
+    },
+
+    emailCheck: function () {
+        var data = {
+            inputCode: $('#code').val(),
+        }
+        if ($('#code').val() == 0) {
+
+            alert("인증 코드를 입력해주세요")
+            return;
+        }
+        $.ajax({
+            type: "post",
+            url: "/emailCheck",
+            dataType: "json",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            success : function (result) {
+                if (result == true) {
+                    alert("인증완료");
+                    $('#mailCheck').val("t");
+                    return;
+                }
+                alert("인증번호 오류");
+            }
+        });
+    },
+
+    pwEmailCheck: function () {
+        var data = {
+            inputCode: $('#code').val(),
+            id: $('#id').val()
+        }
+        if ($('#code').val() == 0) {
+
+            alert("인증 코드를 입력해주세요")
+            return;
+        }
+        $.ajax({
+            type: "post",
+            url: "/emailCheck",
+            dataType: "json",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            success : function (result) {
+                if (result == true) {
+                    alert("인증완료");
+                    $('#idCheck').val("t");
+                    return;
+                }
+                alert("인증번호 오류");
+            }
+        });
+    },
+
+    email: function () {
+        var data = {
+            userEmail: $('#email').val() + "@" + $('#server').val()
+        }
+        if ($('#email').val() == "") {
+            alert("이메일을 입력하세요")
+            return;
+        }
+        if ($('#server').val() == "") {
+            alert("이메일을 입력하세요")
+            return;
+        }
+        alert("잠시만 기다려주세요");
+        $.ajax({
+            type: "post",
+            url: "/emailSend",
+            dataType: "json",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            success: function(result) {
+                if (result == true) {
+                    alert("메일전송 완료");
+                    return;
+                } else {
+                    alert("이미 가입된 이메일입니다");
+                    return;
+                }
+            },
+            error: function(error) {
+                alert("메일 전송 실패");
+                console.error(error);
+            }
+        });
     }
 
 };
@@ -302,4 +408,14 @@ function readImage(input) {
 function chat() {
     var url = $('#url').val();
     window.open("/chat/" + url, "", "_blank");
+}
+
+function naver() {
+    $('#server').val("naver.com");
+}
+function google() {
+    $('#server').val("gmail.com");
+}
+function hanmail() {
+    $('#server').val("hanmail.com");
 }

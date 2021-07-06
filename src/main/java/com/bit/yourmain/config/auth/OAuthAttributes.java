@@ -15,17 +15,19 @@ public class OAuthAttributes {
     private final String name;
     private final String phone;
     private final String address;
+    private final String email;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes,
                            String nameAttributeKey, String id, String name,
-                           String phone, String address) {
+                           String phone, String address, String email) {
         this.attributes = attributes;
         this.nameAttributeKey= nameAttributeKey;
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.address = address;
+        this.email = email;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
@@ -43,6 +45,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .id(mail.substring(0,mail.indexOf("@")))
                 .name((String) attributes.get("name"))
+                .email(mail)
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -56,6 +59,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .id(mail.substring(0,mail.indexOf("@")))
                 .name((String) properties.get("nickname"))
+                .email(mail)
                 .attributes(attributes)
                 .nameAttributeKey("id")
                 .build();
@@ -68,6 +72,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .id(mail.substring(0,mail.indexOf("@")))
                 .name((String) response.get("name"))
+                .email(mail)
                 .attributes(response)
                 .nameAttributeKey("id")
                 .build();
@@ -77,6 +82,7 @@ public class OAuthAttributes {
         return Users.builder()
                 .id(id)
                 .name(name)
+                .email(email)
                 .role(Role.SEMI)
                 .score(50L)
                 .build();

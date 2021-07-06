@@ -17,7 +17,8 @@ public class UsersApiController {
     private final UsersService usersService;
 
     @PostMapping("/signup")
-    public void save(@RequestBody Users users) {
+    public void save(@RequestBody Users users, HttpSession session) {
+        session.removeAttribute("emailCodeInfo");
         usersService.save(users);
     }
 

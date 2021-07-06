@@ -127,6 +127,10 @@ public class UsersService implements UserDetailsService {
         usersRepository.save(users);
     }
 
+    public Users findByEmail(String email) {
+        return usersRepository.findByEmail(email).get();
+    }
+
     public void leave(String id) {
         usersRepository.delete(getUsers(id));
     }

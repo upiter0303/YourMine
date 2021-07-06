@@ -48,6 +48,9 @@ public class Users {
     private String profile;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private Long score;
 
     @Column(nullable = false)
@@ -61,7 +64,7 @@ public class Users {
     private List<Attention> attentions = new ArrayList<>();
 
     @Builder
-    public Users(String name, String id, String password, String phone, String address, String detailAddress, String profile, Long score, Role role) {
+    public Users(String name, String id, String password, String phone, String address, String detailAddress, String profile, Long score, String email, Role role) {
         this.name = name;
         this.id = id;
         this.password = password;
@@ -70,6 +73,7 @@ public class Users {
         this.detailAddress = detailAddress;
         this.profile = profile;
         this.score = score;
+        this.email = email;
         this.role = role;
     }
 

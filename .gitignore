@@ -127,8 +127,9 @@ gradle-app.setting
 
 ### Gradle Patch ###
 **/build/
-application-auth.properties
-application-custom.properties
+**/application-auth.properties
+**/application-custom.properties
+**/application-mail.properties
 
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java-web,gradle
