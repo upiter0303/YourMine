@@ -35,6 +35,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         .addPathPatterns("/chat/**")
                         .addPathPatterns("/posts/modify/*")
                         .addPathPatterns("/posts/delete/*")
-                        .addPathPatterns("/review/**");
+                        .addPathPatterns("/review/**")
+                        .excludePathPatterns("/review/set");
     }
 }

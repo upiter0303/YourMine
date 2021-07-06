@@ -15,3 +15,6 @@
     width: 15%;
     height: 10%;
 }
+#thumbnail {
+    float: left;
+}

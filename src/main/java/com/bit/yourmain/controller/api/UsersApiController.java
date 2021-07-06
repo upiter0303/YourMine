@@ -63,4 +63,15 @@ public class UsersApiController {
     public void leave(@PathVariable String id) {
         usersService.leave(id);
     }
+
+    @PostMapping("/findIdByEmail")
+    public String findIdByEmail(@RequestParam String email) {
+        String result = usersService.findByEmail(email).getId();
+        return result;
+    }
+
+    @PostMapping("/findEmailById")
+    public String findEmailById(@RequestParam String id) {
+        return usersService.getUsers(id).getEmail();
+    }
 }

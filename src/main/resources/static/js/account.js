@@ -37,6 +37,14 @@ var account = {
             func.emailCheck();
         });
 
+        $('#btn-sendCodeById').on('click', function () {
+            func.sendCodeById();
+        });
+
+        $('#btn-pwEmailCheck').on('click', function () {
+            func.pwEmailCheck();
+        });
+
         $('#id').change(function () {
             $('#idCheck').val("f");
         });
@@ -347,7 +355,15 @@ var account = {
             success : function (result) {
                 if (result == true) {
                     alert("인증완료");
-                    $('#idCheck').val("t");
+                    $('#attach').append("<div class=\"form-floating input-group mb-3\">\n" +
+                        "                        <input type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"비밀번호\">\n" +
+                        "                        <label for=\"password\">비밀번호</label>\n" +
+                        "                    </div>\n" +
+                        "                    <div class=\"form-floating input-group mb-3\">\n" +
+                        "                        <input type=\"password\" class=\"form-control\" id=\"password2\" placeholder=\"비밀번호 확인\">\n" +
+                        "                        <label for=\"password2\">비밀번호 확인</label>\n" +
+                        "                    </div>\n" +
+                        "                    <input type=\"submit\" role=\"button\" class=\"btn btn-secondary\" id=\"btn-passwordModify\" value=\"비밀번호 변경\">");
                     return;
                 }
                 alert("인증번호 오류");
@@ -386,6 +402,41 @@ var account = {
             error: function(error) {
                 alert("메일 전송 실패");
                 console.error(error);
+            }
+        });
+    },
+
+    sendCodeById: function () {
+        if ($('#id').val() == null) {
+            alert("아이디를 입력해주세요");
+            return;
+        }
+        $.ajax({
+            url: "/findEmailById",
+            type: "Post",
+            contentType: 'application/json; charset=UTF-8',
+            data: {
+                id: $('#id').val()
+            },
+            success: function(result) {
+                alert("가입시 입력한 이메일로 메일이 발송되었습니다");
+                var data2 = {
+                    userEmail: result
+                };
+                $.ajax({
+                    url: "emailSend",
+                    type: "post",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify(data2)
+                }).done(function () {
+                    alert("메일 전송 완료");
+                }).fail(function (error) {
+                    alert("전송 실패");
+                    console.log(error);
+                })
+            },
+            error: function() {
+                alert("존재하지 않는 아이디입니다");
             }
         });
     }

@@ -20,12 +20,38 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-<h1>제목 : {{post.title}}</h1>
-<h3>작성자 : {{post.author}}</h3>
-<p>내용 : {{{post.content}}}</p>
-<p>거래점수 : {{post.users.score}}</p>
-<p>거래상태 : {{post.status}}</p>
-<p>조회수: {{post.hit}}</p>
+<div class="container">
+    <div class="row">
+        <h4>{{post.title}}</h4>
+    </div>
+    <div class="row">
+        <div class="col">
+            거래 방식 : {{way}}
+        </div>
+        <div class="col">
+            {{#post.ofSize}}크기 : {{post.ofSize}}{{/post.ofSize}}{{^post.ofSize}}{{post.category}}{{/post.ofSize}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            판매자 : {{post.author}}
+        </div>
+        <div class="col">
+            거래 점수 : {{post.users.score}}
+        </div>
+        <div class="col">
+            {{post.status}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{post.area}}
+        </div>
+        <div class="col">
+            조회수 : {{post.hit}}
+        </div>
+    </div>
+</div>
 {{^owner}}
     <form>
         <input type="hidden" id="userId" value="{{#userInfo}}{{userInfo.id}}{{/userInfo}}{{^userInfo}}guest{{/userInfo}}">

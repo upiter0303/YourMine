@@ -69,6 +69,15 @@ public class PostsController {
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
 
+        String way = post.getWay();
+        String wayToString = "";
+        if (way.contains("A")) {
+            wayToString += " 직거래";
+        }
+        if (way.contains("B")) {
+            wayToString += " 택배거래";
+        }
+        model.addAttribute("way", wayToString);
         List<Files> withOutThumbnail = new ArrayList<>();
         withOutThumbnail.addAll(post.getFilesList());
         withOutThumbnail.remove(0);

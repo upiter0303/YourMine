@@ -45,12 +45,17 @@
             <div class="col-md-4">
                 <p>비밀번호 찾기</p>
                 <form>
-                    <div class="form-group">
-                        <label for="phone">전화번호</label>
-                        <input type="tel" id="phone" name="phone">
+                    <div class="form-floating input-group mb-3">
+                        <input type="text" class="form-control" id="id" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <label for="id">아이디</label>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-sendCodeById">메일 발송</button>
                     </div>
-                    <br>
-                    <input type="submit" role="button" class="btn btn-secondary" value="기능없음">
+                    <div class="form-floating input-group mb-3">
+                        <input type="text" class="form-control" id="code" placeholder="인증 번호" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <label for="code">인증 번호</label>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-pwEmailCheck">메일 발송</button>
+                    </div>
+                    <div id="attach"></div>
                     <button type="button" class="close" id="close2">x</button>
                 </form>
             </div>
