@@ -64,14 +64,14 @@
 {{/buyChat}}
 <h3>판매완료된 거래</h3>
 {{#sellReview}}
-    <p><a href="/posts/review/{{no}}/{{position}}">{{title}}</a></p>
+    <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
 {{/sellReview}}
 {{^sellReview}}
     <p>완료된 거래가 없습니다</p>
 {{/sellReview}}
 <h3>구매완료한 거래</h3>
 {{#buyReview}}
-    <p><a href="/posts/review/{{no}}/{{position}}">{{title}}</a></p>
+    <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
 {{/buyReview}}
 {{^buyReview}}
     <p>완료된 거래가 없습니다</p>

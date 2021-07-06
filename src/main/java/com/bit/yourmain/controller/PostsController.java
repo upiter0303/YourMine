@@ -1,7 +1,6 @@
 package com.bit.yourmain.controller;
 
 import com.bit.yourmain.domain.files.Files;
-import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
@@ -12,7 +11,6 @@ import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -134,7 +132,7 @@ public class PostsController {
         return "redirect:/";
     }
 
-    @GetMapping("/posts/review/{no}/{position}")
+    @GetMapping("/review/{position}/{no}")
     public String postReview(@PathVariable Long no, @PathVariable String position, Model model) {
         ReviewResponseDto reviewResponseDto = reviewService.getReview(no);
         reviewResponseDto.setPosition(position);
@@ -148,7 +146,7 @@ public class PostsController {
         return "post/postReview";
     }
 
-    @PutMapping("/post/review/set")
+    @PutMapping("/review/set")
     public String setScore(@RequestBody ReviewScoreSetDto scoreSetDto) {
         reviewService.setScore(scoreSetDto);
         return "account/myPage";

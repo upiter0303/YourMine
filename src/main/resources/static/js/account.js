@@ -63,11 +63,11 @@ var account = {
             alert("이름을 입력해주세요");
             return;
         }
-        if ($('#mailCheck').val() != "t"){
-            console.log($('#mailCheck').val())
-            alert("이메일 인증을 해주세요");
-            return;
-        }
+        // if ($('#mailCheck').val() != "t"){
+        //     console.log($('#mailCheck').val())
+        //     alert("이메일 인증을 해주세요");
+        //     return;
+        // }
         if ($('#address').val() == "") {
             alert("주소를 입력해주세요");
             return;

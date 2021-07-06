@@ -174,7 +174,7 @@ var postMain = {
         };
         $.ajax({
             type: 'put',
-            url: '/post/review/set',
+            url: '/review/set',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(info)
         }).done(function() {

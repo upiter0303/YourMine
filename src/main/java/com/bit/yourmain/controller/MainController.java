@@ -84,7 +84,12 @@ public class MainController {
 
     @GetMapping("/accessDenied")
     public String accessDenied() {
-        return "account/accessDenied";
+        return "deny/accessDenied";
+    }
+
+    @GetMapping("/authDenied")
+    public String authDenied() {
+        return "deny/authDenied";
     }
 
     @GetMapping("/chat/{no}/{id}")

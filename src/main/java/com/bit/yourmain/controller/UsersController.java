@@ -1,10 +1,8 @@
 package com.bit.yourmain.controller;
 
-import com.bit.yourmain.domain.attention.Attention;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
-import com.bit.yourmain.dto.chat.ChatResponseDto;
 import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.service.*;

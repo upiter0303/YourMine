@@ -42,8 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/myPage", "/userModify", "/passwordModify", "/profileModify"
-                            , "/delProfile").authenticated()         // 로그인시 접속가능
-                .antMatchers("/posts/save").hasRole(Role.USER.name()) // user 권한 접속가능
+                            , "/delProfile", "/chat/**").authenticated()         // 로그인시 접속가능
+                .antMatchers("/posts/save", "/posts/modify/*", "/posts/delete/*"
+                                , "/posts/review/**").hasRole(Role.USER.name()) // user 권한 접속가능
                 .anyRequest().permitAll()                                  // 모두 접속가능
                 .and()
                 .formLogin()
