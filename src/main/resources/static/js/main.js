@@ -51,3 +51,23 @@ let getter = function getter() {
         }
     });
 }
+
+function alarm() {
+    var alarm = $('#alarm').val();
+    if (alarm !== null) {
+        $.ajax({
+            url: "/alarm/" + alarm,
+            type: "get",
+            contentType: 'application/json; charset=UTF-8',
+            success: function (result) {
+                if (result) {
+                    alert("new mes");
+                }
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+}
+alarm();

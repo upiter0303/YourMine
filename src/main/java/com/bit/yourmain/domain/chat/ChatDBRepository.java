@@ -10,6 +10,9 @@ import java.util.List;
 public interface ChatDBRepository extends JpaRepository<ChatDB, Long> {
     List<ChatDB> findAllByChatRoomNoOrderByCreatedDate(Long no);
 
+    @Query("SELECT c FROM ChatDB c WHERE c.listener = :listener AND c.read is NULL")
+    List<ChatDB> findAllByListener(String listener);
+
     @Transactional
     @Modifying
     @Query("UPDATE ChatDB c SET c.read = :no WHERE c.no = :no")

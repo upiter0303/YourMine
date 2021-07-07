@@ -98,6 +98,12 @@ public class MainController {
         model.addAttribute("post", postsService.findById(no));
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
         Users users = usersService.getUsers(sessionUser.getId());
+        String postOwner = postsService.findById(no).getUsers().getId();
+        if (users.getId().equals(id)) {
+            model.addAttribute("listener", postOwner);
+        } else {
+            model.addAttribute("listener", id);
+        }
         for (Posts posts: users.getPosts()) {
             if (posts.getId().equals(no)) {
                 model.addAttribute("owner", "owner");

@@ -41,7 +41,7 @@ public class ChatApiController {
         chatService.readCheck(readCheckDto);
     }
 
-    @GetMapping("/alram/{id}")
+    @GetMapping("/alarm/{id}")
     public boolean isNew(@PathVariable String id) {
         return chatService.isNew(id);
     }

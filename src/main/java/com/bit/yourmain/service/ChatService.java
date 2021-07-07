@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +20,6 @@ public class ChatService {
     private final ChatRoomRepository roomRepository;
     private final ChatDBRepository dbRepository;
     private final PostsService postsService;
-    private final UsersService usersService;
 
     public void roomCheck(String roomId) {
         ChatRoom chatRoom = null;
@@ -83,7 +81,8 @@ public class ChatService {
     }
 
     public boolean isNew(String id) {
-        return true;
+        List<ChatDB> isNew = dbRepository.findAllByListener(id);
+        return !isNew.isEmpty();
     }
 
     public void delRoom(Long id) {
