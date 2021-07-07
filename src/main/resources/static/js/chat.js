@@ -52,11 +52,13 @@ function send() {
         roomId: $("#roomId").val(),
         sessionId : $("#sessionId").val(),
         userName : $("#userName").val(),
-        msg : $("#message").val()
+        msg : $("#message").val(),
+        listener: $('#listener').val()
     }
     ws.send(JSON.stringify(data));
     var chatDB = {
         speaker: data.userName,
+        listener: data.listener,
         content: data.msg,
         roomId: data.roomId
     }
@@ -80,6 +82,8 @@ function textLoad() {
 
     var roomId = $("#roomId").val();
     var userName = $("#userName").val();
+
+    readCheck();
     $.ajax({
         url: "/chat/db/demand/"+roomId,
         type: "get",
@@ -99,8 +103,6 @@ function textLoad() {
         }
     });
 }
-wsOpen();
-textLoad();
 
 function setStandby() {
     var now = $('#status').val();
@@ -159,3 +161,24 @@ function putStatus(item) {
         console.error(error);
     });
 }
+
+function readCheck() {
+    var data = {
+        roomId: $('#roomId').val(),
+        userName: $("#userName").val()
+    }
+    $.ajax({
+        type: 'put',
+        url: "/chat/db/check",
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(data)
+    }).done(function () {
+        console.log("read check");
+    }).fail(function (error) {
+        console.error(error);
+    });
+}
+
+
+wsOpen();
+textLoad();

@@ -28,6 +28,16 @@ public class ReviewService {
         return new ReviewResponseDto(reviewRepository.findByNo(no).get());
     }
 
+    public ReviewResponseDto getReviewPosition(Long no, String id) {
+        ReviewResponseDto reviewResponseDto = new ReviewResponseDto(reviewRepository.findByNo(no).get());
+        if (reviewResponseDto.getSeller().equals(id)) {
+            reviewResponseDto.setPosition("seller");
+        } else {
+            reviewResponseDto.setPosition("buyer");
+        }
+        return reviewResponseDto;
+    }
+
     public List<ReviewResponseDto> getSellReview(String id) {
         return getList(reviewRepository.findSellReview(id), "seller");
     }

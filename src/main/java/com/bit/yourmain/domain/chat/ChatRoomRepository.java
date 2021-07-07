@@ -4,9 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
-    ChatRoom findByIdentify(String roomId);
+    Optional<ChatRoom> findByIdentify(String roomId);
     List<ChatRoom> findAllByPostId(Long id);
 
     @Query("SELECT c FROM ChatRoom c WHERE c.identify LIKE %:id")

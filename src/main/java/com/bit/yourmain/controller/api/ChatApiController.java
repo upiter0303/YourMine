@@ -2,11 +2,13 @@ package com.bit.yourmain.controller.api;
 
 import com.bit.yourmain.dto.chat.ChatResponseDto;
 import com.bit.yourmain.dto.chat.ChatSaveRequestDto;
+import com.bit.yourmain.dto.chat.ReadCheckDto;
 import com.bit.yourmain.service.ChatService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class ChatApiController {
     public void chatSet(@RequestBody ChatSaveRequestDto saveRequestDto) {
         chatService.roomCheck(saveRequestDto.getRoomId());
         chatService.chatSave(
-                saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getRoomId());
+                saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(), saveRequestDto.getRoomId());
     }
 
     @GetMapping("/chat/db/demand/{roomId}")
@@ -32,5 +34,15 @@ public class ChatApiController {
             System.out.println("null db");
         }
         return new Gson().toJson(responseDto);
+    }
+
+    @PutMapping("/chat/db/check")
+    public void readCheck(@RequestBody ReadCheckDto readCheckDto) {
+        chatService.readCheck(readCheckDto);
+    }
+
+    @GetMapping("/alram/{id}")
+    public boolean isNew(@PathVariable String id) {
+        return chatService.isNew(id);
     }
 }

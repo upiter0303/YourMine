@@ -42,7 +42,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         } else if (check.equals("review")) {
-            ReviewResponseDto review = reviewService.getReview(Long.valueOf(end));
+            ReviewResponseDto review = reviewService.getReviewPosition(Long.valueOf(end), userId);
             if (review.getBuyer().equals(userId) && review.getPosition().equals(mid)) {
                 return true;
             } else if (review.getSeller().equals(userId) && review.getPosition().equals(mid)) {

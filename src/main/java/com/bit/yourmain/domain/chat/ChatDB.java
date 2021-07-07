@@ -28,14 +28,21 @@ public class ChatDB extends BaseTimeEntity {
     @Column(nullable = false)
     private String speaker;
 
+    @Column(nullable = false)
+    private String listener;
+
+    @Column(nullable = true)
+    private Long read;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ChatRoom_no")
     private ChatRoom chatRoom;
 
     @Builder
-    public ChatDB(String content, String speaker, ChatRoom chatRoom) {
+    public ChatDB(String content, String speaker, String listener, ChatRoom chatRoom) {
         this.content = content;
         this.speaker = speaker;
+        this.listener = listener;
         this.chatRoom = chatRoom;
     }
 }

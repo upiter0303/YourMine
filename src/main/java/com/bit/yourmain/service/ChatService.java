@@ -6,6 +6,7 @@ import com.bit.yourmain.domain.chat.ChatRoom;
 import com.bit.yourmain.domain.chat.ChatRoomRepository;
 import com.bit.yourmain.dto.chat.ChatResponseDto;
 import com.bit.yourmain.dto.chat.ChatRoomListDto;
+import com.bit.yourmain.dto.chat.ReadCheckDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class ChatService {
     public void roomCheck(String roomId) {
         ChatRoom chatRoom = null;
         try {
-            chatRoom = roomRepository.findByIdentify(roomId);
+            chatRoom = roomRepository.findByIdentify(roomId).get();
         } catch (Exception e) {
             System.out.println("null room");
         }
@@ -34,13 +35,13 @@ public class ChatService {
         }
     }
 
-    public void chatSave(String content, String speaker, String roomId) {
-        dbRepository.save(new ChatDB(content, speaker, roomRepository.findByIdentify(roomId)));
+    public void chatSave(String content, String speaker, String listener, String roomId) {
+        dbRepository.save(new ChatDB(content, speaker, listener, roomRepository.findByIdentify(roomId).get()));
     }
 
     public List<ChatResponseDto> chatResponse(String roomId) throws Exception {
         List<ChatDB> chatDBS = dbRepository.findAllByChatRoomNoOrderByCreatedDate(
-                roomRepository.findByIdentify(roomId).getNo());
+                roomRepository.findByIdentify(roomId).get().getNo());
         List<ChatResponseDto> responseDto = new ArrayList<>();
         for (ChatDB chatDB: chatDBS) {
             responseDto.add(new ChatResponseDto(chatDB));
@@ -70,6 +71,19 @@ public class ChatService {
             roomListDtos.add(listDto);
         }
         return roomListDtos;
+    }
+
+    public void readCheck(ReadCheckDto readCheckDto) {
+        List<ChatDB> chatDBList = roomRepository.findByIdentify(readCheckDto.getRoomId()).get().getChatDBS();
+        for (ChatDB db: chatDBList) {
+            if (db.getRead() == null && !db.getSpeaker().equals(readCheckDto.getUserName())) {
+                dbRepository.readCheck(db.getNo());
+            }
+        }
+    }
+
+    public boolean isNew(String id) {
+        return true;
     }
 
     public void delRoom(Long id) {

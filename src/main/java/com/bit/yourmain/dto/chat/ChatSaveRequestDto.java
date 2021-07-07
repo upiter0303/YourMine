@@ -8,6 +8,7 @@ import lombok.Getter;
 public class ChatSaveRequestDto {
 
     private String speaker;
+    private String listener;
     private String content;
     private String roomId;
 }

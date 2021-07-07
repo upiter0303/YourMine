@@ -1,9 +1,17 @@
 package com.bit.yourmain.domain.chat;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ChatDBRepository extends JpaRepository<ChatDB, Long> {
     List<ChatDB> findAllByChatRoomNoOrderByCreatedDate(Long no);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE ChatDB c SET c.read = :no WHERE c.no = :no")
+    void readCheck(Long no);
 }
