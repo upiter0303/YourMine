@@ -1,34 +1,45 @@
 {{>layout/header}}
 
-<div class="chatBoxTheme" id="chatBoxTheme" style="width: 320px; height: 480px;">
+<div class="chatBox" style="width: 700px; height: 480px;">
+    <div class="chatBoxTheme" id="chatBoxTheme" style="width: 320px; height: 480px;">
 
-    <div id="chatting" class="chatting" onchange="readCheck()"></div>
+        <div id="chatting" class="chatting" onchange="readCheck()"></div>
 
-    <input type="hidden" id="sessionId" name="sessionId" value="{{userInfo.id}}">
-    <input type="hidden" id="roomId" name="roomId" value="{{roomId}}">
-    <input type="hidden" id="userName" name="userName" value="{{userInfo.id}}">
-    <input type="hidden" id="listener" name="listener" value="{{listener}}">
+        <input type="hidden" id="sessionId" name="sessionId" value="{{userInfo.id}}">
+        <input type="hidden" id="roomId" name="roomId" value="{{roomId}}">
+        <input type="hidden" id="userName" name="userName" value="{{userInfo.id}}">
+        <input type="hidden" id="listener" name="listener" value="{{listener}}">
 
-    <div class="sendForm">
-        <input type="hidden" value="{{userInfo.id}}" id="sender" name="sender">
-        <textarea id="message" class="sendMessage" placeholder="메시지를 입력하세요."></textarea>
-        <div class="button" onclick="send()"><p>전송</p></div>
-        <div class="clear"></div>
+        <div class="sendForm">
+            <input type="hidden" value="{{userInfo.id}}" id="sender" name="sender">
+            <textarea id="message" class="sendMessage" placeholder="메시지를 입력하세요."></textarea>
+            <div class="button" onclick="send()"><p>전송</p></div>
+            <div class="clear"></div>
+        </div>
     </div>
 
-    {{#owner}}
-        <div class="dropdown">
-            <input type="hidden" id="status" value="{{post.status}}">
-            <input type="hidden" id="postNo" value="{{post.id}}">
-            <input role="button" class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown"
-                   data-bs-toggle="dropdown" aria-expanded="false" value="{{post.status}}">
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><button class="dropdown-item" type="button" onclick="setStandby()">거래대기</button></li>
-                <li><button class="dropdown-item" type="button" onclick="setProgress()">거래중</button></li>
-                <li><button class="dropdown-item" type="button" onclick="setDone()">거래완료</button></li>
-            </ul>
-        </div>
-    {{/owner}}
+    <div class="reviewBox" style="width: 320px; height: 480px;">
+        <p>거래를 진행해 보세요!</p>
+
+        {{#owner}}
+            <div class="dropdown">
+                <input type="hidden" id="status" value="{{post.status}}">
+                <input type="hidden" id="postNo" value="{{post.id}}">
+                <input role="button" class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false" value="{{post.status}}">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><button class="dropdown-item" type="button" onclick="setStandby()">거래대기</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="setProgress()">거래중</button></li>
+                    <li><button class="dropdown-item" type="button" onclick="setDone()">거래완료</button></li>
+                </ul>
+            </div>
+        {{/owner}}
+
+        <br><br><br>
+        <p>구매자가 판매자 리뷰 평가 공간<br>구매를 완료하셨나요?<br>판매자를 평가해주세요!</p>
+
+        <p>판매자가 구매자 리뷰 평가 공간<br>판매를 완료하셨나요?<br>구매자를 평가해주세요!</p>
+    </div>
 </div>
 
 {{>layout/js}}

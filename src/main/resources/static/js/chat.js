@@ -1,4 +1,4 @@
-window.resizeTo(600,800);
+window.resizeTo(700,800);
 let ws;
 
 function wsOpen(){
@@ -15,6 +15,12 @@ function wsEvt() {
         //메시지를 받으면 동작
         var msg = data.data;
 
+        // 채팅 보낸 시간 설정
+        var d = new Date();
+        var ampm = (d.getHours()>12 ?  "PM" : "AM");
+        var h = (d.getHours()>12 ? d.getHours()-12 : d.getHours());
+        var m = d.getMinutes()>9 ? d.getMinutes() : "0" + d.getMinutes();
+
         var chatContainer = document.getElementById("chatBoxTheme");
         var chatContainerMessage = chatContainer.getElementsByClassName("chatting")[0];
 
@@ -27,9 +33,9 @@ function wsEvt() {
                 }
             }else if(d.type == "message"){
                 if(d.sessionId == $("#sessionId").val()){
-                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + d.msg + "</p></div></div>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + d.msg + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div>");
                 }else{
-                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + d.userName + "</div><div class='a'></div><div class='b'><p class='others'>" + d.msg + "</p></div></div></div>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + d.userName + "</div><div class='a'></div><div class='b'><p class='others'>" + d.msg + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div></div>");
                 }
 
             }else{
@@ -75,6 +81,12 @@ function send() {
     $('#message').val("");
 }
 function textLoad() {
+    // 채팅 보낸시간 불러오기 수정해야함!!!
+    var d = new Date();
+    var ampm = (d.getHours()>12 ?  "PM" : "AM");
+    var h = (d.getHours()>12 ? d.getHours()-12 : d.getHours());
+    var m = d.getMinutes()>9 ? d.getMinutes() : "0" + d.getMinutes();
+
     var now = $('#status').val();
     if (now === "거래완료") {
         $('#statusDropdown').attr("disabled", true);
@@ -92,9 +104,9 @@ function textLoad() {
             var obj = JSON.parse(result);
             obj.forEach(function (item) {
                 if (item.speaker === userName) {
-                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div></div>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div>");
                 } else {
-                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div></div><div>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div><div>");
                 }
             })
         },

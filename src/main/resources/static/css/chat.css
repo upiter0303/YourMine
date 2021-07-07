@@ -1,5 +1,6 @@
 .chatBoxTheme
 {
+    float: left;
 	padding: 4px 4px 0px 4px;
 	border: 1px solid #f79d1e;
 	border-radius: 10px;
@@ -26,6 +27,16 @@
 .chatBoxTheme .chatting .time
 {
 	font-size: 10px;
+}
+
+.chatBoxTheme .chatting .me .time
+{
+	float: right;
+}
+
+.chatBoxTheme .chatting .others .time
+{
+	float: left;
 }
 
 .chatBoxTheme .chatting .me
@@ -156,4 +167,20 @@
 {
   display: table-cell;
   vertical-align: middle;
+}
+
+.chatBox
+{
+	width: 100%;
+	border: 1px solid #f79d1e;
+	border-radius: 10px;
+	position: absolute;
+}
+
+.chatBox .reviewBox
+{
+	padding: 4px 4px 0px 4px;
+	border: 1px solid #f79d1e;
+	border-radius: 10px;
+	float: right;
 }
