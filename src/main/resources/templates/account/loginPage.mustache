@@ -26,11 +26,23 @@
         <div class="col-md-12" id="findIdField">
             <div class="col-md-4">
                 <p>아이디 찾기</p>
-                <p>가입할때 입력한 전화번호를 적어주세요</p>
+                <p>가입시 입력한 이메일을 적어주세요</p>
                 <form>
-                    <div class="form-group">
-                    <label for="phone">전화번호</label>
-                    <input type="tel" id="phone" name="phone"><br>
+                    <div class="input-group mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="email" aria-label="email" id="email">
+                            <label for="email">이메일</label>
+                        </div>
+                        <span class="input-group-text">@</span>
+                        <input type="text" class="form-control" placeholder="웹 주소" aria-label="Server" id="server"  aria-describedby="button-addon2">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" onclick="naver()">naver.com</a></li>
+                            <li><a class="dropdown-item" onclick="google()">gmail.com</a></li>
+                            <li><a class="dropdown-item" onclick="hanmail()">hanmail.net</a></li>
+                        </ul>
                     </div>
                     <button type="button" class="btn btn-secondary" id="btn-findId">아이디 찾기</button>
                     <button type="button" class="close" id="close1">x</button>
@@ -46,14 +58,14 @@
                 <p>비밀번호 찾기</p>
                 <form>
                     <div class="form-floating input-group mb-3">
-                        <input type="text" class="form-control" id="id" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <label for="id">아이디</label>
-                        <button class="btn btn-outline-secondary" type="button" id="btn-sendCodeById">메일 발송</button>
+                        <input type="text" class="form-control" id="toFindId" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <label for="toFindId">아이디</label>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-sendCodeById">확인</button>
                     </div>
                     <div class="form-floating input-group mb-3">
                         <input type="text" class="form-control" id="code" placeholder="인증 번호" aria-label="Recipient's username" aria-describedby="button-addon2">
                         <label for="code">인증 번호</label>
-                        <button class="btn btn-outline-secondary" type="button" id="btn-pwEmailCheck">메일 발송</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-pwEmailCheck">인증하기</button>
                     </div>
                     <div id="attach"></div>
                     <button type="button" class="close" id="close2">x</button>

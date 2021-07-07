@@ -54,24 +54,18 @@ public class UsersApiController {
         usersService.passwordModify(modifyDto);
     }
 
-    @PostMapping("/findId")
-    public String findId(@RequestBody String phone) {
-        return usersService.findId(phone);
-    }
-
     @GetMapping("/leave/{id}")
     public void leave(@PathVariable String id) {
         usersService.leave(id);
     }
 
     @PostMapping("/findIdByEmail")
-    public String findIdByEmail(@RequestParam String email) {
-        String result = usersService.findByEmail(email).getId();
-        return result;
+    public String findIdByEmail(@RequestBody Map<String,String> map) {
+        return usersService.findByEmail(map.get("email")).getId();
     }
 
     @PostMapping("/findEmailById")
-    public String findEmailById(@RequestParam String id) {
-        return usersService.getUsers(id).getEmail();
+    public String findEmailById(@RequestBody Map<String,String> map) {
+        return usersService.getUsers(map.get("id")).getEmail();
     }
 }

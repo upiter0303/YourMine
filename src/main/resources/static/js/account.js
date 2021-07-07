@@ -274,17 +274,16 @@ var account = {
     },
 
     findId: function () {
+        var data = {
+            email: $('#email').val()+"@"+$('#server').val()
+        }
         $.ajax({
             type: 'POST',
-            url: "/findId",
+            url: "/findIdByEmail",
             contentType: 'application/json; charset=UTF-8',
-            data: {
-                phone: $('#phone').val()
-            }
+            data: JSON.stringify(data)
         }).done(function (result) {
-            $('#findIdField').empty();
-            var con = "<p>해당 번호로 가입된 아이디는 "+result+" 입니다";
-            $('#findIdField').append(con);
+            alert("해당 번호로 가입된 아이디는 "+result+" 입니다");
         }).fail(function (error) {
             alert('가입 정보가 없습니다');
             console.error(JSON.stringify(error));
@@ -373,7 +372,8 @@ var account = {
 
     email: function () {
         var data = {
-            userEmail: $('#email').val() + "@" + $('#server').val()
+            userEmail: $('#email').val() + "@" + $('#server').val(),
+            find: "false"
         }
         if ($('#email').val() == "") {
             alert("이메일을 입력하세요")
@@ -407,29 +407,32 @@ var account = {
     },
 
     sendCodeById: function () {
-        if ($('#id').val() == null) {
+        var id = $('#toFindId').val();
+        if (id == null) {
             alert("아이디를 입력해주세요");
             return;
+        }
+        var data = {
+            id: id
         }
         $.ajax({
             url: "/findEmailById",
             type: "Post",
             contentType: 'application/json; charset=UTF-8',
-            data: {
-                id: $('#id').val()
-            },
+            data: JSON.stringify(data),
             success: function(result) {
-                alert("가입시 입력한 이메일로 메일이 발송되었습니다");
+                alert("잠시만 기다려주세요");
                 var data2 = {
-                    userEmail: result
+                    userEmail: result,
+                    find: "find"
                 };
                 $.ajax({
-                    url: "emailSend",
+                    url: "/emailSend",
                     type: "post",
                     contentType: 'application/json; charset=UTF-8',
                     data: JSON.stringify(data2)
                 }).done(function () {
-                    alert("메일 전송 완료");
+                    alert("가입시 입력한 이메일로 메일이 발송되었습니다");
                 }).fail(function (error) {
                     alert("전송 실패");
                     console.log(error);

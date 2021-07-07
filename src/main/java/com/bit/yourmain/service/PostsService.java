@@ -27,6 +27,7 @@ public class PostsService {
     private final UsersRepository usersRepository;
     private final FileService fileService;
     private final FilesRepository filesRepository;
+    private final String wait = "거래대기";
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
@@ -70,7 +71,7 @@ public class PostsService {
     // Posts Searching in Title and Content
     @Transactional
     public List<PostsResponseDto> search(String keyword, Pageable pageable, Long cursor) {
-        return postsRepository.findAllSearch(keyword, pageable, cursor).stream()
+        return postsRepository.findAllSearch(keyword, pageable, cursor, wait).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -83,7 +84,7 @@ public class PostsService {
 
     @Transactional(readOnly = true)
     public List<PostsResponseDto> findAllDesc(Pageable pageable, Long cursor) {
-        return postsRepository.findAllDesc(pageable, cursor).stream()
+        return postsRepository.findAllDesc(pageable, cursor, wait).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -97,7 +98,7 @@ public class PostsService {
     }
 
     public List<PostsResponseDto> findByCategory(String category, Pageable pageable, Long cursor) {
-        return postsRepository.findByCategory(category, pageable, cursor).stream()
+        return postsRepository.findByCategory(category, pageable, cursor, wait).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -105,13 +106,13 @@ public class PostsService {
     public List<PostsResponseDto> findByAddress(String area, Pageable pageable, Long cursor) {
         int index = area.indexOf(" ",area.indexOf(" ")+1);
         String address = area.substring(0, index);
-        return postsRepository.findByAddress(address, pageable, cursor).stream()
+        return postsRepository.findByAddress(address, pageable, cursor, wait).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     public List<PostsResponseDto> findByHit(Pageable pageable, Long cursor) {
-        return postsRepository.HitDesc(pageable, cursor).stream()
+        return postsRepository.HitDesc(pageable, cursor, wait).stream()
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }

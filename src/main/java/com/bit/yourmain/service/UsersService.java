@@ -58,8 +58,7 @@ public class UsersService implements UserDetailsService {
     }
 
     public Users getUsers(String id) {
-        Users users = usersRepository.findById(id).get();
-        return users;
+        return usersRepository.findById(id).get();
     }
 
     public SessionUser userModify(UserModifyDto modifyDto, SessionUser sessionUser) {
@@ -115,9 +114,8 @@ public class UsersService implements UserDetailsService {
         return users;
     }
 
-    public String findId(String phone) {
-        String phoneNum = phone.substring(phone.lastIndexOf("=")+1);
-        return usersRepository.findByPhone(phoneNum).getId();
+    public String findId(String email) {
+        return usersRepository.findByEmail(email).get().getId();
     }
 
     public void setScore(ReviewScoreSetDto scoreSetDto) {

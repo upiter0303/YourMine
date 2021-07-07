@@ -20,8 +20,7 @@ public class MailApiController {
     private final UsersService usersService;
 
     @PostMapping("/emailSend")
-    public Boolean emailSend(HttpServletRequest request, @RequestBody Map<String,String> map) {
-        HttpSession session = request.getSession();
+    public Boolean emailSend(HttpSession session, @RequestBody Map<String,String> map) {
         Boolean result = false;
         String userEmail = map.get("userEmail");
         Users users = null;
@@ -31,6 +30,9 @@ public class MailApiController {
             e.getMessage();
         }
         if (users == null) {
+            mailService.mailSend(session, userEmail);
+            result = true;
+        } else if (map.get("find").equals("find")) {
             mailService.mailSend(session, userEmail);
             result = true;
         }
