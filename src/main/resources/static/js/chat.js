@@ -1,4 +1,4 @@
-window.resizeTo(700,800);
+window.resizeTo(720,800);
 let ws;
 
 function wsOpen(){
@@ -15,17 +15,12 @@ function wsEvt() {
         //메시지를 받으면 동작
         var msg = data.data;
 
-        // 채팅 보낸 시간 설정
-        var d = new Date();
-        var ampm = (d.getHours()>12 ?  "PM" : "AM");
-        var h = (d.getHours()>12 ? d.getHours()-12 : d.getHours());
-        var m = d.getMinutes()>9 ? d.getMinutes() : "0" + d.getMinutes();
-
         var chatContainer = document.getElementById("chatBoxTheme");
         var chatContainerMessage = chatContainer.getElementsByClassName("chatting")[0];
 
         if(msg != null && msg.trim() != ''){
             var d = JSON.parse(msg);
+            var sendTime = d.sendTime;
             if(d.type == "getId"){
                 var si = d.sessionId != null ? d.sessionId : "";
                 if(si != ''){
@@ -33,9 +28,9 @@ function wsEvt() {
                 }
             }else if(d.type == "message"){
                 if(d.sessionId == $("#sessionId").val()){
-                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + d.msg + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + d.msg + "</p></div><div class='time'>" + sendTime + "</div></div>");
                 }else{
-                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + d.userName + "</div><div class='a'></div><div class='b'><p class='others'>" + d.msg + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div></div>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + d.userName + "</div><div class='a'></div><div class='b'><p class='others'>" + d.msg + "</p></div><div class='time'>" + sendTime + "</div></div></div>");
                 }
 
             }else{
@@ -53,20 +48,29 @@ function wsEvt() {
     });
 }
 function send() {
+    // Setting a sending time
+    var nowTime = new Date();
+    var ampm = (nowTime.getHours()>12 ?  "PM" : "AM");
+    var hour = (nowTime.getHours()>12 ? nowTime.getHours()-12 : nowTime.getHours());
+    var min = (nowTime.getMinutes()>9 ? nowTime.getMinutes() : "0" + nowTime.getMinutes());
+    var sendTime = ampm + " " + hour +":" + min;
+
     var data = {
         type: "message",
         roomId: $("#roomId").val(),
         sessionId : $("#sessionId").val(),
         userName : $("#userName").val(),
         msg : $("#message").val(),
-        listener: $('#listener').val()
+        listener: $('#listener').val(),
+        sendTime: sendTime
     }
     ws.send(JSON.stringify(data));
     var chatDB = {
         speaker: data.userName,
         listener: data.listener,
         content: data.msg,
-        roomId: data.roomId
+        roomId: data.roomId,
+        sendTime: data.sendTime
     }
     $.ajax({
         type: 'POST',
@@ -81,12 +85,6 @@ function send() {
     $('#message').val("");
 }
 function textLoad() {
-    // 채팅 보낸시간 불러오기 수정해야함!!!
-    var d = new Date();
-    var ampm = (d.getHours()>12 ?  "PM" : "AM");
-    var h = (d.getHours()>12 ? d.getHours()-12 : d.getHours());
-    var m = d.getMinutes()>9 ? d.getMinutes() : "0" + d.getMinutes();
-
     var now = $('#status').val();
     if (now === "거래완료") {
         $('#statusDropdown').attr("disabled", true);
@@ -104,9 +102,9 @@ function textLoad() {
             var obj = JSON.parse(result);
             obj.forEach(function (item) {
                 if (item.speaker === userName) {
-                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div><div class='time'>" + item.sendTime + "</div></div>");
                 } else {
-                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div><div class='time'>" + ampm + " " + h + ":" + m + "</div></div><div>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div><div class='time'>" + item.sendTime + "</div></div><div>");
                 }
             })
         },

@@ -10,5 +10,6 @@ public class ChatSaveRequestDto {
     private String speaker;
     private String listener;
     private String content;
+    private String sendTime;
     private String roomId;
 }

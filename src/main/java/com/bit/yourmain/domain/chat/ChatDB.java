@@ -31,6 +31,9 @@ public class ChatDB extends BaseTimeEntity {
     @Column(nullable = false)
     private String listener;
 
+    @Column(nullable = false)
+    private String sendTime;
+
     @Column(nullable = true)
     private Long read;
 
@@ -39,10 +42,11 @@ public class ChatDB extends BaseTimeEntity {
     private ChatRoom chatRoom;
 
     @Builder
-    public ChatDB(String content, String speaker, String listener, ChatRoom chatRoom) {
+    public ChatDB(String content, String speaker, String listener, String sendTime, ChatRoom chatRoom) {
         this.content = content;
         this.speaker = speaker;
         this.listener = listener;
+        this.sendTime = sendTime;
         this.chatRoom = chatRoom;
     }
 }

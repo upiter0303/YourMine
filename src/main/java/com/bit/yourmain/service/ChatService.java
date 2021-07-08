@@ -33,8 +33,8 @@ public class ChatService {
         }
     }
 
-    public void chatSave(String content, String speaker, String listener, String roomId) {
-        dbRepository.save(new ChatDB(content, speaker, listener, roomRepository.findByIdentify(roomId).get()));
+    public void chatSave(String content, String speaker, String listener, String sendTime, String roomId) {
+        dbRepository.save(new ChatDB(content, speaker, listener, sendTime, roomRepository.findByIdentify(roomId).get()));
     }
 
     public List<ChatResponseDto> chatResponse(String roomId) throws Exception {

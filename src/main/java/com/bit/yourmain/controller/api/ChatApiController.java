@@ -22,7 +22,7 @@ public class ChatApiController {
     public void chatSet(@RequestBody ChatSaveRequestDto saveRequestDto) {
         chatService.roomCheck(saveRequestDto.getRoomId());
         chatService.chatSave(
-                saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(), saveRequestDto.getRoomId());
+                saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(), saveRequestDto.getSendTime(), saveRequestDto.getRoomId());
     }
 
     @GetMapping("/chat/db/demand/{roomId}")
