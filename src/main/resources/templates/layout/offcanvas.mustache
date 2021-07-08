@@ -1,22 +1,14 @@
-<button id="offcanvas" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasWithBothOptions"
-        aria-controls="offcanvasWithBothOptions"><span></span><span></span><span></span></button>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
             <img src="{{#userInfo.profile}}/profile/{{userInfo.profile}}{{/userInfo.profile}}
                 {{^userInfo.profile}}/img/default.jpeg{{/userInfo.profile}}" width="30" height="30" alt="logo">
             {{userInfo.name}}
-        </h5>&emsp;
+        </h5>
         <a href="/myPage">my page</a>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-        <ul style="list-style-type:none;">
-            <li class="oc-items"><a href="/all">All</a></li><br>    <!-- 전체 게시글 페이지-->
-            <li class="oc-items"><a href="/hit">Top Posts</a></li><br>    <!-- 인기 게시글 페이지-->
-            <li class="oc-items"><a href="/nearby">Nearby Posts</a></li><br>    <!-- 근처 게시글 페이지-->
-            <li class="oc-items"><a href="/recent">Recent Posts</a></li>    <!-- 최근 게시글 페이지-->
-        </ul>
+    <div class="offcanvas-body" id="messageBox">
+
     </div>
 </div>

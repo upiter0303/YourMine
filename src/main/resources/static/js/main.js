@@ -6,7 +6,6 @@ var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
 let search = function search() {
     window.location.href="/request/search/0/" + $('#keyword').val();
 }
-
 let getter = function getter() {
     let data = {
         kind: $('#kind').val(),
@@ -61,7 +60,8 @@ function alarm() {
             contentType: 'application/json; charset=UTF-8',
             success: function (result) {
                 if (result) {
-                    alert("new mes");
+                    toastr.remove();
+                    toastr.info('읽지않은 메세지가 있습니다', {timeOut: 3000});
                 }
             },
             error: function (error) {
@@ -70,4 +70,59 @@ function alarm() {
         });
     }
 }
+
+function getMessage() {
+    var id = $('#alarm').val();
+    $('#messageBox').empty();
+    $.ajax({
+        url: "/chat/db/list/"+id,
+        type: "get",
+        contentType: 'application/json; charset=UTF-8',
+        success: function(result) {
+            $("#cursor").val(function(i, val) {
+                return val + 1;
+            });
+            let obj = JSON.parse(result);
+            obj.forEach(function (item) {
+                if (item.newChatCount === 0) {
+                    $('#messageBox').append(
+                        "           <div class=\"out-box\" onclick=\"closeOff(" + item.url1 + "," + item.url2 +")\">\n" +
+                        "                <img src=\"" + item.profile + "\">\n" +
+                        "                <div class=\"content\">\n" +
+                        "                    <span class=\"mes-title\">" + item.title + "</span>\n" +
+                        "                    <span class=\"mes-time\">" + item.lastTime + "</span>\n" +
+                        "                    <div class=\"sub\">" + item.lastChat + "</div>\n" +
+                        "                </div>\n" +
+                        "            </div>" +
+                        "          </a>"
+                    );
+                } else {
+                    var count = item.newChatCount;
+                    if (count > 99) {
+                        count = 99;
+                    }
+                    $('#messageBox').append(
+                        "              <div class=\"out-box\" onclick=\"closeOff(" + item.url1 + "," + item.url2 +")\">\n" +
+                        "                <img src=\"" + item.profile + "\">\n" +
+                        "                <div class=\"content\">\n" +
+                        "                    <span class=\"mes-title\">" + item.title + "</span>\n" +
+                        "                    <span class=\"mes-time\">" + item.lastTime + "</span>\n" +
+                        "                    <div class=\"sub\">" + item.lastChat + "</div>\n" +
+                        "                    <div class=\"mes-new\">" + count + "</div>" +
+                        "                </div>\n" +
+                        "            </div>" +
+                        "          </a>"
+                    );
+                }
+            })
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
 alarm();
+function closeOff(url1, url2) {
+    document.getElementById("offcanvas").click();
+    window.open("/chat/" + url1 + "/" + url2, "", "_blank");
+}

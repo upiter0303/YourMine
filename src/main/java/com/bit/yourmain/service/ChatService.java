@@ -4,6 +4,8 @@ import com.bit.yourmain.domain.chat.ChatDB;
 import com.bit.yourmain.domain.chat.ChatDBRepository;
 import com.bit.yourmain.domain.chat.ChatRoom;
 import com.bit.yourmain.domain.chat.ChatRoomRepository;
+import com.bit.yourmain.domain.posts.Posts;
+import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.chat.ChatResponseDto;
 import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.chat.ReadCheckDto;
@@ -11,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class ChatService {
     private final ChatRoomRepository roomRepository;
     private final ChatDBRepository dbRepository;
     private final PostsService postsService;
+    private final UsersService usersService;
 
     public void roomCheck(String roomId) {
         ChatRoom chatRoom = null;
@@ -71,6 +76,43 @@ public class ChatService {
         return roomListDtos;
     }
 
+    public List<ChatRoomListDto> getSortList(String id) {
+        List<ChatRoomListDto> roomSortList = new ArrayList<>();
+        List<ChatRoom> buyRooms = roomRepository.findBuyList("-" + id);
+        for (ChatRoom chatRoom : buyRooms) {
+            ChatRoomListDto dto = chatRoomToDto(chatRoom, id);
+            roomSortList.add(dto);
+        }
+        List<Posts> postsList = usersService.getUsers(id).getPosts();
+        for (Posts posts: postsList) {
+            List<ChatRoom> sellRoom = roomRepository.findAllByPostId(posts.getId());
+            for (ChatRoom chatRoom : sellRoom) {
+                ChatRoomListDto dto = chatRoomToDto(chatRoom, id);
+                roomSortList.add(dto);
+            }
+        }
+        return roomSortList;
+    }
+
+    public ChatRoomListDto chatRoomToDto(ChatRoom chatRoom, String id) {
+        ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
+        listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
+        String profile = postsService.findById(chatRoom.getPostId()).getUsers().getProfile();
+        if (profile == null) {
+            listDto.setProfile("/img/default.jpeg");
+        } else {
+            listDto.setProfile("/profile/" + profile);
+        }
+        Long count = 0L;
+        for (ChatDB chatDB : chatRoom.getChatDBS()) {
+            if (chatDB.getListener().equals(id) && chatDB.getRead() == null) {
+                count++;
+            }
+        }
+        listDto.setNewChatCount(count);
+        return listDto;
+    }
+
     public void readCheck(ReadCheckDto readCheckDto) {
         List<ChatDB> chatDBList = roomRepository.findByIdentify(readCheckDto.getRoomId()).get().getChatDBS();
         for (ChatDB db: chatDBList) {
@@ -84,6 +126,14 @@ public class ChatService {
         List<ChatDB> isNew = dbRepository.findAllByListener(id);
         return !isNew.isEmpty();
     }
+
+    public void roomUpdate(String roomId) {
+        ChatRoom chatRoom = roomRepository.findByIdentify(roomId).get();
+        chatRoom.update(new Date());
+        roomRepository.save(chatRoom);
+    }
+
+
 
     public void delRoom(Long id) {
         roomRepository.delete(roomRepository.findById(id).get());

@@ -183,6 +183,7 @@ function readCheck() {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(data)
     }).done(function () {
+        $('#redDot').empty();
         console.log("read check");
     }).fail(function (error) {
         console.error(error);

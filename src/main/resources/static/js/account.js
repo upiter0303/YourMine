@@ -459,11 +459,6 @@ function readImage(input) {
     }
 }
 
-function chat() {
-    var url = $('#url').val();
-    window.open("/chat/" + url, "", "_blank");
-}
-
 function naver() {
     $('#server').val("naver.com");
 }

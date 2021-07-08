@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -29,6 +30,9 @@ public class ChatRoom {
     @Column(nullable = false)
     private String identify;
 
+    @Column(nullable = false)
+    private Date lastTime;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
     private final List<ChatDB> chatDBS = new ArrayList<>();
 
@@ -36,5 +40,11 @@ public class ChatRoom {
     public ChatRoom(String identify) {
         this.postId = Long.parseLong(identify.substring(0, identify.indexOf("-")));
         this.identify = identify;
+        this.lastTime = new Date();
+    }
+
+    public ChatRoom update(Date date) {
+        this.lastTime = date;
+        return this;
     }
 }

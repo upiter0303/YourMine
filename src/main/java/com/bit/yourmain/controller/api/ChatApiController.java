@@ -1,6 +1,7 @@
 package com.bit.yourmain.controller.api;
 
 import com.bit.yourmain.dto.chat.ChatResponseDto;
+import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.chat.ChatSaveRequestDto;
 import com.bit.yourmain.dto.chat.ReadCheckDto;
 import com.bit.yourmain.service.ChatService;
@@ -8,8 +9,8 @@ import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,9 @@ public class ChatApiController {
     public void chatSet(@RequestBody ChatSaveRequestDto saveRequestDto) {
         chatService.roomCheck(saveRequestDto.getRoomId());
         chatService.chatSave(
-                saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(), saveRequestDto.getSendTime(), saveRequestDto.getRoomId());
+                saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(),
+                saveRequestDto.getSendTime(), saveRequestDto.getRoomId());
+        chatService.roomUpdate(saveRequestDto.getRoomId());
     }
 
     @GetMapping("/chat/db/demand/{roomId}")
@@ -34,6 +37,13 @@ public class ChatApiController {
             System.out.println("null db");
         }
         return new Gson().toJson(responseDto);
+    }
+
+    @GetMapping("/chat/db/list/{id}")
+    public String myChatList(@PathVariable String id) {
+        List<ChatRoomListDto> list = chatService.getSortList(id);
+        list.sort(Collections.reverseOrder());
+        return new Gson().toJson(list);
     }
 
     @PutMapping("/chat/db/check")
