@@ -1,11 +1,11 @@
 package com.bit.yourmain.domain.chat;
 
-import com.bit.yourmain.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -16,7 +16,7 @@ import javax.persistence.*;
         initialValue = 1,
         allocationSize = 1
 )
-public class ChatDB extends BaseTimeEntity {
+public class ChatDB {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "ChatDB_seq_gen")
@@ -32,7 +32,7 @@ public class ChatDB extends BaseTimeEntity {
     private String listener;
 
     @Column(nullable = false)
-    private String sendTime;
+    private LocalDateTime fulTime;
 
     @Column(nullable = true)
     private Long read;
@@ -42,11 +42,11 @@ public class ChatDB extends BaseTimeEntity {
     private ChatRoom chatRoom;
 
     @Builder
-    public ChatDB(String content, String speaker, String listener, String sendTime, ChatRoom chatRoom) {
+    public ChatDB(String content, String speaker, String listener, LocalDateTime fulTime, ChatRoom chatRoom) {
         this.content = content;
         this.speaker = speaker;
         this.listener = listener;
-        this.sendTime = sendTime;
+        this.fulTime = fulTime;
         this.chatRoom = chatRoom;
     }
 }

@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 public class ChatResponseDto implements Serializable {
     private String speaker;
     private String content;
-    private String sendTime;
+    private LocalDateTime fulTime;
 
     @Builder
     public ChatResponseDto(ChatDB chatDB) {
         this.speaker = chatDB.getSpeaker();
         this.content = chatDB.getContent();
-        this.sendTime = chatDB.getSendTime();
+        this.fulTime = chatDB.getFulTime();
     }
 }

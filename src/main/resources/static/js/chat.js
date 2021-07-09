@@ -23,7 +23,7 @@ function wsEvt() {
 
         if(msg != null && msg.trim() != ''){
             var d = JSON.parse(msg);
-            var sendTime = d.sendTime;
+            var sendTime = chatTime(d.fulTime);
             if(d.type == "getId"){
                 var si = d.sessionId != null ? d.sessionId : "";
                 if(si != ''){
@@ -52,11 +52,7 @@ function wsEvt() {
 }
 function send() {
     // Setting a sending time
-    var nowTime = new Date();
-    var ampm = (nowTime.getHours()>12 ?  "PM" : "AM");
-    var hour = (nowTime.getHours()>12 ? nowTime.getHours()-12 : nowTime.getHours());
-    var min = (nowTime.getMinutes()>9 ? nowTime.getMinutes() : "0" + nowTime.getMinutes());
-    var sendTime = ampm + " " + hour +":" + min;
+    var fulTime = new Date();
 
     var data = {
         type: "message",
@@ -65,7 +61,7 @@ function send() {
         userName : $("#userName").val(),
         msg : $("#message").val(),
         listener: $('#listener').val(),
-        sendTime: sendTime
+        fulTime: fulTime
     }
     ws.send(JSON.stringify(data));
     var chatDB = {
@@ -73,7 +69,7 @@ function send() {
         listener: data.listener,
         content: data.msg,
         roomId: data.roomId,
-        sendTime: data.sendTime
+        fulTime: data.fulTime
     }
     $.ajax({
         type: 'POST',
@@ -105,9 +101,9 @@ function textLoad() {
             var obj = JSON.parse(result);
             obj.forEach(function (item) {
                 if (item.speaker === userName) {
-                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div><div class='time'>" + item.sendTime + "</div></div>");
+                    $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div><div class='time'>" + LoadChatTime(item.fulTime) + "</div></div>");
                 } else {
-                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div><div class='time'>" + item.sendTime + "</div></div><div>");
+                    $("#chatting").append("<div class='others'><div class='box'><div class='profile_name'>" + item.speaker + "</div><div class='a'></div><div class='b'><p class='others'>" + item.content + "</p></div><div class='time'>" + LoadChatTime(item.fulTime) + "</div></div><div>");
                 }
             })
         },
@@ -208,6 +204,25 @@ function chatOut() {
     }).fail(function (error) {
         console.error(error);
     });
+}
+function chatTime(time) {
+    var fulTime = new Date(time);
+    var ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
+    var hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
+    var min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
+    var sendTime = ampm + " " + hour +":" + min;
+    return sendTime;
+}
+
+function LoadChatTime(fulTime) {
+    var korHour = fulTime.time.hour + 9;
+    if(korHour > 23) { korHour -= 9; }
+
+    var ampm = (korHour>12 ?  "PM" : "AM");
+    var hour = (korHour>12 ? korHour-12 : korHour);
+    var min = (fulTime.time.minute>9 ? fulTime.time.minute : "0" + fulTime.time.minute);
+    var sendTime = ampm + " " + hour +":" + min;
+    return sendTime;
 }
 
 wsOpen();
