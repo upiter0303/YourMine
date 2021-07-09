@@ -84,22 +84,6 @@ public class UsersController {
             System.out.println("no attention");
         }
         try {
-            List<ChatRoomListDto> sellRoomList = new ArrayList<>();
-            List<Posts> myPosts = users.getPosts();
-            for (Posts posts: myPosts) {
-                sellRoomList.addAll(chatService.getChatList(posts.getId()));
-            }
-            model.addAttribute("sellChat", sellRoomList);
-        } catch (NullPointerException e) {
-            System.out.println("no sellChat");
-        }
-        try {
-            List<ChatRoomListDto> buyRoomList = chatService.getBuyList(sessionUser.getId());
-            model.addAttribute("buyChat", buyRoomList);
-        } catch (NullPointerException e) {
-            System.out.println("no buyChat");
-        }
-        try {
             model.addAttribute("sellReview", reviewService.getSellReview(sessionUser.getId()));
         } catch (NullPointerException e) {
             System.out.println("no SellReview");

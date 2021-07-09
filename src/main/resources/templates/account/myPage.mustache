@@ -43,25 +43,6 @@
         </div>
     </div>
 </div>
-<h3>진행중인 판매 대화</h3>
-{{#sellChat}}
-    <p>게시물 : {{title}}</p>
-    <p>거래 상대 : {{name}}</p>
-    <input type="hidden" id="url" value="{{url}}">
-    <button class="btn btn-outline-primary" onclick="chat()">상대와 대화하기</button>
-{{/sellChat}}
-{{^sellChat}}
-    <p>진행중인 대화가 없습니다</p>
-{{/sellChat}}
-<h3>진행중인 구매 대화</h3>
-{{#buyChat}}
-    <p>게시물 : {{title}}</p>
-    <input type="hidden" id="url" value="{{url}}">
-    <button class="btn btn-outline-primary" onclick="chat()">상대와 대화하기</button>
-{{/buyChat}}
-{{^buyChat}}
-    <p>진행중인 대화가 없습니다</p>
-{{/buyChat}}
 <h3>판매완료된 거래</h3>
 {{#sellReview}}
     <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>

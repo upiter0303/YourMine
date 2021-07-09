@@ -1,4 +1,7 @@
-window.resizeTo(720,800);
+window.resizeTo(720,550);
+var widthSize = 720/2;
+var heightSize = 550/2;
+window.moveTo(window.screen.width/2-widthSize, window.screen.height/2-heightSize);
 let ws;
 
 function wsOpen(){
