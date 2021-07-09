@@ -102,7 +102,7 @@ function getMessage() {
                         count = 99;
                     }
                     $('#messageBox').append(
-                        "              <div class=\"out-box\" onclick=\"closeOff(" + "\"item.url1\"" + "," + "\"item.url2\"" + ")\">\n" +
+                        "              <div class=\"out-box\" onclick=\"closeOff(\'"+ item.url1 + "\'," + "\'"+ item.url2 + "\')\">\n" +
                         "                <img src=\"" + item.profile + "\">\n" +
                         "                <div class=\"content\">\n" +
                         "                    <span class=\"mes-title\">" + item.title + "</span>\n" +
