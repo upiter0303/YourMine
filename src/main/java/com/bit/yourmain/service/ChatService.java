@@ -5,16 +5,14 @@ import com.bit.yourmain.domain.chat.ChatDBRepository;
 import com.bit.yourmain.domain.chat.ChatRoom;
 import com.bit.yourmain.domain.chat.ChatRoomRepository;
 import com.bit.yourmain.domain.posts.Posts;
-import com.bit.yourmain.domain.users.Users;
+import com.bit.yourmain.dto.chat.ChatOutDto;
 import com.bit.yourmain.dto.chat.ChatResponseDto;
 import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.chat.ReadCheckDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,45 +50,27 @@ public class ChatService {
         return responseDto;
     }
 
-    public List<ChatRoomListDto> getChatList(Long id) {
-        List<ChatRoom> chatRooms = roomRepository.findAllByPostId(id);
-        List<ChatRoomListDto> roomListDtos = new ArrayList<>();
-        for (ChatRoom chatRoom: chatRooms) {
-            ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
-            listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
-            String data = listDto.getIdentify();
-            listDto.setName(data.substring(data.indexOf("-")+1));
-            roomListDtos.add(listDto);
-        }
-        return roomListDtos;
-    }
-
-    public List<ChatRoomListDto> getBuyList(String id) {
-        List<ChatRoom> chatRooms = roomRepository.findBuyList("-" + id);
-        List<ChatRoomListDto> roomListDtos = new ArrayList<>();
-        for (ChatRoom chatRoom : chatRooms) {
-            ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
-            listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
-            roomListDtos.add(listDto);
-        }
-        return roomListDtos;
-    }
-
     public List<ChatRoomListDto> getSortList(String id) {
         List<ChatRoomListDto> roomSortList = new ArrayList<>();
         List<ChatRoom> buyRooms = roomRepository.findBuyList("-" + id);
         for (ChatRoom chatRoom : buyRooms) {
-            ChatRoomListDto dto = chatRoomToDto(chatRoom, id);
-            roomSortList.add(dto);
+            if (chatRoom.getBuyerOut() != 1) {
+                ChatRoomListDto dto = chatRoomToDto(chatRoom, id);
+                roomSortList.add(dto);
+            }
         }
         List<Posts> postsList = usersService.getUsers(id).getPosts();
         for (Posts posts: postsList) {
             List<ChatRoom> sellRoom = roomRepository.findAllByPostId(posts.getId());
             for (ChatRoom chatRoom : sellRoom) {
-                ChatRoomListDto dto = chatRoomToDto(chatRoom, id);
-                roomSortList.add(dto);
+                if (chatRoom.getSellerOut() != 1) {
+                    ChatRoomListDto dto = chatRoomToDto(chatRoom, id);
+                    roomSortList.add(dto);
+                }
             }
         }
+        roomSortList = roomSortList.stream().sorted(Comparator.comparing(
+                ChatRoomListDto::getLastTime).reversed()).collect(Collectors.toList());
         return roomSortList;
     }
 
@@ -133,7 +113,17 @@ public class ChatService {
         roomRepository.save(chatRoom);
     }
 
+    public void chatOut(ChatOutDto chatOutDto) {
+        if (chatOutDto.getPosition().equals("seller")) {
+            roomRepository.sellerOut(chatOutDto.getIdentify());
+        } else {
+            roomRepository.buyerOut(chatOutDto.getIdentify());
+        }
+    }
 
+    public void chatIn(String identify) {
+        roomRepository.chatIn(identify);
+    }
 
     public void delRoom(Long id) {
         roomRepository.delete(roomRepository.findById(id).get());

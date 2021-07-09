@@ -193,6 +193,22 @@ function readCheck() {
     });
 }
 
+function chatOut() {
+    var data = {
+        identify: $('#roomId').val(),
+        position: $('#position').val()
+    }
+    $.ajax({
+        url: '/chatOut',
+        type: 'put',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(data)
+    }).done(function () {
+        window.close();
+    }).fail(function (error) {
+        console.error(error);
+    });
+}
 
 wsOpen();
 textLoad();

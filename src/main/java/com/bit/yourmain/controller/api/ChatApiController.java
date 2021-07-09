@@ -1,9 +1,6 @@
 package com.bit.yourmain.controller.api;
 
-import com.bit.yourmain.dto.chat.ChatResponseDto;
-import com.bit.yourmain.dto.chat.ChatRoomListDto;
-import com.bit.yourmain.dto.chat.ChatSaveRequestDto;
-import com.bit.yourmain.dto.chat.ReadCheckDto;
+import com.bit.yourmain.dto.chat.*;
 import com.bit.yourmain.service.ChatService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +39,6 @@ public class ChatApiController {
     @GetMapping("/chat/db/list/{id}")
     public String myChatList(@PathVariable String id) {
         List<ChatRoomListDto> list = chatService.getSortList(id);
-        list.sort(Collections.reverseOrder());
         return new Gson().toJson(list);
     }
 
@@ -54,5 +50,10 @@ public class ChatApiController {
     @GetMapping("/alarm/{id}")
     public boolean isNew(@PathVariable String id) {
         return chatService.isNew(id);
+    }
+
+    @PutMapping("/chatOut")
+    public void chatOut(@RequestBody ChatOutDto chatOutDto) {
+        chatService.chatOut(chatOutDto);
     }
 }

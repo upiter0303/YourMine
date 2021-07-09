@@ -33,15 +33,19 @@
                     <li><button class="dropdown-item" type="button" onclick="setDone()">거래완료</button></li>
                 </ul>
             </div>
+            <input type="hidden" id="position" value="seller">
         {{/owner}}
-
+        {{^owner}}
+            <input type="hidden" id="position" value="buyer">
+        {{/owner}}
         <br><br><br>
         <p>구매자가 판매자 리뷰 평가 공간<br>구매를 완료하셨나요?<br>판매자를 평가해주세요!</p>
 
         <p>판매자가 구매자 리뷰 평가 공간<br>판매를 완료하셨나요?<br>구매자를 평가해주세요!</p>
+
+        <button type="button" role="button" class="btn btn-info" onclick="chatOut()">채팅창 나가기</button>
     </div>
 </div>
-
 {{>layout/js}}
 <script src="/js/chat.js"></script>
 </body>

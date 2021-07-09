@@ -33,6 +33,12 @@ public class ChatRoom {
     @Column(nullable = false)
     private Date lastTime;
 
+    @Column(nullable = true)
+    private Long sellerOut;
+
+    @Column(nullable = true)
+    private Long buyerOut;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
     private final List<ChatDB> chatDBS = new ArrayList<>();
 
@@ -41,6 +47,8 @@ public class ChatRoom {
         this.postId = Long.parseLong(identify.substring(0, identify.indexOf("-")));
         this.identify = identify;
         this.lastTime = new Date();
+        this.sellerOut = 0L;
+        this.buyerOut = 0L;
     }
 
     public ChatRoom update(Date date) {
