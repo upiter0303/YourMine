@@ -24,7 +24,7 @@ public class ChatApiController {
         chatService.roomCheck(saveRequestDto.getRoomId());
         chatService.chatSave(
                 saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(),
-                saveRequestDto.getSendTime(), saveRequestDto.getRoomId());
+                saveRequestDto.getFulTime(), saveRequestDto.getRoomId());
         chatService.roomUpdate(saveRequestDto.getRoomId());
     }
 

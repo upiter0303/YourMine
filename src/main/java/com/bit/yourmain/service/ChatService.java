@@ -12,6 +12,7 @@ import com.bit.yourmain.dto.chat.ReadCheckDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +39,12 @@ public class ChatService {
         }
     }
 
-    public void chatSave(String content, String speaker, String listener, String sendTime, String roomId) {
-        dbRepository.save(new ChatDB(content, speaker, listener, sendTime, roomRepository.findByIdentify(roomId).get()));
+    public void chatSave(String content, String speaker, String listener, LocalDateTime fulTime, String roomId) {
+        dbRepository.save(new ChatDB(content, speaker, listener, fulTime, roomRepository.findByIdentify(roomId).get()));
     }
 
     public List<ChatResponseDto> chatResponse(String roomId) throws Exception {
-        List<ChatDB> chatDBS = dbRepository.findAllByChatRoomNoOrderByCreatedDate(
+        List<ChatDB> chatDBS = dbRepository.findAllByChatRoomNoOrderByFulTime(
                 roomRepository.findByIdentify(roomId).get().getNo());
         List<ChatResponseDto> responseDto = new ArrayList<>();
         for (ChatDB chatDB: chatDBS) {
