@@ -1,4 +1,3 @@
-
 imageView = function imageView(att_zone, btn) {
 
     var attZone = document.getElementById(att_zone);
@@ -59,7 +58,12 @@ imageView = function imageView(att_zone, btn) {
             img.src = ee.target.result;
             attZone.appendChild(makeDiv(img, file));
         }
-
+        dt = new DataTransfer();
+        for (f in sel_files) {
+            var file = sel_files[f];
+            dt.items.add(file);
+        }
+        btnAtt.files = dt.files;
         reader.readAsDataURL(file);
     }
 
