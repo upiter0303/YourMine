@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -22,7 +21,7 @@ public class ChatApiController {
         chatService.chatSave(
                 saveRequestDto.getContent(), saveRequestDto.getSpeaker(), saveRequestDto.getListener(),
                 saveRequestDto.getFulTime(), saveRequestDto.getRoomId());
-        chatService.roomUpdate(saveRequestDto.getRoomId());
+        chatService.chatIn(saveRequestDto.getRoomId());
     }
 
     @GetMapping("/chat/db/demand/{roomId}")

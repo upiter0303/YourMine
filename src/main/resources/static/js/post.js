@@ -1,3 +1,4 @@
+var numberTest = /^[0-9]*$/g;
 var postMain = {
     init: function() {
         var func = this;
@@ -38,8 +39,7 @@ var postMain = {
             $('#price').focus();
             return;
         }
-        var priceTest = /^[0-9]*$/g;
-        if(!priceTest.test($('#price').val())) {
+        if(!numberTest.test($('#price').val())) {
             alert("가격에는 숫자만 입력 가능합니다");
             $('#price').focus();
             return;
@@ -60,8 +60,23 @@ var postMain = {
         }
         var ofSize = null;
         if ($('#size3').val() !== "") {
+            if(!numberTest.test($('#size3').val())) {
+                alert("숫자만 입력 가능합니다");
+                $('#size3').focus();
+                return;
+            }
             if ($('#size2').val() !== "") {
+                if(!numberTest.test($('#size2').val())) {
+                    alert("숫자만 입력 가능합니다");
+                    $('#size2').focus();
+                    return;
+                }
                 if ($('#size1').val() !== "") {
+                    if(!numberTest.test($('#size1').val())) {
+                        alert("숫자만 입력 가능합니다");
+                        $('#size1').focus();
+                        return;
+                    }
                     ofSize = $('#size1').val();
                 } else {
                     alert("\'가로\'부터 채워주세요");

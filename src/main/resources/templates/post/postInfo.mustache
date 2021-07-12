@@ -1,73 +1,99 @@
 {{>layout/header}}
 <link href="/css/post.css" rel="stylesheet" type="text/css" media="all">
 {{>layout/nav}}
-<div id="thumbnail" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="/postImage/{{post.thumbnail}}" class="d-block w-100" alt="...">
-        </div>
-        {{#files}}
-        <div class="carousel-item">
-            <img src="/postImage/{{fileName}}" class="d-block w-100" alt="...">
-        </div>
-        {{/files}}
+<div class="post-info">
+    <div class="category">
+        <p>{{post.category}}</p>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#thumbnail" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#thumbnail" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+    <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/postImage/{{post.thumbnail}}" class="d-block w-100" alt="...">
+            </div>
+            {{#files}}
+                <div class="carousel-item">
+                    <img src="/postImage/{{fileName}}" class="d-block w-100" alt="...">
+                </div>
+            {{/files}}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="info-text">
+        <div class="title">
+            <h4>{{post.title}}</h4>
+        </div>
+        <div class="price">
+            <p>{{post.price}}원</p>
+        </div>
+        <div class="hit">
+            <p>
+                <span class="icons"><i class="mdi mdi-heart"></i> : 213 </span>
+                <span class="icons"><i class="mdi mdi-eye"></i> : {{post.hit}} </span>
+                <span class="icons"><i class="mdi mdi-forum-outline"></i> : 00 </span>
+                <span class="icons"><i class="mdi mdi-thumb-up"></i> : {{post.users.score}} </span>
+            </p>
+        </div>
+        <div class="status">
+            <ul>
+                <li>{{post.status}}</li>
+                <li>거래 종류</li>
+                {{#post.ofSize}}<li>사이즈 : {{post.ofSize}}</li>{{/post.ofSize}}
+            </ul>
+        </div>
+        <div class="button-div">
+            {{^owner}}
+                <form>
+                    <input type="hidden" id="userId" value="{{#userInfo}}{{userInfo.id}}{{/userInfo}}{{^userInfo}}guest{{/userInfo}}">
+                    <input type="hidden" id="postNo" value="{{post.id}}">
+                </form>
+                <button type="button" class="btn btn-secondary" id="btn-attention"><i class="mdi mdi-heart"></i>  찜하기</button>
+                <button type="button" class="btn btn-danger" id="btn-chatOpen"><i class="mdi mdi-forum-outline"></i>  대화하기</button>
+            {{/owner}}
+            {{#owner}}
+                <form id="deleteForm" action="/posts/delete/{{post.id}}" method="get">
+                </form>
+                <a href="/posts/modify/{{post.id}}" role="button" class="btn btn-secondary"><i class="mdi mdi-pencil"></i>  수정</a>
+                <button type="button" id="btn-postDelete" class="btn btn-danger"><i class="mdi mdi-delete-forever"></i>  삭제</button>
+            {{/owner}}
+        </div>
+    </div>
 </div>
-<div class="container">
-    <div class="row">
-        <h4>{{post.title}}</h4>
-    </div>
-    <div class="row">
-        <div class="col">
-            거래 방식 : {{way}}
-        </div>
-        <div class="col">
-            {{#post.ofSize}}크기 : {{post.ofSize}}{{/post.ofSize}}{{^post.ofSize}}{{post.category}}{{/post.ofSize}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            판매자 : {{post.author}}
-        </div>
-        <div class="col">
-            거래 점수 : {{post.users.score}}
-        </div>
-        <div class="col">
-            {{post.status}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{post.area}}
-        </div>
-        <div class="col">
-            조회수 : {{post.hit}}
-        </div>
+<div class="post-content">
+    <p id="content-title">상품 설명</p>
+    <p id="content-body">{{post.content}}</p>
+    <div class="post-list">
+        <h3>최근 인기상품</h3>
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5 text-truncate">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {{#hitPost}}
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <a href="/posts/{{id}}">
+                                    <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                                </a>
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <h5 class="fw-bolder">{{title}}</h5>
+                                        <p>{{price}}원</p>
+                                        <p>{{status}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/hitPost}}
+                </div>
+            </div>
+        </section>
     </div>
 </div>
-{{^owner}}
-    <form>
-        <input type="hidden" id="userId" value="{{#userInfo}}{{userInfo.id}}{{/userInfo}}{{^userInfo}}guest{{/userInfo}}">
-        <input type="hidden" id="postNo" value="{{post.id}}">
-    </form>
-    <button type="button" id="btn-attention" class="btn btn-outline-secondary">찜 하기</button>
-    <button type="button" id="btn-chatOpen" class="btn btn-outline-primary">판매자와 대화하기</button>
-{{/owner}}
-<a href="/">뒤로</a>
-{{#owner}}
-    <a href="/posts/modify/{{post.id}}">수정</a>
-    <form id="deleteForm" action="/posts/delete/{{post.id}}" method="get">
-    </form>
-    <button type="button" id="btn-postDelete">삭제</button>
-{{/owner}}
 {{>layout/js}}
 <script src="/js/post.js"></script>
 <script src="/js/scripts.js"></script>

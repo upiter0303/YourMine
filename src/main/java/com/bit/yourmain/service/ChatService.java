@@ -54,30 +54,6 @@ public class ChatService {
         return responseDto;
     }
 
-    public List<ChatRoomListDto> getChatList(Long id) {
-        List<ChatRoom> chatRooms = roomRepository.findAllByPostId(id);
-        List<ChatRoomListDto> roomListDtos = new ArrayList<>();
-        for (ChatRoom chatRoom: chatRooms) {
-            ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
-            listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
-            String data = listDto.getIdentify();
-            listDto.setName(data.substring(data.indexOf("-")+1));
-            roomListDtos.add(listDto);
-        }
-        return roomListDtos;
-    }
-
-    public List<ChatRoomListDto> getBuyList(String id) {
-        List<ChatRoom> chatRooms = roomRepository.findBuyList("-" + id);
-        List<ChatRoomListDto> roomListDtos = new ArrayList<>();
-        for (ChatRoom chatRoom : chatRooms) {
-            ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
-            listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
-            roomListDtos.add(listDto);
-        }
-        return roomListDtos;
-    }
-
     public List<ChatRoomListDto> getSortList(String id) {
         List<ChatRoomListDto> roomSortList = new ArrayList<>();
         List<ChatRoom> buyRooms = roomRepository.findBuyList("-" + id);

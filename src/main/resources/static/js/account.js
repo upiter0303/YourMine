@@ -1,3 +1,6 @@
+var idTest = /^[a-zA-z](?=.*[0-9]{1,16}).{8,16}/
+var pwTest = /(?=.*\d{1,30})(?=.*[~`!@#$%\^&*()-+=]{1,30})(?=.*[a-zA-Z]{1,30}).{8,30}$/;
+var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
 var account = {
     init: function () {
         var func = this;
@@ -55,44 +58,6 @@ var account = {
     },
 
     save: function () {
-        if ($('#idCheck').val() != "t"){
-            alert("아이디 중복 확인을 해주세요");
-            return;
-        }
-        if ($('#password').val() == "") {
-            alert("비밀번호를 입력해주세요");
-            return;
-        }
-        if ($('#password').val() != $('#password2').val()) {
-            alert("비밀번호가 일치하지 않습니다");
-            return;
-        }
-        if ($('#name').val() == "") {
-            alert("이름을 입력해주세요");
-            return;
-        }
-        // if ($('#mailCheck').val() != "t"){
-        //     console.log($('#mailCheck').val())
-        //     alert("이메일 인증을 해주세요");
-        //     return;
-        // }
-        if ($('#address').val() == "") {
-            alert("주소를 입력해주세요");
-            return;
-        }
-        if ($('#detailAddress').val() == "") {
-            alert("상세주소를 입력해주세요");
-            return;
-        }
-        if ($('#phone').val() == "") {
-            alert("휴대폰번호를 입력해주세요");
-            return;
-        }
-        var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
-        if(!numTest.test($('#phone').val())) {
-            alert("휴대폰번호 형식이 잘못되었습니다");
-            return;
-        }
         var data = {
             name: $('#name').val(),
             id: $('#id').val(),
@@ -102,6 +67,48 @@ var account = {
             detailAddress: $('#detailAddress').val(),
             email: $('#email').val() + "@" + $('#server').val()
         };
+        if (data.id != "t"){
+            alert("아이디 중복 확인을 해주세요");
+            return;
+        }
+        if (data.password == "") {
+            alert("비밀번호를 입력해주세요");
+            return;
+        }
+        if(!pwTest.test(data.password)) {
+            alert("비밀번호는 영문, 숫자, 특수문자를 1회이상 사용한 8자리 이상이여야합니다");
+            return;
+        }
+        if (data.password != $('#password2').val()) {
+            alert("비밀번호가 일치하지 않습니다");
+            return;
+        }
+        if (data.name == "") {
+            alert("이름을 입력해주세요");
+            return;
+        }
+        // if ($('#mailCheck').val() != "t"){
+        //     console.log($('#mailCheck').val())
+        //     alert("이메일 인증을 해주세요");
+        //     return;
+        // }
+        if (data.address == "") {
+            alert("주소를 입력해주세요");
+            return;
+        }
+        if (data.detailAddress == "") {
+            alert("상세주소를 입력해주세요");
+            return;
+        }
+        if (data.phone == "") {
+            alert("휴대폰번호를 입력해주세요");
+            return;
+        }
+        if(!numTest.test(data.phone)) {
+            alert("휴대폰번호 형식이 잘못되었습니다");
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: "/signup",
@@ -123,9 +130,8 @@ var account = {
             $('#msg').append(con);
             return;
         }
-        var idTest = /^[0-9a-z]+$/;
-        if(!idTest.test($('#id').val())) {
-            alert("아이디에는 숫자와 영어만 사용할 수 있습니다");
+        if(!idTest.test(data.id)) {
+            alert("아이디는 영어로 시작해 숫자를 혼합한 8~16자리여야합니다");
             return;
         }
         var data = {
@@ -223,8 +229,8 @@ var account = {
             alert("개인정보를 변경하기위해서는 전화번호를 입력하여야 합니다");
             return;
         }
-        var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
         if(!numTest.test($('#phone').val())) {
+            alert("휴대폰번호 형식이 잘못되었습니다");
             return;
         }
         var data = {
@@ -250,6 +256,10 @@ var account = {
     passwordModify: function () {
         if ($('#password').val() == "") {
             alert("비밀번호를 입력해주세요");
+            return;
+        }
+        if(!pwTest.test(data.password)) {
+            alert("비밀번호는 영문, 숫자, 특수문자를 1회이상 사용한 8자리 이상이여야합니다");
             return;
         }
         if ($('#password').val() != $('#password2').val()) {

@@ -11,10 +11,70 @@
     font-size:.9em;
     text-align: center;
 }
-.carousel {
-    width: 15%;
-    height: 10%;
+.post-info {
+    font-family: 'Jeju Gothic', sans-serif;
+    margin: 100px auto;
+    width: 80%;
 }
-#thumbnail {
+.category {
+    margin: 10px 0px 10px 20px;
+}
+#carousel {
     float: left;
+    width: 400px;
+    height: 400px;
+    background-color: rgb(235, 235, 235);
+}
+.carousel-out {
+    margin-top: 50%;
+    transform: translate(0%, -50%);
+}
+.carousel-out img {
+    max-height: 400px;
+    max-width: 400px;
+}
+.info-text {
+    margin-top: 5%;
+}
+.title {
+    margin-left: 440px;
+}
+.price {
+    margin-top: 20px;
+    margin-left: 440px;
+    font-size: 3rem;
+}
+.hit {
+    margin-top: 20px;
+    margin-left: 440px;
+    font-size: 0.8rem;
+}
+.status {
+    margin-top: 20px;
+    margin-left: 440px;
+    font-size: 1.2rem;
+}
+.button-div {
+    margin-top: 5%;
+    margin-left: 440px;
+}
+.post-content {
+    font-family: 'Jeju Gothic', sans-serif;
+    margin: auto;
+    width: 80%;
+    max-width: 80%;
+}
+.icons {
+    margin-left: 20px;
+}
+.post-content #content-title {
+    font-size: 1.2rem;
+}
+#content-body {
+    font-size: 0.9rem;
+    height: fit-content;
+    max-height: 300px;
+}
+.post-list {
+    margin-top: 5%;
 }
