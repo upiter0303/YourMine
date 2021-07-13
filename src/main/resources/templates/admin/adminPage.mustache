@@ -30,6 +30,53 @@
             </div>
         </div>
     </section>
+
+    <div>
+        <h4>전체 회원 관리</h4>
+        <div class="col-md-12">
+            <div class="row">
+                <div>
+                    <a href="/adminPage/signup" class="btn btn-success active" role="button">회원등록</a>
+                </div>
+
+                <table class="table table-horizontal table-bordered">
+                    <thead class="thead-strong">
+                    <tr>
+                        <th>회원번호</th>
+                        <th>이름</th>
+                        <th>아이디</th>
+                        <th>전화번호</th>
+                        <th>주소</th>
+                        <th>상세주소</th>
+                        <th>이메일</th>
+                        <th>매너온도</th>
+                        <th>회원유형</th>
+                        <th>비고</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tbody">
+                    {{#allUsers}}
+                        <tr>
+                            <td>{{no}}</td>
+                            <td>{{name}}</td>
+                            <td>{{id}}</td>
+                            <td>{{phone}}</td>
+                            <td>{{address}}</td>
+                            <td>{{detailAddress}}</td>
+                            <td>{{email}}</td>
+                            <td>{{score}}</td>
+                            <td>{{role}}</td>
+                            <td><a href="/adminPage/users/update/{{no}}" role="button" class="btn btn-secondary">회원정보 수정</a>
+                                <button type="button" class="btn btn-danger" id="btn-leave">회원탈퇴</button>
+                            </td>
+                        </tr>
+                    {{/allUsers}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </center>
 {{>layout/footer}}
 {{>layout/js}}

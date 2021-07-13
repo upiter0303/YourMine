@@ -1,8 +1,8 @@
 package com.bit.yourmain.controller;
 
 import com.bit.yourmain.dto.posts.PostsResponseDto;
+import com.bit.yourmain.service.AdminService;
 import com.bit.yourmain.service.PostsService;
-import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
+    private final AdminService adminService;
     private final PostsService postsService;
-    private final UsersService usersService;
     static final PageRequest indexPage = PageRequest.of(0,8);
 
     @GetMapping("/adminPage")
@@ -27,6 +27,7 @@ public class AdminController {
         final Long cursor = 0L;
         List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage, cursor);
         model.addAttribute("posts", postsList);
+        model.addAttribute("allUsers", adminService.findAll());
 
         return "admin/adminPage";
     }
