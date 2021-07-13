@@ -1,5 +1,6 @@
 package com.bit.yourmain.config.interceptor;
 
+import com.bit.yourmain.domain.users.Role;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.reviews.ReviewResponseDto;
 import com.bit.yourmain.service.PostsService;
@@ -30,6 +31,12 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
         String end = ser.substring(ser.lastIndexOf("/")+1);
         String toMid = ser.substring(ser.substring(1).indexOf("/")+1).substring(1);
         String mid = toMid.substring(0, toMid.indexOf("/"));
+
+        // admin 권한 설정
+        if(sessionUser.getRole().equals(Role.ADMIN)) {
+            return true;
+        }
+
         if (check.equals("chat")) {
             if (userId.equals(end)) {
                 return true;

@@ -1,6 +1,7 @@
 package com.bit.yourmain.controller;
 
 import com.bit.yourmain.domain.files.Files;
+import com.bit.yourmain.domain.users.Role;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
@@ -89,7 +90,8 @@ public class PostsController {
             model.addAttribute("files", withOutThumbnail);
         }
         try {
-            if (sessionUser.getId().equals(post.getAuthor())) {
+            // Post Author or Admin
+            if (sessionUser.getId().equals(post.getAuthor()) || sessionUser.getRole().equals(Role.ADMIN)) {
                 model.addAttribute("owner", "owner");
             }
         } catch (NullPointerException e) {

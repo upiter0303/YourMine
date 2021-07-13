@@ -21,6 +21,11 @@
                         info
                     </a>
                 </li>
+                {{#admin}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/adminPage">admin</a>
+                    </li>
+                {{/admin}}
                 <input type="hidden" id="alarm" value="{{userInfo.id}}">
                 {{>layout/offcanvas}}
             {{/userInfo}}
