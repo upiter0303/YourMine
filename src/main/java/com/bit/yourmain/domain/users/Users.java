@@ -81,4 +81,15 @@ public class Users {
         this.id = id;
         return this;
     }
+
+    public Users update(String name, String phone, String address, String detailAddress, String email, Long score) {
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.detailAddress = detailAddress;
+        this.email = email;
+        this.score = score;
+
+        return this;
+    }
 }
