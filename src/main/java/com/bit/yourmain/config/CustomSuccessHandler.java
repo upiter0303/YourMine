@@ -1,5 +1,6 @@
 package com.bit.yourmain.config;
 
+import com.bit.yourmain.domain.users.Role;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,19 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     private final UsersService usersService;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         HttpSession session = request.getSession();
 
         if (session.getAttribute("userInfo") != null) {
             session.removeAttribute("userInfo");
         }
         SessionUser users = new SessionUser(usersService.getUsers(authentication.getName()));
+        // Admin Authentication
+        if(users.getRole().equals(Role.ADMIN)) {
+            session.setAttribute("admin", "admin");
+        }
         session.setAttribute("userInfo" , users);
+
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>(authentication.getAuthorities());
         grantedAuthorities.add(new SimpleGrantedAuthority(users.getRole().getValue()));
