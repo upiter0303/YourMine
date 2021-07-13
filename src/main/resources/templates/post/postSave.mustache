@@ -1,9 +1,8 @@
 {{>layout/header}}
 {{>layout/nav}}
-<h1>게시글 등록</h1>
-
-<div class="col-md-12">
-    <div class="col-md-8">
+<div class="post-save">
+    <h1 id="post-save-title">게시글 등록</h1>
+    <div class="col-md-10">
         <p>* 이 붙은 항목은 필수입력</p>
         <form id="postForm" enctype="multipart/form-data" action="/posts/save" method="post">
             <input type="hidden" value="{{userInfo.id}}" id="author" name="author">
@@ -66,7 +65,7 @@
             </label>
             <div class="input-group mb-3">
                 <textarea class="form-control" id="content" name="content" placeholder="내용를 입력하세요"
-                cols="100" rows="20"></textarea>
+                          cols="100" rows="20"></textarea>
             </div>
             <div class="mb-3" id="image_preview">
                 <label for="formFileMultiple" class="form-label">마지막 이미지가 대표 이미지로 설정됩니다</label>
@@ -74,8 +73,10 @@
                 <div id="att_zone" data-placeholder="드래그로 파일 올리기"></div>
             </div>
         </form>
-        <a href="/" role="button" class="btn btn-secondary">취소</a>
-        <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+        <div class="buttons">
+            <a href="/" role="button" class="btn btn-secondary">취소</a>
+            <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+        </div>
     </div>
 </div>
 

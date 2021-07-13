@@ -23,6 +23,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.bit.yourmain.controller.MainController.indexPage;
+
 @RequiredArgsConstructor
 @Controller
 public class PostsController {
@@ -68,7 +70,9 @@ public class PostsController {
         PostsResponseDto post = postsService.findById(id);
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
-
+        final Long cursor = 0L;
+        List<PostsResponseDto> hitList = postsService.findByHit(indexPage, cursor);
+        model.addAttribute("hitPost", hitList);
         String way = post.getWay();
         String wayToString = "";
         if (way.contains("A")) {
@@ -111,9 +115,6 @@ public class PostsController {
                 String size1 = ofSize.substring(0, ofSize.indexOf("*"));
                 String size2 = ofSize.substring(ofSize.indexOf("*")+1, ofSize.lastIndexOf("*"));
                 String size3 = ofSize.substring(ofSize.lastIndexOf("*")+1);
-                System.out.println(size1);
-                System.out.println(size2);
-                System.out.println(size3);
                 model.addAttribute("size1", size1);
                 model.addAttribute("size2", size2);
                 model.addAttribute("size3", size3);

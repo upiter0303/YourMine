@@ -1,5 +1,5 @@
 
-var myCarousel = document.querySelector('#thumbnail')
+var myCarousel = document.querySelector('#carousel')
 
 var carousel = new bootstrap.Carousel(myCarousel, {
     interval: 3000

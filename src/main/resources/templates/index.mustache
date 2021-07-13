@@ -1,43 +1,80 @@
 {{>layout/header}}
+<link rel="stylesheet" href="/css/index.css"/>
 <header class="bg-white py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-black-50">
             <h1 class="display-4 fw-bolder">Your Mine</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
+            <p class="lead fw-normal text-black-50 mb-0">123123123</p>
         </div>
     </div>
 </header>
 {{>layout/nav}}
-<center>
+<div id="carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item carousel-out active">
+            <a href="/">
+                <img src="https://placeimg.com/1000/300/animals" class="d-block w-100" alt="...">
+            </a>
+        </div>
+        <div class="carousel-item carousel-out">
+            <a href="/">
+                <img src="https://placeimg.com/900/300/arch" class="d-block w-100" alt="...">
+            </a>
+        </div>
+        <div class="carousel-item carousel-out">
+            <a href="/">
+                <img src="https://placeimg.com/1000/200/people" class="d-block w-100" alt="...">
+            </a>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="post-description">
     <a href="/request/hit/0/0"><h4>인기 게시물</h4></a>
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5 text-truncate">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {{#hitPost}}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <a href="/posts/{{id}}">
-                                <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
-                            </a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{title}}</h5>
-                                    <!-- Product price-->
-                                    <p>{{price}}원</p>
-                                    <p>{{status}}</p>
-                                </div>
+</div>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5 text-truncate">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {{#hitPost}}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <a href="/posts/{{id}}">
+                            <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{title}}</h5>
+                                <!-- Product price-->
+                                <p>{{price}}원</p>
+                                <p>{{status}}</p>
                             </div>
                         </div>
                     </div>
-                {{/hitPost}}
-            </div>
+                </div>
+            {{/hitPost}}
         </div>
-    </section>
-    {{#userInfo.address}}
-    <a href="/request/area/0/{{userInfo.address}}"><h4>근처 게시물</h4></a>
+    </div>
+</section>
+{{#userInfo.address}}
+    <div class="post-description">
+        <a href="/request/area/0/{{userInfo.address}}"><h4>근처 게시물</h4></a>
+    </div>
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -67,37 +104,39 @@
             </div>
         </div>
     </section>
-    {{/userInfo.address}}
+{{/userInfo.address}}
+<div class="post-description">
     <a href="/request/all/0/0"><h4>최근 게시물</h4></a>
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {{#posts}}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <a href="/posts/{{id}}">
-                                <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
-                            </a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{title}}</h5>
-                                    <!-- Product price-->
-                                    <p>{{price}}원</p>
-                                    <p>{{status}}</p>
-                                </div>
+</div>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {{#posts}}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <a href="/posts/{{id}}">
+                            <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{title}}</h5>
+                                <!-- Product price-->
+                                <p>{{price}}원</p>
+                                <p>{{status}}</p>
                             </div>
                         </div>
                     </div>
-                {{/posts}}
-            </div>
+                </div>
+            {{/posts}}
         </div>
-    </section>
-    </center>
+    </div>
+</section>
+{{>layout/footer}}
 {{>layout/js}}
 <script src="/js/post.js"></script>
-<script src="/js/scripts.js"></script>
+<script src="/js/carousel.js"></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 {{>layout/header}}
-<link href="/css/post.css" rel="stylesheet" type="text/css" media="all">
+<link rel="stylesheet" href="/css/post.css"/>
 {{>layout/nav}}
 <div class="post-info">
     <div class="category">
-        <p>{{post.category}}</p>
+        <p> - {{post.category}}</p>
     </div>
     <div id="carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -66,7 +66,7 @@
     </div>
 </div>
 <div class="post-content">
-    <p id="content-title">상품 설명</p>
+    <p id="content-title"> 상품 설명</p>
     <p id="content-body">{{post.content}}</p>
     <div class="post-list">
         <h3>최근 인기상품</h3>
@@ -96,6 +96,6 @@
 </div>
 {{>layout/js}}
 <script src="/js/post.js"></script>
-<script src="/js/scripts.js"></script>
+<script src="/js/carousel.js"></script>
 </body>
 </html>

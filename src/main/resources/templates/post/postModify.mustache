@@ -1,14 +1,13 @@
 {{>layout/header}}
 <link href="/css/post.css" rel="stylesheet" type="text/css" media="all">
 {{>layout/nav}}
-<h1>게시글 수정</h1>
-
-<div class="col-md-12">
-    <div class="col-md-8">
+<div class="post-save">
+    <h1 id="post-save-title">게시글 수정</h1>
+    <div class="col-md-10">
         <p>* 이 붙은 항목은 필수입력</p>
         <form id="postForm" enctype="multipart/form-data" action="/posts/modify" method="post">
-            <input type="hidden" id="subType" value="modify">
             <input type="hidden" name="id" id="id" value="{{post.id}}">
+            <input type="hidden" id="subType" value="modify">
             <div class="form-floating input-group mb-3">
                 <input type="text" class="form-control" id="title" name="title" placeholder="* 제목" value="{{post.title}}">
                 <label for="title">* 제목</label>
@@ -25,61 +24,64 @@
                     <option value="other" {{#other}}selected{{/other}}>기타</option>
                 </select>
             </div>
-        <div class="form-floating input-group mb-3">
-            <input type="text" class="form-control" id="price" name="price" placeholder="* 가격/ 단위 : 원" value="{{post.price}}">
-            <label for="price">* 가격/ 단위 : 원</label>
-        </div>
-        <div class="input-group mb-3" id="check1">
-            <input type="hidden" value="" id="way" name="way">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="delivery" id="delivery" name="delivery" {{#A}}checked{{/A}}>
-                <label class="form-check-label" for="delivery">
-                    택배 거래
-                </label>
+            <div class="form-floating input-group mb-3">
+                <input type="text" class="form-control" id="price" name="price" placeholder="* 가격/ 단위 : 원" value="{{post.price}}">
+                <label for="price">* 가격/ 단위 : 원</label>
             </div>
-            <br>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="direct" id="direct" name="direct" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false" {{#B}}checked{{/B}}>
-                <label class="form-check-label" for="direct">
-                    직거래
-                </label>
-            </div>
-        </div>
-        <div {{#B}}class="collapse show"{{/B}}{{^B}}class="collapse"{{/B}} id="collapseExample">
-            <div class="card card-body">
-                <p>직거래 장소 설정</p>
-                <div class="input-group mb-3">
-                    <button class="btn btn-outline-secondary" type="button" id="btn-postcode" onclick="findAddress()">위치 변경</button>
-                    <input type="text" class="form-control" id="area" name="area" placeholder="주소" aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{post.area}}" readonly>
+            <div class="input-group mb-3" id="check1">
+                <input type="hidden" value="" id="way" name="way">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="delivery" id="delivery" name="delivery" {{#A}}checked{{/A}}>
+                    <label class="form-check-label" for="delivery">
+                        택배 거래
+                    </label>
                 </div>
-                <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+                <br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="direct" id="direct" name="direct" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false" {{#B}}checked{{/B}}>
+                    <label class="form-check-label" for="direct">
+                        직거래
+                    </label>
+                </div>
             </div>
-        </div>
-        <input type="hidden" value="" name="ofSize" id="ofSize">
-        <label>사이즈/ 단위: cm
+            <div {{#B}}class="collapse show"{{/B}}{{^B}}class="collapse"{{/B}} id="collapseExample">
+                <div class="card card-body">
+                    <p>직거래 장소 설정</p>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-postcode" onclick="findAddress()">위치 변경</button>
+                        <input type="text" class="form-control" id="area" name="area" placeholder="주소" aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{post.area}}" readonly>
+                    </div>
+                    <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+                </div>
+            </div>
+            <input type="hidden" value="" name="ofSize" id="ofSize">
+            <label>사이즈/ 단위: cm
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" id="size1" placeholder="가로" value="{{#size1}}{{size1}}{{/size1}}">
+                    <span class="input-group-text">*</span>
+                    <input type="number" class="form-control" id="size2" placeholder="세로" value="{{#size2}}{{size2}}{{/size2}}">
+                    <span class="input-group-text">*</span>
+                    <input type="number" class="form-control" id="size3" placeholder="높이" value="{{#size3}}{{size3}}{{/size3}}">
+                </div>
+            </label>
             <div class="input-group mb-3">
-                <input type="number" class="form-control" id="size1" placeholder="가로" value="{{#size1}}{{size1}}{{/size1}}">
-                <span class="input-group-text">*</span>
-                <input type="number" class="form-control" id="size2" placeholder="세로" value="{{#size2}}{{size2}}{{/size2}}">
-                <span class="input-group-text">*</span>
-                <input type="number" class="form-control" id="size3" placeholder="높이" value="{{#size3}}{{size3}}{{/size3}}">
+                <textarea class="form-control" id="content" name="content" placeholder="내용를 입력하세요"
+                                      cols="100" rows="20">{{post.content}}</textarea>
             </div>
-        </label>
-        <div class="input-group mb-3">
-                        <textarea class="form-control" id="content" name="content" placeholder="내용를 입력하세요"
-                                  cols="100" rows="20">{{post.content}}</textarea>
-        </div>
-        <div class="mb-3" id="image_preview">
-            <label for="formFileMultiple" class="form-label">마지막 이미지가 대표 이미지로 설정됩니다</label>
-            <input type="file" class="form-control" accept=".jpg, .png, .bmp, .jpeg" id="formFileMultiple" name="image" multiple="multiple"/>
-            <div id="att_zone" data-placeholder="드래그로 파일 올리기"></div>
-            <input type="hidden" name="toDelFile" id="toDelFile">
-        </div>
+            <div class="mb-3" id="image_preview">
+                <label for="formFileMultiple" class="form-label">마지막 이미지가 대표 이미지로 설정됩니다</label>
+                <input type="file" class="form-control" accept=".jpg, .png, .bmp, .jpeg" id="formFileMultiple" name="image" multiple="multiple"/>
+                <div id="att_zone" data-placeholder="드래그로 파일 올리기"></div>
+                <input type="hidden" name="toDelFile" id="toDelFile">
+            </div>
         </form>
-    <a href="/" role="button" class="btn btn-secondary">취소</a>
-    <button type="button" class="btn btn-primary" id="btn-save">수정</button>
+        <div class="buttons">
+            <a href="/" role="button" class="btn btn-secondary">취소</a>
+            <button type="button" class="btn btn-primary" id="btn-save">수정</button>
+        </div>
     </div>
 </div>
+
 {{>layout/js}}
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{kakaoKey}}&libraries=services"></script>

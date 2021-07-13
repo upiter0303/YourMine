@@ -12,12 +12,14 @@
     text-align: center;
 }
 .post-info {
-    font-family: 'Jeju Gothic', sans-serif;
     margin: 100px auto;
+    padding: 20px 0px;
     width: 80%;
 }
 .category {
-    margin: 10px 0px 10px 20px;
+    margin: 10px 0px 30px 20px;
+    padding-bottom: 10px;
+    border-bottom: black solid 1px;
 }
 #carousel {
     float: left;
@@ -68,6 +70,8 @@
     margin-left: 20px;
 }
 .post-content #content-title {
+    border-top: black solid 1px;
+    padding-top: 20px;
     font-size: 1.2rem;
 }
 #content-body {
@@ -77,4 +81,23 @@
 }
 .post-list {
     margin-top: 5%;
+}
+
+#post-save-title {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.post-save {
+    width: fit-content;
+    margin: 5% auto;
+}
+#check1 .form-check {
+    margin-left: 10px;
+}
+.buttons {
+    float: right;
+    margin-right: 10px;
+}
+#btn-save {
+    margin-left: 10px;
 }

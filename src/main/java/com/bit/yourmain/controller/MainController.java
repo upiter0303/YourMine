@@ -26,10 +26,11 @@ public class MainController {
 
     private final PostsService postsService;
     private final UsersService usersService;
+    static final PageRequest indexPage = PageRequest.of(0,8);
+
 
     @GetMapping("/")
     public String index(HttpSession session, Model model, HttpServletResponse response) {
-        final PageRequest indexPage = PageRequest.of(0,8);
         final Long cursor = 0L;
         List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage, cursor);
         model.addAttribute("posts", postsList);
@@ -51,7 +52,6 @@ public class MainController {
 
     @GetMapping("/request/{kind}/{cursor}/{value}")
     public String requestPage(@PathVariable String kind, @PathVariable Long cursor, @PathVariable String value, Model model) {
-        PageRequest indexPage = PageRequest.of(0, 8);
         switch (kind) {
             case "category":
                 model.addAttribute("input", "해당 카테고리의 상품 목록");

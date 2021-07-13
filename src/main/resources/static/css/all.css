@@ -1,0 +1,22 @@
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body {
+    font-family: 'Jeju Gothic', sans-serif;
+}
+.footer {
+    margin-top: 10%;
+    height: 60px;
+    width: 100%;
+    background-color: rgb(221, 221, 221);
+}
+#foot-left {
+    float: left;
+    margin-top: 15px;
+    margin-left: 5%;
+    color: rgb(104, 104, 104);
+}
+#foot-right {
+    float: right;
+    margin-top: 15px;
+    margin-right: 5%;
+    color: rgb(104, 104, 104);
+}
