@@ -40,7 +40,6 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         }
         session.setAttribute("userInfo" , users);
 
-
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>(authentication.getAuthorities());
         grantedAuthorities.add(new SimpleGrantedAuthority(users.getRole().getValue()));
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
