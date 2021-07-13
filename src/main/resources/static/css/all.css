@@ -1,12 +1,16 @@
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 body {
     font-family: 'Jeju Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(247, 247, 247);
 }
 .footer {
     margin-top: 10%;
     height: 60px;
     width: 100%;
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(247, 247, 247);
+    bottom: 0;
 }
 #foot-left {
     float: left;
@@ -19,4 +23,13 @@ body {
     margin-top: 15px;
     margin-right: 5%;
     color: rgb(104, 104, 104);
+}
+.password {
+    font-family: sans-serif;
+}
+#off-myPage {
+    margin-left: 45%;
+}
+h3 {
+    margin-top: 5%;
 }

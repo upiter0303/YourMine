@@ -6,6 +6,8 @@ import com.bit.yourmain.domain.users.Users;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -21,6 +23,7 @@ public class PostsResponseDto {
     private final String area;
     private final String way;
     private final String ofSize;
+    private final String creatTime;
     private final String category;
     private final Long hit;
     private final Users users;
@@ -37,6 +40,7 @@ public class PostsResponseDto {
         this.area = entity.getArea();
         this.way = entity.getWay();
         this.ofSize = entity.getOfSize();
+        this.creatTime = entity.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.category = entity.getCategory();
         this.hit = entity.getHit();
         this.users = entity.getUsers();

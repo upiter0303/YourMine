@@ -1,17 +1,28 @@
 {{>layout/header}}
+<style>
+    #deny {
+        width: fit-content;
+        margin: 15% auto 0px auto;
+    }
+    p {
+        width: fit-content;
+        margin: 10px auto;
+    }
+</style>
 {{>layout/nav}}
-<div class="account-form">
-{{#userInfo}}
-    <h3>주소 및 전화번호 입력 이후 이용 가능합니다</h3>
-    <a href="/userModify"><strong>수정하기</strong></a><br>
-    <a href="/"><strong>돌아가기</strong></a>
-{{/userInfo}}
-{{^userInfo}}
-    <h3>로그인 후 이용가능합니다</h3>
-    <a href="/loginpage"><strong>로그인</strong></a><br>
-    <a href="/"><strong>돌아가기</strong></a>
-{{/userInfo}}
+<div id="deny">
+    {{#userInfo}}
+        <h3>주소 및 전화번호 입력 이후 이용 가능합니다</h3>
+        <p><a href="/userModify"><strong>수정하기</strong></a><br></p>
+        <p><a href="#" onclick="history.back();"><strong>돌아가기</strong></a></p>
+    {{/userInfo}}
+    {{^userInfo}}
+        <h3>로그인 후 이용가능합니다</h3>
+        <p><a href="/loginPage"><strong>로그인</strong></a><br></p>
+        <p><a href="#" onclick="history.back();"><strong>돌아가기</strong></a></p>
+    {{/userInfo}}
 </div>
+{{>layout/footer}}
 {{>layout/js}}
 </body>
 </html>

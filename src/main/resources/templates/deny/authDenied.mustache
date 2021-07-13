@@ -1,7 +1,25 @@
 {{>layout/header}}
+<style>
+    #deny {
+        width: fit-content;
+        margin: 15% auto 0px auto;
+    }
+    p {
+        width: fit-content;
+        margin: 10px auto;
+    }
+</style>
 {{>layout/nav}}
-<h3>해당 페이지에 접근할 권한이 없습니다</h3>
-<p>잠시 후 메인 페이지로 이동합니다</p>
+<div id="deny">
+    <h3>해당 페이지에 접근할 권한이 없습니다</h3>
+    <p>잠시 후 메인 페이지로 이동합니다</p>
+</div>
+{{>layout/footer}}
 {{>layout/js}}
+<script>
+    setTimeout(function() {
+        window.location.href="/";
+    }, 3000);
+</script>
 </body>
 </html>

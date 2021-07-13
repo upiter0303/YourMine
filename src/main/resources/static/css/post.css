@@ -1,6 +1,6 @@
 
 #att_zone{
-    width: 660px;
+    width: 700px;
     min-height:150px;
     padding:10px;
     border:1px dotted #00f;
@@ -13,8 +13,11 @@
 }
 .post-info {
     margin: 100px auto;
-    padding: 20px 0px;
+    padding: 5%;
     width: 80%;
+    background-color: white;
+    border:rgb(235, 235, 235) solid 1px;
+    border-radius: 10%;
 }
 .category {
     margin: 10px 0px 30px 20px;
@@ -37,6 +40,7 @@
 }
 .info-text {
     margin-top: 5%;
+    margin-bottom: 5%;
 }
 .title {
     margin-left: 440px;
@@ -61,10 +65,7 @@
     margin-left: 440px;
 }
 .post-content {
-    font-family: 'Jeju Gothic', sans-serif;
-    margin: auto;
-    width: 80%;
-    max-width: 80%;
+    clear: both;
 }
 .icons {
     margin-left: 20px;
@@ -80,16 +81,20 @@
     max-height: 300px;
 }
 .post-list {
-    margin-top: 5%;
+    margin: auto;
 }
 
 #post-save-title {
-    margin-top: 5%;
-    margin-bottom: 5%;
+    font-size: 2.5rem;
+    margin: 5% auto 5% auto;
 }
 .post-save {
     width: fit-content;
     margin: 5% auto;
+    background-color: white;
+    border:rgb(235, 235, 235) solid 1px;
+    border-radius: 10%;
+    padding: 5%;
 }
 #check1 .form-check {
     margin-left: 10px;
@@ -100,4 +105,8 @@
 }
 #btn-save {
     margin-left: 10px;
+}
+#post-info-hot {
+    width: fit-content;
+    margin: auto;
 }

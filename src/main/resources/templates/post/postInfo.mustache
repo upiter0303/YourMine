@@ -64,36 +64,39 @@
             {{/owner}}
         </div>
     </div>
+    <div class="post-content">
+        <p id="content-title"> 상품 설명</p>
+        <p id="content-body">{{post.content}}</p>
+
+    </div>
 </div>
-<div class="post-content">
-    <p id="content-title"> 상품 설명</p>
-    <p id="content-body">{{post.content}}</p>
-    <div class="post-list">
-        <h3>최근 인기상품</h3>
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5 text-truncate">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {{#hitPost}}
-                        <div class="col mb-5">
-                            <div class="card h-100">
-                                <a href="/posts/{{id}}">
-                                    <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
-                                </a>
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <h5 class="fw-bolder">{{title}}</h5>
-                                        <p>{{price}}원</p>
-                                        <p>{{status}}</p>
-                                    </div>
+
+<div class="post-list">
+    <h3 id="post-info-hot">최근 인기상품</h3>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5 text-truncate">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#hitPost}}
+                    <div class="col mb-5">
+                        <a href="/posts/{{id}}">
+                        <div class="card h-100">
+                            <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{title}}</h5>
+                                    <p>{{price}}원</p>
+                                    <p>{{status}}</p>
                                 </div>
                             </div>
                         </div>
-                    {{/hitPost}}
-                </div>
+                        </a>
+                    </div>
+                {{/hitPost}}
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </div>
+{{>layout/footer}}
 {{>layout/js}}
 <script src="/js/post.js"></script>
 <script src="/js/carousel.js"></script>

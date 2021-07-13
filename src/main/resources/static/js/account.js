@@ -67,7 +67,7 @@ var account = {
             detailAddress: $('#detailAddress').val(),
             email: $('#email').val() + "@" + $('#server').val()
         };
-        if (data.id != "t"){
+        if ($('#idCheck').val() != "t"){
             alert("아이디 중복 확인을 해주세요");
             return;
         }
@@ -123,8 +123,10 @@ var account = {
     },
 
     idCheck: function () {
+        var data = {
+            id: $('#id').val()
+        };
         if ($('#id').val().length == 0) {
-
             var con = "<p>ID를 입력해주세요</p>";
             $('#msg').empty();
             $('#msg').append(con);
@@ -134,9 +136,6 @@ var account = {
             alert("아이디는 영어로 시작해 숫자를 혼합한 8~16자리여야합니다");
             return;
         }
-        var data = {
-            id: $('#id').val()
-        };
         $.ajax({
             url: "/idCheck",
             type: "Post",
@@ -254,6 +253,10 @@ var account = {
     },
 
     passwordModify: function () {
+        var data = {
+            id: $('#id').val(),
+            password: $('#password').val()
+        };
         if ($('#password').val() == "") {
             alert("비밀번호를 입력해주세요");
             return;
@@ -266,10 +269,6 @@ var account = {
             alert("비밀번호가 일치하지 않습니다");
             return;
         }
-        var data = {
-            id: $('#id').val(),
-            password: $('#password').val()
-        };
         $.ajax({
             type: 'POST',
             url: "/passwordModify",
@@ -302,9 +301,7 @@ var account = {
 
     leave: function () {
         var check = confirm("정말 탈퇴하시겠습니까? 개인정보는 복구되지 않습니다");
-        if (check != true) {
-
-        } else {
+        if (check == true) {
             var id = $('#id').val();
             $.ajax({
                 type: 'get',
@@ -363,13 +360,13 @@ var account = {
             data: JSON.stringify(data),
             success : function (result) {
                 if (result == true) {
-                    alert("인증완료");
+                    alert("인증완료! 비밀번호를 변경해주세요");
                     $('#attach').append("<div class=\"form-floating input-group mb-3\">\n" +
-                        "                        <input type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"비밀번호\">\n" +
+                        "                        <input type=\"password\" class=\"form-control password\" id=\"password\" placeholder=\"비밀번호\">\n" +
                         "                        <label for=\"password\">비밀번호</label>\n" +
                         "                    </div>\n" +
                         "                    <div class=\"form-floating input-group mb-3\">\n" +
-                        "                        <input type=\"password\" class=\"form-control\" id=\"password2\" placeholder=\"비밀번호 확인\">\n" +
+                        "                        <input type=\"password\" class=\"form-control password\" id=\"password2\" placeholder=\"비밀번호 확인\">\n" +
                         "                        <label for=\"password2\">비밀번호 확인</label>\n" +
                         "                    </div>\n" +
                         "                    <input type=\"submit\" role=\"button\" class=\"btn btn-secondary\" id=\"btn-passwordModify\" value=\"비밀번호 변경\">");

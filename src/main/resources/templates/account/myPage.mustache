@@ -1,124 +1,103 @@
 {{>layout/header}}
+<link rel="stylesheet" href="/css/modal.css"/>
+<link rel="stylesheet" href="/css/account.css"/>
 {{>layout/nav}}
-<div class="account-form">
-    {{#userInfo.profile}}
-        <p><img src="/profile/{{userInfo.profile}}" id="btn-modal1" title="프로필 사진 바꾸기" width=100 height=100/></p>
-    {{/userInfo.profile}}
-    {{^userInfo.profile}}
-        <p><img src="/img/default.jpeg" id="btn-modal1" title="프로필 사진 바꾸기" width=100 height=100/></p>
-    {{/userInfo.profile}}
+<div class="mypage-div">
+    <div class="mypage-info">
+        {{#userInfo.profile}}
+            <p><img src="/profile/{{userInfo.profile}}" id="btn-modal1" title="프로필 사진 바꾸기" width=100 height=100/></p>
+        {{/userInfo.profile}}
+        {{^userInfo.profile}}
+            <p><img src="/img/default.jpeg" id="btn-modal1" title="프로필 사진 바꾸기" width=100 height=100/></p>
+        {{/userInfo.profile}}
 
-    <a href="/userModify" role="button" class="btn btn-secondary">개인정보 변경</a>
-    {{#userInfo.password}}
-        <a href="/passwordModify" role="button" class="btn btn-secondary">비밀번호 변경</a>
-    {{/userInfo.password}}
-    <br>
-    <input type="hidden" value="{{userInfo.id}}" id="id">
-    <button type="button" class="btn btn-danger" id="btn-leave">회원탈퇴</button>
-</div>
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <form action="/profileModify" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="{{userInfo.id}}" id="id" name="id">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="file" class="form-control" accept=".jpg, .png, .bmp, .jpeg"  id="profile" name="profile" aria-describedby="inputGroupFileAddon04" aria-label="Upload" onchange="readImage(this)">
-                            <input type="submit" role="button" class="btn btn-outline-secondary"></button>
-                        </div>
-                        {{#userInfo.profile}}
-                            <img id="preview-image" src="/profile/{{userInfo.profile}}" width=100 height=100 />
-                        {{/userInfo.profile}}
-                        {{^userInfo.profile}}
-                            <img id="preview-image" src="/img/default.jpeg" width=100 height=100 />
-                        {{/userInfo.profile}}
-                    </div>
-                    <br>
-                    <a href="/delProfile" role="button" class="btn btn-danger">프로필 사진 삭제</a>
-                </form>
-                <br>
-                <button type="button" class="close" id="close1">x</button>
-            </div>
+        <a href="/userModify" role="button" class="btn btn-secondary">개인정보 변경</a>
+        {{#userInfo.password}}
+            <a href="/passwordModify" role="button" class="btn btn-secondary">비밀번호 변경</a>
+        {{/userInfo.password}}
+        <br>
+        <input type="hidden" value="{{userInfo.id}}" id="id">
+        <button type="button" class="btn btn-danger" id="btn-leave">회원탈퇴</button>
+    </div>
+    <div class="mypage-review">
+        <div class="sell review-box">
+            <h3>판매완료된 거래</h3>
+            {{#sellReview}}
+                <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
+            {{/sellReview}}
+            {{^sellReview}}
+                <p>완료된 거래가 없습니다</p>
+            {{/sellReview}}
+        </div>
+        <div class="buy review-box">
+            <h3>구매완료한 거래</h3>
+            {{#buyReview}}
+                <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
+            {{/buyReview}}
+            {{^buyReview}}
+                <p>완료된 거래가 없습니다</p>
+            {{/buyReview}}
         </div>
     </div>
-</div>
-<h3>판매완료된 거래</h3>
-{{#sellReview}}
-    <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
-{{/sellReview}}
-{{^sellReview}}
-    <p>완료된 거래가 없습니다</p>
-{{/sellReview}}
-<h3>구매완료한 거래</h3>
-{{#buyReview}}
-    <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
-{{/buyReview}}
-{{^buyReview}}
-    <p>완료된 거래가 없습니다</p>
-{{/buyReview}}
-<h3>내가 올린 상품</h3>
-<table class="table table-horizontal table-bordered">
-    <thead class="thead-strong">
-    <tr>
-        <th>제목</th>
-        <th>가격</th>
-        <th>거래상태</th>
-        <th>조회수</th>
-    </tr>
-    </thead>
+    <div class="mypage-post">
+        <h3>내가 올린 상품</h3>
+        <table class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>제목</th>
+                <th>거래상태</th>
+                <th>게시시간</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
 
-    <tbody id="tbody">
-    {{#posts}}
-        <tr>
-            <td>{{title}}</td>
-            <td>{{price}}</a></td>
-            <td>{{status}}</td>
-            <td>{{hit}}</td>
-        </tr>
-    {{/posts}}
-    {{^posts}}
-        <tr>
-            내가 올린 상품이 없습니다
-        </tr>
-    {{/posts}}
-    </tbody>
-</table>
-<h3>내가 찜한 목록</h3>
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {{#attention}}
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
+            <tbody id="tbody">
+            {{#posts}}
+                <tr>
+                    <td><a href="/posts/{{id}}">{{title}}</a></td>
+                    <td>{{status}}</td>
+                    <td>{{creatTime}}</td>
+                    <td>{{hit}}</td>
+                </tr>
+            {{/posts}}
+            {{^posts}}
+                <tr>
+                    내가 올린 상품이 없습니다
+                </tr>
+            {{/posts}}
+            </tbody>
+        </table>
+        <h3>내가 찜한 목록</h3>
+    </div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#attention}}
+                    <div class="col mb-5">
                         <a href="/posts/{{id}}">
+                        <div class="card h-100">
                             <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
-                        </a>
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">{{title}}</h5>
-                                <!-- Product price-->
-                                <p>{{price}}원</p>
-                                <p>{{status}}</p>
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{title}}</h5>
+                                    <p>{{price}}원</p>
+                                    <p>{{status}}</p>
+                                </div>
                             </div>
                         </div>
+                        </a>
                     </div>
-                </div>
-            {{/attention}}
-            {{^attention}}
-                <p>찜한 게시물이 없습니다</p>
-            {{/attention}}
+                {{/attention}}
+                {{^attention}}
+                    <p>찜한 게시물이 없습니다</p>
+                {{/attention}}
+            </div>
         </div>
-    </div>
-</section>
-
+    </section>
+</div>
+{{>layout/footer}}
 {{>layout/js}}
 <script src="/js/account.js"></script>
 <script src="/js/modal.js"></script>
-<link href="/css/modal.css" rel="stylesheet" type="text/css" media="all">
-<link href="/css/account.css" rel="stylesheet" type="text/css" media="all">
 </body>
 </html>
