@@ -29,6 +29,12 @@ public class AdminService {
         return no;
     }
 
+    @Transactional
+    public void delete(Long no) {
+        Users users = adminRepository.findByNo(no).orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+        adminRepository.delete(users);
+    }
+
     public UsersResponseDto findByNo(Long no) {
         Users entity = adminRepository.findByNo(no).orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
         return new UsersResponseDto(entity);

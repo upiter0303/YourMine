@@ -16,4 +16,9 @@ public class AdminApiController {
         return adminService.update(no, requestDto);
     }
 
+    @DeleteMapping("/adminPage/{no}")
+    public Long delete(@PathVariable Long no) {
+        adminService.delete(no);
+        return no;
+    }
 }

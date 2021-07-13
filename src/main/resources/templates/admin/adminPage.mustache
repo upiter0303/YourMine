@@ -1,4 +1,5 @@
 {{>layout/header}}
+{{>layout/nav}}
 <center>
     <h1>Admin Page</h1>
     <div class="post-description">
@@ -67,8 +68,9 @@
                             <td>{{email}}</td>
                             <td>{{score}}</td>
                             <td>{{role}}</td>
-                            <td><a href="/adminPage/users/modify/{{no}}" role="button" class="btn btn-secondary">회원정보 수정</a>
-                                <button type="button" class="btn btn-danger" id="btn-leave">회원탈퇴</button>
+                            <td>
+                                <a href="/adminPage/users/modify/{{no}}" role="button" class="btn btn-secondary">회원정보 수정</a>
+                                <button type="button" class="btn btn-danger" onclick="usersDelete({{no}}, '{{role}}');">회원탈퇴</button>
                             </td>
                         </tr>
                     {{/allUsers}}
@@ -80,7 +82,7 @@
 </center>
 {{>layout/footer}}
 {{>layout/js}}
-<script src="/js/post.js"></script>
+<script src="/js/admin.js"></script>
 <script src="/js/carousel.js"></script>
 </body>
 </html>
