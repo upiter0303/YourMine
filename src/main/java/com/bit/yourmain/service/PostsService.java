@@ -56,7 +56,6 @@ public class PostsService {
     public void update(PostsUpdateRequestDto requestDto) {
         isValid(requestDto.getTitle(), requestDto.getCategory(), requestDto.getPrice(), requestDto.getWay(), requestDto.getContent());
         Posts posts = postsRepository.findById(requestDto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + requestDto));
-
         posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getPrice(),
                 requestDto.getArea(), requestDto.getWay(),
                 requestDto.getOfSize(), requestDto.getCategory());

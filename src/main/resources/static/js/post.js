@@ -60,23 +60,8 @@ var postMain = {
         }
         var ofSize = null;
         if ($('#size3').val() !== "") {
-            if(!numberTest.test($('#size3').val())) {
-                alert("숫자만 입력 가능합니다");
-                $('#size3').focus();
-                return;
-            }
             if ($('#size2').val() !== "") {
-                if(!numberTest.test($('#size2').val())) {
-                    alert("숫자만 입력 가능합니다");
-                    $('#size2').focus();
-                    return;
-                }
                 if ($('#size1').val() !== "") {
-                    if(!numberTest.test($('#size1').val())) {
-                        alert("숫자만 입력 가능합니다");
-                        $('#size1').focus();
-                        return;
-                    }
                     ofSize = $('#size1').val();
                 } else {
                     alert("\'가로\'부터 채워주세요");
@@ -107,19 +92,21 @@ var postMain = {
                 alert("사진을 하나 이상 첨부하셔야 합니다");
                 return;
             } else {
-                var fileName = $('#toDelFile').val();
-                $.ajax({
-                    type: 'delete',
-                    url: '/post/files/del',
-                    data: {
-                        fileName: fileName
-                    },
-                    contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-                }).done(function() {
-                    console.log("del file")
-                }).fail(function(error) {
-                    console.error(JSON.stringify(error));
-                });
+                if ($('#toDelFile').val() !== null) {
+                    var fileName = $('#toDelFile').val();
+                    $.ajax({
+                        type: 'delete',
+                        url: '/post/files/del',
+                        data: {
+                            fileName: fileName
+                        },
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                    }).done(function() {
+                        console.log("del file")
+                    }).fail(function(error) {
+                        console.error(JSON.stringify(error));
+                    });
+                }
             }
         }
         var form = $('#postForm');

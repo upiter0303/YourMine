@@ -63,7 +63,9 @@ public class PostsController {
         postsService.update(requestDto);
         List<MultipartFile> images = files.getFiles("image");
         for (MultipartFile image : images) {
-            postsService.imageSave(image, requestDto.getId());
+            if (!image.isEmpty()) {
+                postsService.imageSave(image, requestDto.getId());
+            }
         }
         return "redirect:/posts/"+requestDto.getId();
     }

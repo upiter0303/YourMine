@@ -206,23 +206,52 @@ function chatOut() {
     });
 }
 function chatTime(time) {
+    var now = new Date();
     var fulTime = new Date(time);
-    var ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
-    var hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
-    var min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
-    var sendTime = ampm + " " + hour +":" + min;
-    return sendTime;
+
+    if (now.getDate() === fulTime.getDate()) {
+        if (now.getMonth() === fulTime.getMonth()) {
+            if (now.getFullYear() === fulTime.getFullYear()) {
+                var ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
+                var hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
+                var min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
+                return ampm + " " + hour + ":" + min;
+            }
+        }
+    } else {
+        return getDateFormat(fulTime);
+    }
 }
 
-function LoadChatTime(fulTime) {
-    var korHour = fulTime.time.hour + 9;
-    if(korHour > 23) { korHour -= 9; }
+function LoadChatTime(time) {
+    var now = new Date();
+    if (now.getDate() === time.date.day) {
+        if ((now.getMonth()+1) === time.date.month) {
+            if (now.getFullYear() === time.date.year) {
+                var korHour = time.time.hour + 9;
+                if(korHour > 23) { korHour -= 24; }
 
-    var ampm = (korHour>12 ?  "PM" : "AM");
-    var hour = (korHour>12 ? korHour-12 : korHour);
-    var min = (fulTime.time.minute>9 ? fulTime.time.minute : "0" + fulTime.time.minute);
-    var sendTime = ampm + " " + hour +":" + min;
-    return sendTime;
+                var ampm = (korHour>12 ?  "PM" : "AM");
+                var hour = (korHour>12 ? korHour-12 : korHour);
+                var min = (time.time.minute>9 ? time.time.minute : "0" + time.time.minute);
+                return ampm + " " + hour + ":" + min;
+            }
+        }
+    } else {
+        var month = (1+ time.date.month);
+        var day = time.date.day;
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        return month + '월 ' + day + '일';
+    }
+}
+
+function getDateFormat(time) {
+    var month = (1+ time.getMonth());
+    var day = time.getDate();
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+    return month + '월 ' + day + '일';
 }
 
 wsOpen();

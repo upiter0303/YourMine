@@ -38,7 +38,6 @@ public class PostsApiController {
 
     @DeleteMapping("/post/files/del")
     public void delFiles(@RequestParam String fileName) {
-        System.out.println("del file");
         fileService.delFiles(fileName);
     }
 
