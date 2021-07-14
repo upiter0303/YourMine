@@ -49,4 +49,9 @@ public class AttentionService {
         }
         return idList;
     }
+
+    public int getAttentionCount(Long no) {
+        List<Attention> attentionList = attentionRepository.findAllByPostNo(no);
+        return attentionList.size();
+    }
 }

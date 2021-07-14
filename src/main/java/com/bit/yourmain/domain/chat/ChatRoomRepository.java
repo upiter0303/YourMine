@@ -27,6 +27,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE ChatRoom c SET c.sellerOut = 0 WHERE c.identify = :identify")
+    @Query("UPDATE ChatRoom c SET c.sellerOut = 0, c.buyerOut = 0 WHERE c.identify = :identify")
     void chatIn(String identify);
 }

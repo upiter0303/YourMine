@@ -3,7 +3,10 @@
 {{>layout/nav}}
 <div class="post-info">
     <div class="category">
-        <p> - {{post.category}}</p>
+        <p>
+            <span id="post-cate">- {{post.category}}</span>
+            <span id="post-time">작성 시간: {{post.creatTime}}</span>
+        </p>
     </div>
     <div id="carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -34,16 +37,16 @@
         </div>
         <div class="hit">
             <p>
-                <span class="icons"><i class="mdi mdi-heart"></i> : 213 </span>
+                <span class="icons"><i class="mdi mdi-heart"></i> : {{attention}} </span>
                 <span class="icons"><i class="mdi mdi-eye"></i> : {{post.hit}} </span>
-                <span class="icons"><i class="mdi mdi-forum-outline"></i> : 00 </span>
+                <span class="icons"><i class="mdi mdi-forum-outline"></i> : {{chat}} </span>
                 <span class="icons"><i class="mdi mdi-thumb-up"></i> : {{post.users.score}} </span>
             </p>
         </div>
         <div class="status">
             <ul>
                 <li>{{post.status}}</li>
-                <li>거래 종류</li>
+                <li>{{way}}</li>
                 {{#post.ofSize}}<li>사이즈 : {{post.ofSize}}</li>{{/post.ofSize}}
             </ul>
         </div>
@@ -62,6 +65,7 @@
                 <a href="/posts/modify/{{post.id}}" role="button" class="btn btn-secondary"><i class="mdi mdi-pencil"></i>  수정</a>
                 <button type="button" id="btn-postDelete" class="btn btn-danger"><i class="mdi mdi-delete-forever"></i>  삭제</button>
             {{/owner}}
+
         </div>
     </div>
     <div class="post-content">

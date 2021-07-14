@@ -8,6 +8,8 @@ import com.bit.yourmain.dto.posts.PostsSaveRequestDto;
 import com.bit.yourmain.dto.posts.PostsUpdateRequestDto;
 import com.bit.yourmain.dto.reviews.ReviewResponseDto;
 import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
+import com.bit.yourmain.service.AttentionService;
+import com.bit.yourmain.service.ChatService;
 import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,8 @@ public class PostsController {
 
     private final PostsService postsService;
     private final ReviewService reviewService;
+    private final AttentionService attentionService;
+    private final ChatService chatService;
     @Value("${kakao.js.key}")
     private String kakaoKey;
 
@@ -81,6 +85,8 @@ public class PostsController {
         if (way.contains("B")) {
             wayToString += " 택배거래";
         }
+        model.addAttribute("attention", attentionService.getAttentionCount(post.getId()));
+        model.addAttribute("chat", chatService.getChatCount(post.getId()));
         model.addAttribute("way", wayToString);
         List<Files> withOutThumbnail = new ArrayList<>();
         withOutThumbnail.addAll(post.getFilesList());
