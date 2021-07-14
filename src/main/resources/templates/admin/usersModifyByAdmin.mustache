@@ -1,56 +1,59 @@
 {{>layout/header}}
+<link rel="stylesheet" href="/css/account.css"/>
+{{>layout/nav}}
 <div class="account-form">
-    <div class="col-md-12">
-        <div class="col-md-4">
-            <form>
-                <div class="form-group">
-                    <label for="no">회원번호</label>
-                    <input type="text" class="form-control" id="no" value="{{user.no}}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="id">아이디</label>
-                    <input type="text" class="form-control" id="id" value="{{user.id}}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="name">이름</label>
-                    <input type="text" class="form-control" id="name" value="{{user.name}}">
-                </div>
-                <div class="form-group">
-                    <label for="phone">전화번호</label>
-                    <input type="text" class="form-control" id="phone" value="{{user.phone}}">
-                </div>
-                <div class="form-group">
-                    <label for="postcode">우편번호</label>
-                    <input type="text" class="form-control" id="postcode" name="postcode" placeholder="우편번호" readonly>
-                </div>
-                <button type="button" class="btn btn-primary" id="btn-postcode">우편번호 찾기</button><br>
-                <div class="form-group">
-                    <label for="address">주소</label>
-                    <input type="text" class="form-control" id="address" name="address" value="{{user.address}}" readonly>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="detailAddress">상세주소</label>
-                    <input type="text" class="form-control" id="detailAddress" name="detailAddress" value="{{user.detailAddress}}">
-                </div>
-                <div class="form-group">
-                    <label for="email">이메일</label>
-                    <input type="text" class="form-control" id="email" value="{{user.email}}">
-                </div>
-                <div class="form-group">
-                    <label for="score">매너온도</label>
-                    <input type="text" class="form-control" id="score" value="{{user.score}}">
-                </div>
-            </form>
-            <a href="/adminPage" role="button" class="btn btn-secondary">취소</a>
-            <button type="button" class="btn btn-primary" onclick="usersModify();">정보 등록</button>
-        </div>
+    <div id="account-logo">
+        회원정보 변경
     </div>
+    <form>
+        <div class="form-floating input-group mb-3">
+            <label for="no">회원번호</label>
+            <input type="text" class="form-control" id="no" value="{{user.no}}" readonly>
+        </div>
+        <div class="form-floating input-group mb-3">
+            <label for="id">아이디</label>
+            <input type="text" class="form-control" id="id" value="{{user.id}}" readonly>
+        </div>
+        <div class="form-floating input-group mb-3">
+            <label for="name">이름</label>
+            <input type="text" class="form-control" id="name" value="{{user.name}}">
+            </div>
+        <div class="form-floating input-group mb-3">
+            <label for="phone">전화번호</label>
+            <input type="text" class="form-control" id="phone" value="{{user.phone}}">
+        </div>
+        <div class="form-floating input-group mb-3">
+            <button class="btn btn-outline-secondary" type="button" id="btn-postcode" onclick="postCode();">주소 찾기</button>
+            <input type="text" class="form-control" id="postcode" placeholder="우편번호" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly>
+        </div>
+        <div class="form-floating input-group mb-3">
+            <input type="text" class="form-control" id="address" name="address" value="{{user.address}}" readonly>
+            <label for="address">주소</label>
+        </div>
+        <br>
+        <div class="form-floating input-group mb-3">
+            <label for="detailAddress">상세주소</label>
+            <input type="text" class="form-control" id="detailAddress" name="detailAddress" value="{{user.detailAddress}}">
+        </div>
+        <div class="form-floating input-group mb-3">
+            <input type="text" id="extraAddress" class="form-control" placeholder="비고" readonly>
+            <label for="detailAddress">비고</label>
+        </div>
+        <div class="form-floating input-group mb-3">
+            <label for="email">이메일</label>
+            <input type="text" class="form-control" id="email" value="{{user.email}}">
+        </div>
+        <div class="form-floating input-group mb-3">
+            <label for="score">매너온도</label>
+            <input type="text" class="form-control" id="score" value="{{user.score}}">
+        </div>
+    </form>
+    <a href="/adminPage" role="button" class="btn btn-secondary">취소</a>
+    <button type="button" class="btn btn-primary" onclick="usersModify();">정보 등록</button>
 </div>
-
+{{>layout/footer}}
 {{>layout/js}}
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/admin.js"></script>
-<link href="/css/account.css" rel="stylesheet" type="text/css" media="all">
 </body>
 </html>
