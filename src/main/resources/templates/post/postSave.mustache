@@ -6,7 +6,6 @@
     <div class="col-md-10">
         <p>* 이 붙은 항목은 필수입력</p>
         <form id="postForm" enctype="multipart/form-data" action="/posts/save" method="post">
-            <input type="hidden" value="{{userInfo.id}}" id="author" name="author">
             <input type="hidden" id="subType" value="save">
             <div class="form-floating input-group mb-3">
                 <input type="text" class="form-control" id="title" name="title" placeholder="* 제목">
@@ -15,13 +14,13 @@
             <div class="input-group mb-3">
                 <select class="form-select" id="category" name="category" aria-label="Category select">
                     <option value="x" selected>카테고리 선택</option>
-                    <option value="clothes">의류,잡화</option>
-                    <option value="stationery">문구</option>
-                    <option value="furniture">가구,가전</option>
-                    <option value="book">도서,취미</option>
-                    <option value="digital">디지털</option>
-                    <option value="beauty">미용</option>
-                    <option value="other">기타</option>
+                    <option value="의류,잡화">의류,잡화</option>
+                    <option value="문구">문구</option>
+                    <option value="가구,가전">가구,가전</option>
+                    <option value="도서,취미">도서,취미</option>
+                    <option value="디지털">디지털</option>
+                    <option value="미용">미용</option>
+                    <option value="기타">기타</option>
                 </select>
             </div>
             <div class="form-floating input-group mb-3">

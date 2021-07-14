@@ -35,6 +35,7 @@ public class PostsController {
     @Value("${kakao.js.key}")
     private String kakaoKey;
 
+
     @GetMapping("/posts/save")
     public String postsSave(Model model) {
         model.addAttribute("kakaoKey", kakaoKey);
@@ -42,7 +43,9 @@ public class PostsController {
     }
 
     @PostMapping("/posts/save")
-    public String save(@ModelAttribute PostsSaveRequestDto requestDto, MultipartHttpServletRequest files) {
+    public String save(@ModelAttribute PostsSaveRequestDto requestDto, MultipartHttpServletRequest files, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("userInfo");
+        requestDto.setAuthor(user.getId());
         Long id = postsService.save(requestDto);
         List<MultipartFile> images = files.getFiles("image");
         for (MultipartFile image: images) {
@@ -54,13 +57,9 @@ public class PostsController {
     @PostMapping("/posts/modify")
     public String postModify(@ModelAttribute PostsUpdateRequestDto requestDto, MultipartHttpServletRequest files) {
         postsService.update(requestDto);
-        try {
-            List<MultipartFile> images = files.getFiles("image");
-            for (MultipartFile image : images) {
-                postsService.imageSave(image, requestDto.getId());
-            }
-        } catch (Exception e) {
-            System.out.println("no image");
+        List<MultipartFile> images = files.getFiles("image");
+        for (MultipartFile image : images) {
+            postsService.imageSave(image, requestDto.getId());
         }
         return "redirect:/posts/"+requestDto.getId();
     }
@@ -95,7 +94,7 @@ public class PostsController {
                 model.addAttribute("owner", "owner");
             }
         } catch (NullPointerException e) {
-            System.out.println("비 로그인");
+            System.out.println("guest");
         }
         if (!cookie.contains(String.valueOf(id))) {
             cookie += id+"/";
@@ -124,16 +123,12 @@ public class PostsController {
         } catch (Exception e) {
             System.out.println("size null");
         }
-        try {
-            String way = post.getWay();
-            if (way.contains("A")) {
-                model.addAttribute("A", "A");
-            }
-            if (way.contains("B")) {
-                model.addAttribute("B", "B");
-            }
-        } catch (Exception e) {
-            System.out.println("way null");
+        String way = post.getWay();
+        if (way.contains("A")) {
+            model.addAttribute("A", "A");
+        }
+        if (way.contains("B")) {
+            model.addAttribute("B", "B");
         }
         return "post/postModify";
     }

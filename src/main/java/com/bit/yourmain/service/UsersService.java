@@ -7,6 +7,7 @@ import com.bit.yourmain.domain.users.UsersRepository;
 import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.dto.users.PasswordModifyDto;
 import com.bit.yourmain.dto.users.UserModifyDto;
+import com.bit.yourmain.dto.users.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,20 +24,53 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class UsersService implements UserDetailsService {
     private final UsersRepository usersRepository;
     private final FileService fileService;
+    String idTest = "^[a-zA-z](?=.*[0-9]{1,16}).{7,16}";
+    String pwTest = "(?=.*[0-9]{1,30})(?=.*[~`!@#$%\\^&*()-+=	]{1,30})(?=.*[a-zA-Z]{1,30}).{8,30}$";
+    String numTest = "^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$";
 
-    public void save(Users users) {
+    public void save(UserSaveRequestDto users, String pass) {
+        Users checkUser = null;
+        try {
+            checkUser = getUsers(users.getId());
+        } catch (NoSuchElementException e) {
+            System.out.println("가입된 계정 없음");
+        }
+        boolean check;
+        check = checkUser == null;
+
+
+        if (!check) {
+            throw new IllegalArgumentException("sign up : un valid id");
+        } else if (!Pattern.matches(idTest, users.getId())) {
+            throw new IllegalArgumentException("sign up : un valid id");
+        } else if (!Pattern.matches(pwTest, users.getPassword())) {
+            throw new IllegalArgumentException("sign up : un valid password");
+        } else if (!Pattern.matches(numTest, users.getPhone())) {
+            throw new IllegalArgumentException("sign up : un valid phone");
+        } else if (users.getName() == null) {
+            throw new IllegalArgumentException("sign up : un valid name");
+        } else if (users.getAddress() == null) {
+            throw new IllegalArgumentException("sign up : un valid address");
+        } else if (users.getDetailAddress() == null) {
+            throw new IllegalArgumentException("sign up : un valid detail address");
+        }
+//        else if (!pass.equals("pass")) {
+//            throw new IllegalArgumentException("sign up : un valid email");
+//        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         users.setRole(Role.USER);
         users.setScore(50L);
 
-        usersRepository.save(users);
+        usersRepository.save(users.toEntity());
     }
 
     @Override
@@ -62,6 +96,11 @@ public class UsersService implements UserDetailsService {
     }
 
     public SessionUser userModify(UserModifyDto modifyDto, SessionUser sessionUser) {
+        if (modifyDto.getPhone() != null && !Pattern.matches(numTest, modifyDto.getPhone())) {
+            throw new IllegalArgumentException("userModify : un valid phone");
+        } else if (modifyDto.getName() == null) {
+            throw new IllegalArgumentException("userModify : un valid name");
+        }
         Users users = getUsers(modifyDto.getId());
         users.setName(modifyDto.getName());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

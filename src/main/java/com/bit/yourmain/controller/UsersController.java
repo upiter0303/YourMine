@@ -3,7 +3,6 @@ package com.bit.yourmain.controller;
 import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
-import com.bit.yourmain.dto.chat.ChatRoomListDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.service.*;
 import lombok.RequiredArgsConstructor;
@@ -25,32 +24,31 @@ public class UsersController {
     private final UsersService usersService;
     private final PostsService postsService;
     private final AttentionService attentionService;
-    private final ChatService chatService;
     private final ReviewService reviewService;
 
     @GetMapping("/loginPage")
     public String loginPage(@RequestParam(value = "error", required = false) String error, HttpSession session, Model model) {
 
-        SessionUser user = null;
-        try {
-            user = (SessionUser) session.getAttribute("userInfo");
-        } catch (Exception e) {
-            System.out.println("로그인 정보 없음");
-        }
+        SessionUser user = (SessionUser) session.getAttribute("userInfo");
         if (user != null) {
             return "index";
         }
 
         if (error != null) {
             String errCode = null;
-            if (error.equals("err1")) {
-                errCode = "존재하지 않는 아이디입니다";
-            } else if (error.equals("err2")) {
-                errCode = "아이디 또는 비밀번호가 틀렸습니다";
-            } else if (error.equals("err3")) {
-                errCode = "이미 접속중인 계정입니다";
-            } else {
-                errCode = "로그인 실패";
+            switch (error) {
+                case "err1":
+                    errCode = "존재하지 않는 아이디입니다";
+                    break;
+                case "err2":
+                    errCode = "아이디 또는 비밀번호가 틀렸습니다";
+                    break;
+                case "err3":
+                    errCode = "이미 접속중인 계정입니다";
+                    break;
+                default:
+                    errCode = "로그인 실패";
+                    break;
             }
             String content = "<b style=\"color:red;\">" + errCode + "</b>";
             model.addAttribute("error", content);
@@ -74,24 +72,24 @@ public class UsersController {
                 model.addAttribute("posts", myPosts);
             }
         } catch (NullPointerException e) {
-            System.out.println("no posts");
+            System.out.println("posts null");
         }
         try {
             List<Long> longList = attentionService.findAllByUsersNo(sessionUser.getNo());
             List<PostsResponseDto> postsList = postsService.findByAttention(longList);
             model.addAttribute("attention", postsList);
         } catch (NullPointerException e) {
-            System.out.println("no attention");
+            System.out.println("attention null");
         }
         try {
             model.addAttribute("sellReview", reviewService.getSellReview(sessionUser.getId()));
         } catch (NullPointerException e) {
-            System.out.println("no SellReview");
+            System.out.println("SellReview null");
         }
         try {
             model.addAttribute("buyReview", reviewService.getBuyReview(sessionUser.getId()));
         } catch (NullPointerException e) {
-            System.out.println("no BuyReview");
+            System.out.println("BuyReview null");
         }
         return "account/myPage";
     }

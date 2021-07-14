@@ -37,24 +37,28 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        if (check.equals("chat")) {
-            if (userId.equals(end)) {
-                return true;
-            }
-            if (postsService.findById(Long.valueOf(mid)).getUsers().getId().equals(userId)) {
-                return true;
-            }
-        } else if (check.equals("posts")) {
-            if (userId.equals(postsService.findById(Long.valueOf(end)).getUsers().getId())) {
-                return true;
-            }
-        } else if (check.equals("review")) {
-            ReviewResponseDto review = reviewService.getReviewPosition(Long.valueOf(end), userId);
-            if (review.getBuyer().equals(userId) && review.getPosition().equals(mid)) {
-                return true;
-            } else if (review.getSeller().equals(userId) && review.getPosition().equals(mid)) {
-                return true;
-            }
+        switch (check) {
+            case "chat":
+                if (userId.equals(end)) {
+                    return true;
+                }
+                if (postsService.findById(Long.valueOf(mid)).getUsers().getId().equals(userId)) {
+                    return true;
+                }
+                break;
+            case "posts":
+                if (userId.equals(postsService.findById(Long.valueOf(end)).getUsers().getId())) {
+                    return true;
+                }
+                break;
+            case "review":
+                ReviewResponseDto review = reviewService.getReviewPosition(Long.valueOf(end), userId);
+                if (review.getBuyer().equals(userId) && review.getPosition().equals(mid)) {
+                    return true;
+                } else if (review.getSeller().equals(userId) && review.getPosition().equals(mid)) {
+                    return true;
+                }
+                break;
         }
         response.sendRedirect(request.getContextPath()+"/authDenied");
         return false;

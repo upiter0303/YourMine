@@ -1,4 +1,4 @@
-var numberTest = /^[0-9]*$/g;
+var numberTest = /[0-9]/g;
 var postMain = {
     init: function() {
         var func = this;

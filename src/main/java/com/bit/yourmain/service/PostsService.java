@@ -31,14 +31,19 @@ public class PostsService {
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
+        isValid(requestDto.getTitle(), requestDto.getCategory(), requestDto.getPrice(), requestDto.getWay(), requestDto.getContent());
         Users users = usersRepository.findById(requestDto.getAuthor()).get();
         requestDto.setUsers(users);
-        requestDto.setStatus("거래대기");
+        requestDto.setStatus(wait);
         requestDto.setHit(0L);
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
     public void imageSave(MultipartFile image, Long id) {
+        if (image.isEmpty()) {
+            delete(id);
+            throw new IllegalArgumentException("post save : imageSave");
+        }
         Posts posts = postsRepository.findById(id).get();
         String saveFileName = fileService.fileSave(image, "postImage");
 
@@ -49,6 +54,7 @@ public class PostsService {
 
     @Transactional
     public void update(PostsUpdateRequestDto requestDto) {
+        isValid(requestDto.getTitle(), requestDto.getCategory(), requestDto.getPrice(), requestDto.getWay(), requestDto.getContent());
         Posts posts = postsRepository.findById(requestDto.getId()).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + requestDto));
 
         posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getPrice(),
@@ -129,5 +135,19 @@ public class PostsService {
         Posts posts = postsRepository.findById(id).get();
         posts.updateStatus(status);
         postsRepository.save(posts);
+    }
+
+    public void isValid(String title, String category, Long price, String way, String content) {
+        if (title.isEmpty()) {
+            throw new IllegalArgumentException("post save : Title");
+        } else if (category == null) {
+            throw new IllegalArgumentException("post save : Category");
+        } else if (price == null) {
+            throw new IllegalArgumentException("post save : Price");
+        } else if (way == null) {
+            throw new IllegalArgumentException("post save : Way");
+        } else if (content == null) {
+            throw new IllegalArgumentException("post save : Content");
+        }
     }
 }

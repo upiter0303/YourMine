@@ -20,8 +20,8 @@ public class MailApiController {
     private final UsersService usersService;
 
     @PostMapping("/emailSend")
-    public Boolean emailSend(HttpSession session, @RequestBody Map<String,String> map) {
-        Boolean result = false;
+    public boolean emailSend(HttpSession session, @RequestBody Map<String,String> map) {
+        boolean result = false;
         String userEmail = map.get("userEmail");
         Users users = null;
         try {
@@ -40,8 +40,7 @@ public class MailApiController {
     }
 
     @PostMapping("/emailCheck")
-    public boolean emailCheck(HttpServletRequest request, @RequestBody Map<String, String> map) {
-        HttpSession session = request.getSession();
+    public boolean emailCheck(HttpServletRequest request, @RequestBody Map<String, String> map, HttpSession session) {
         String Code = map.get("inputCode");
         int inputCode = 999999999;
 
@@ -50,9 +49,10 @@ public class MailApiController {
         } catch (Exception e) {
             System.out.println("code is not integer");
         }
-
-        boolean result = mailService.emailAuth(session, inputCode);
-
-        return result;
+        boolean check = mailService.emailAuth(session, inputCode);
+        if (check) {
+            session.setAttribute("emailPass", "pass");
+        }
+        return check;
     }
 }

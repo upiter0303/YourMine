@@ -110,3 +110,7 @@
     width: fit-content;
     margin: auto;
 }
+a {
+    text-decoration-line: none;
+    color: black;
+}

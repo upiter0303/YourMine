@@ -5,9 +5,8 @@ import com.bit.yourmain.service.ChatService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,11 +25,11 @@ public class ChatApiController {
 
     @GetMapping("/chat/db/demand/{roomId}")
     public String chatResponse(@PathVariable String roomId) {
-        List<ChatResponseDto> responseDto = new ArrayList<>();
+        List<ChatResponseDto> responseDto = null;
         try {
             responseDto = chatService.chatResponse(roomId);
-        } catch (Exception e) {
-            System.out.println("null db");
+        } catch (NoSuchElementException e) {
+            System.out.println("room null");
         }
         return new Gson().toJson(responseDto);
     }
@@ -43,7 +42,12 @@ public class ChatApiController {
 
     @PutMapping("/chat/db/check")
     public void readCheck(@RequestBody ReadCheckDto readCheckDto) {
-        chatService.readCheck(readCheckDto);
+        try {
+            chatService.readCheck(readCheckDto);
+        } catch (NoSuchElementException e) {
+            System.out.println("chat null");
+        }
+
     }
 
     @GetMapping("/alarm/{id}")

@@ -17,6 +17,7 @@ import static com.bit.yourmain.controller.MainController.indexPage;
 
 @RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;

@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +41,7 @@ public class ChatService {
         dbRepository.save(new ChatDB(content, speaker, listener, fulTime, roomRepository.findByIdentify(roomId).get()));
     }
 
-    public List<ChatResponseDto> chatResponse(String roomId) throws Exception {
+    public List<ChatResponseDto> chatResponse(String roomId) throws NoSuchElementException{
         List<ChatDB> chatDBS = dbRepository.findAllByChatRoomNoOrderByFulTime(
                 roomRepository.findByIdentify(roomId).get().getNo());
         List<ChatResponseDto> responseDto = new ArrayList<>();
@@ -97,7 +94,7 @@ public class ChatService {
         return listDto;
     }
 
-    public void readCheck(ReadCheckDto readCheckDto) {
+    public void readCheck(ReadCheckDto readCheckDto) throws NoSuchElementException {
         List<ChatDB> chatDBList = roomRepository.findByIdentify(readCheckDto.getRoomId()).get().getChatDBS();
         for (ChatDB db: chatDBList) {
             if (db.getRead() == null && !db.getSpeaker().equals(readCheckDto.getUserName())) {

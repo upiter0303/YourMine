@@ -28,7 +28,6 @@ public class MainController {
     private final UsersService usersService;
     static final PageRequest indexPage = PageRequest.of(0,8);
 
-
     @GetMapping("/")
     public String index(HttpSession session, Model model, HttpServletResponse response) {
         final Long cursor = 0L;
@@ -36,17 +35,17 @@ public class MainController {
         model.addAttribute("posts", postsList);
         List<PostsResponseDto> hitList = postsService.findByHit(indexPage, cursor);
         model.addAttribute("hitPost", hitList);
-
         try {
             SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
             List<PostsResponseDto> areaList = postsService.findByAddress(sessionUser.getAddress(), indexPage, cursor);
             model.addAttribute("areaPost", areaList);
         } catch (NullPointerException e) {
-            System.out.println("null address");
+            System.out.println("guest in");
         }
         Cookie cookie = new Cookie("hitCheck", null);
         cookie.setMaxAge(60*60*24);
         response.addCookie(cookie);
+
         return "index";
     }
 
