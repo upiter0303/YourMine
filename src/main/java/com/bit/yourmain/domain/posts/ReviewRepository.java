@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query("SELECT r FROM Review r WHERE r.seller = :id AND  r.sellerScore is null")
-    List<Review> findSellReview(String id);
+    @Query("SELECT r FROM Review r WHERE r.seller = :id AND r.postId = :postId AND r.sellerScore is null")
+    List<Review> findSellReview(String id, Long postId);
 
-    @Query("SELECT r FROM Review r WHERE r.buyer = :id AND r.buyerScore is Null")
-    List<Review> findBuyReview(String id);
+    @Query("SELECT r FROM Review r WHERE r.buyer = :id AND r.postId = :postId AND r.buyerScore is Null")
+    List<Review> findBuyReview(String id, Long postId);
 
     Optional<Review> findByNo(Long no);
+    Optional<Review> findByPostId(Long postId);
 
     @Transactional
     @Modifying

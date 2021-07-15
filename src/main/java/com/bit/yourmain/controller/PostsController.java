@@ -39,7 +39,6 @@ public class PostsController {
     @Value("${kakao.js.key}")
     private String kakaoKey;
 
-
     @GetMapping("/posts/save")
     public String postsSave(Model model) {
         model.addAttribute("kakaoKey", kakaoKey);
