@@ -92,7 +92,7 @@ var postMain = {
                 alert("사진을 하나 이상 첨부하셔야 합니다");
                 return;
             } else {
-                if ($('#toDelFile').val() !== null) {
+                if ($('#toDelFile').val() !== "") {
                     var fileName = $('#toDelFile').val();
                     $.ajax({
                         type: 'delete',

@@ -10,14 +10,12 @@
         {{^userInfo.profile}}
             <p><img src="/img/default.jpeg" id="btn-modal1" title="프로필 사진 바꾸기" width=100 height=100/></p>
         {{/userInfo.profile}}
-
-        <a href="/userModify" role="button" class="btn btn-secondary">개인정보 변경</a>
+            <div><a href="/userModify" role="button" class="btn btn-outline-primary mypage-button">개인정보 변경</a></div><br>
         {{#userInfo.password}}
-            <a href="/passwordModify" role="button" class="btn btn-secondary">비밀번호 변경</a>
+            <div><a href="/passwordModify" role="button" class="btn btn-outline-warning mypage-button">비밀번호 변경</a></div><br>
         {{/userInfo.password}}
-        <br>
         <input type="hidden" value="{{userInfo.id}}" id="id">
-        <button type="button" class="btn btn-danger" id="btn-leave">회원탈퇴</button>
+        <div><button type="button" class="btn btn-outline-danger mypage-button" id="btn-leave">회원탈퇴</button></div>
     </div>
     <div class="mypage-review">
         <div class="sell review-box">
@@ -26,7 +24,7 @@
                 <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
             {{/sellReview}}
             {{^sellReview}}
-                <p>완료된 거래가 없습니다</p>
+                <p class="cloud">완료된 거래가 없습니다</p>
             {{/sellReview}}
         </div>
         <div class="buy review-box">
@@ -35,7 +33,7 @@
                 <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
             {{/buyReview}}
             {{^buyReview}}
-                <p>완료된 거래가 없습니다</p>
+                <p class="cloud">완료된 거래가 없습니다</p>
             {{/buyReview}}
         </div>
     </div>
@@ -62,7 +60,7 @@
             {{/posts}}
             {{^posts}}
                 <tr>
-                    내가 올린 상품이 없습니다
+                    <td colspan="4" class="cloud">내가 올린 상품이 없습니다</td>
                 </tr>
             {{/posts}}
             </tbody>
@@ -75,25 +73,46 @@
                 {{#attention}}
                     <div class="col mb-5">
                         <a href="/posts/{{id}}">
-                        <div class="card h-100">
-                            <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <h5 class="fw-bolder">{{title}}</h5>
-                                    <p>{{price}}원</p>
-                                    <p>{{status}}</p>
+                            <div class="card h-100">
+                                <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <h5 class="fw-bolder">{{title}}</h5>
+                                        <p>{{price}}원</p>
+                                        <p>{{status}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </a>
                     </div>
                 {{/attention}}
                 {{^attention}}
-                    <p>찜한 게시물이 없습니다</p>
+                    <p class="cloud">찜한 게시물이 없습니다</p>
                 {{/attention}}
             </div>
         </div>
     </section>
+</div>
+<div id="modal1" class="modal">
+    <div class="modal-content profile-modal">
+        <form action="/profileModify" method="post" enctype="multipart/form-data">
+            <input type="hidden" value="{{userInfo.id}}" id="id" name="id">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="file" class="form-control" accept=".jpg, .png, .bmp, .jpeg"  id="profile" name="profile" aria-describedby="inputGroupFileAddon04" aria-label="Upload" onchange="readImage(this)">
+                    <input type="submit" role="button" class="btn btn-outline-secondary" value="등록"></button>
+                </div>
+                {{#userInfo.profile}}
+                    <img id="preview-image" src="/profile/{{userInfo.profile}}" width=100 height=100 />
+                {{/userInfo.profile}}
+                {{^userInfo.profile}}
+                    <img id="preview-image" src="/img/default.jpeg" width=100 height=100 />
+                {{/userInfo.profile}}
+            </div>
+            <br>
+            <a href="/delProfile" role="button" class="btn btn-danger profile-button">프로필 사진 삭제</a>
+        </form>
+    </div>
 </div>
 {{>layout/footer}}
 {{>layout/js}}

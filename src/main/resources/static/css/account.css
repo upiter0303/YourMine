@@ -73,3 +73,15 @@ a {
     margin: 5%;
     padding: 5%;
 }
+.profile-modal {
+    width: 30%;
+}
+.profile-button {
+    float: right;
+}
+.mypage-button {
+    margin-top: 2%;
+}
+.cloud {
+    opacity: 0.5;
+}
