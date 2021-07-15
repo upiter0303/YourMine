@@ -3,6 +3,16 @@ var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
     return new bootstrap.Offcanvas(offcanvasEl)
 })
 
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(function () {
+    $(document).ajaxSend(function (e, xhr, option) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+
+
 let search = function search() {
     window.location.href="/request/search/0/" + $('#keyword').val();
 }
@@ -125,4 +135,8 @@ alarm();
 function closeOff(url1, url2) {
     document.getElementById("offcanvas").click();
     window.open("/chat/" + url1 + "/" + url2, "", "_blank");
+}
+function logout() {
+    var form = $('#logoutForm');
+    form.submit();
 }

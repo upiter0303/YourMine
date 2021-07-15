@@ -96,6 +96,7 @@
 <div id="modal1" class="modal">
     <div class="modal-content profile-modal">
         <form action="/profileModify" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
             <input type="hidden" value="{{userInfo.id}}" id="id" name="id">
             <div class="form-group">
                 <div class="input-group">

@@ -6,6 +6,7 @@
     <div class="col-md-10">
         <p>* 이 붙은 항목은 필수입력</p>
         <form id="postForm" enctype="multipart/form-data" action="/posts/modify" method="post">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
             <input type="hidden" name="id" id="id" value="{{post.id}}">
             <input type="hidden" id="subType" value="modify">
             <div class="form-floating input-group mb-3">

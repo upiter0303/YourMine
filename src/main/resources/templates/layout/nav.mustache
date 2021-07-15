@@ -12,7 +12,7 @@
             </li>
             {{#userInfo}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">logout</a>
+                    <a class="nav-link" href="#" onclick="logout()">logout</a>
                 </li>
                 <li class="nav-item" onclick="getMessage()">
                     <a id="offcanvas" class="nav-link"
@@ -61,3 +61,6 @@
         </form>
     </div>
 </nav>
+<form method="post" action="/logout" id="logoutForm">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+</form>
