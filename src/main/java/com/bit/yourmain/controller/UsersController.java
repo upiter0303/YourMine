@@ -81,16 +81,6 @@ public class UsersController {
         } catch (NullPointerException e) {
             System.out.println("attention null");
         }
-        try {
-            model.addAttribute("sellReview", reviewService.getSellReview(sessionUser.getId()));
-        } catch (NullPointerException e) {
-            System.out.println("SellReview null");
-        }
-        try {
-            model.addAttribute("buyReview", reviewService.getBuyReview(sessionUser.getId()));
-        } catch (NullPointerException e) {
-            System.out.println("BuyReview null");
-        }
         return "account/myPage";
     }
 

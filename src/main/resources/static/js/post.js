@@ -181,7 +181,7 @@ var postMain = {
             data: JSON.stringify(info)
         }).done(function() {
             alert("리뷰가 작성되었습니다");
-            window.location.href="/myPage";
+            window.close();
         }).fail(function(error) {
             console.error(JSON.stringify(error));
             alert('다시 시도해주세요');

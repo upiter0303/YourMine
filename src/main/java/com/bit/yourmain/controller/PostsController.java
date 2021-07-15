@@ -146,24 +146,4 @@ public class PostsController {
         postsService.delete(id);
         return "redirect:/";
     }
-
-    @GetMapping("/review/{position}/{no}")
-    public String postReview(@PathVariable Long no, @PathVariable String position, Model model) {
-        ReviewResponseDto reviewResponseDto = reviewService.getReview(no);
-        reviewResponseDto.setPosition(position);
-        ReviewScoreSetDto scoreSetDto = new ReviewScoreSetDto(reviewResponseDto);
-        if (position.equals("buyer")) {
-            scoreSetDto.setId(reviewResponseDto.getSeller());
-        } else {
-            scoreSetDto.setId(reviewResponseDto.getBuyer());
-        }
-        model.addAttribute("review", scoreSetDto);
-        return "post/postReview";
-    }
-
-    @PutMapping("/review/set")
-    public String setScore(@RequestBody ReviewScoreSetDto scoreSetDto) {
-        reviewService.setScore(scoreSetDto);
-        return "account/myPage";
-    }
 }

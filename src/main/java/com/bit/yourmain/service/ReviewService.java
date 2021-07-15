@@ -28,6 +28,10 @@ public class ReviewService {
         return new ReviewResponseDto(reviewRepository.findByNo(no).get());
     }
 
+    public ReviewResponseDto getReviewByPostId(Long postId) {
+        return new ReviewResponseDto(reviewRepository.findByPostId(postId).get());
+    }
+
     public ReviewResponseDto getReviewPosition(Long no, String id) {
         ReviewResponseDto reviewResponseDto = new ReviewResponseDto(reviewRepository.findByNo(no).get());
         if (reviewResponseDto.getSeller().equals(id)) {
@@ -38,12 +42,12 @@ public class ReviewService {
         return reviewResponseDto;
     }
 
-    public List<ReviewResponseDto> getSellReview(String id) {
-        return getList(reviewRepository.findSellReview(id), "seller");
+    public List<ReviewResponseDto> getSellReview(String id, Long postId) {
+        return getList(reviewRepository.findSellReview(id, postId), "seller");
     }
 
-    public List<ReviewResponseDto> getBuyReview(String id) {
-        return getList(reviewRepository.findBuyReview(id), "buyer");
+    public List<ReviewResponseDto> getBuyReview(String id, Long postId) {
+        return getList(reviewRepository.findBuyReview(id, postId), "buyer");
     }
 
     public List<ReviewResponseDto> getList(List<Review> reviewList, String position) {

@@ -4,6 +4,7 @@ import com.bit.yourmain.dto.posts.PostPageDto;
 import com.bit.yourmain.dto.posts.PostPageResponseDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
 import com.bit.yourmain.dto.reviews.ReviewSaveRequestDto;
+import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.service.FileService;
 import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.ReviewService;
@@ -69,5 +70,10 @@ public class PostsApiController {
             postPageResponseDto.add(new PostPageResponseDto(responseDto));
         }
         return new Gson().toJson(postPageResponseDto);
+    }
+
+    @PutMapping("/review/set")
+    public void setScore(@RequestBody ReviewScoreSetDto scoreSetDto) {
+        reviewService.setScore(scoreSetDto);
     }
 }

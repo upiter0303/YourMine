@@ -5,7 +5,10 @@ import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.posts.PostPageDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
+import com.bit.yourmain.dto.reviews.ReviewResponseDto;
+import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.service.PostsService;
+import com.bit.yourmain.service.ReviewService;
 import com.bit.yourmain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
 
+    private final ReviewService reviewService;
     private final PostsService postsService;
     private final UsersService usersService;
     static final PageRequest indexPage = PageRequest.of(0,8);
@@ -92,9 +96,10 @@ public class MainController {
     }
 
     @GetMapping("/chat/{no}/{id}")
-    public String chat(@PathVariable Long no, @PathVariable String id, Model model, HttpSession session) {
+    public String chat(@PathVariable Long no, @PathVariable String id, Model model, HttpSession session, Long reviewNo) {
         model.addAttribute("roomId", no + "-" + id);
         model.addAttribute("post", postsService.findById(no));
+
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
         Users users = usersService.getUsers(sessionUser.getId());
         String postOwner = postsService.findById(no).getUsers().getId();
@@ -108,6 +113,40 @@ public class MainController {
                 model.addAttribute("owner", "owner");
             }
         }
+
+        try {
+            model.addAttribute("sellReview", reviewService.getSellReview(sessionUser.getId(), no));
+        } catch (NullPointerException e) {
+            System.out.println("SellReview null");
+        }
+        try {
+            model.addAttribute("buyReview", reviewService.getBuyReview(sessionUser.getId(), no));
+        } catch (NullPointerException e) {
+            System.out.println("BuyReview null");
+        }
+
+        String status = postsService.findById(no).getStatus();
+        if(status.equals("거래완료")) {
+            ReviewResponseDto reviewResponseDto = reviewService.getReviewByPostId(no);
+            if (users.getId().equals(id)) {
+                reviewResponseDto.setPosition("buyer");
+            } else {
+                reviewResponseDto.setPosition("seller");
+            }
+
+            ReviewScoreSetDto scoreSetDto = new ReviewScoreSetDto(reviewResponseDto);
+            String position = reviewResponseDto.getPosition();
+            if (position.equals("buyer")) {
+                scoreSetDto.setId(reviewResponseDto.getSeller());
+            } else {
+                scoreSetDto.setId(reviewResponseDto.getBuyer());
+            }
+            model.addAttribute("review", scoreSetDto);
+        } else {
+            ReviewScoreSetDto scoreSetDto = new ReviewScoreSetDto();
+            model.addAttribute("review", scoreSetDto);
+        }
+
         return "chat/chat";
     }
 }
