@@ -71,6 +71,10 @@ function alarm() {
             success: function (result) {
                 if (result) {
                     toastr.remove();
+                    toastr.options.onclick = function () {
+                        document.getElementById("offcanvas").click();
+                        toastr.remove();
+                    }
                     toastr.info('읽지않은 메세지가 있습니다', {timeOut: 3000});
                 }
             },

@@ -91,8 +91,6 @@ function textLoad() {
 
     var roomId = $("#roomId").val();
     var userName = $("#userName").val();
-
-    readCheck();
     $.ajax({
         url: "/chat/db/demand/"+roomId,
         type: "get",
@@ -177,12 +175,11 @@ function readCheck() {
         userName: $("#userName").val()
     }
     $.ajax({
+        url: '/readCheck',
         type: 'put',
-        url: "/chat/db/check",
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(data)
     }).done(function () {
-        $('#redDot').empty();
         console.log("read check");
     }).fail(function (error) {
         console.error(error);
@@ -190,20 +187,23 @@ function readCheck() {
 }
 
 function chatOut() {
-    var data = {
-        identify: $('#roomId').val(),
-        position: $('#position').val()
+    var check = confirm("정말 채팅방을 나가시겠습니까?");
+    if (check) {
+        var data = {
+            identify: $('#roomId').val(),
+            position: $('#position').val()
+        }
+        $.ajax({
+            url: '/chatOut',
+            type: 'put',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data)
+        }).done(function () {
+            window.close();
+        }).fail(function (error) {
+            console.error(error);
+        });
     }
-    $.ajax({
-        url: '/chatOut',
-        type: 'put',
-        contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify(data)
-    }).done(function () {
-        window.close();
-    }).fail(function (error) {
-        console.error(error);
-    });
 }
 function chatTime(time) {
     var now = new Date();
@@ -255,4 +255,5 @@ function getDateFormat(time) {
 }
 
 wsOpen();
+readCheck();
 textLoad();

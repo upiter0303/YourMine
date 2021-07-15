@@ -40,14 +40,13 @@ public class ChatApiController {
         return new Gson().toJson(list);
     }
 
-    @PutMapping("/chat/db/check")
+    @PutMapping("/readCheck")
     public void readCheck(@RequestBody ReadCheckDto readCheckDto) {
         try {
             chatService.readCheck(readCheckDto);
         } catch (NoSuchElementException e) {
             System.out.println("chat null");
         }
-
     }
 
     @GetMapping("/alarm/{id}")
