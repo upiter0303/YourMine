@@ -1,6 +1,6 @@
-window.resizeTo(720,550);
-let widthSize = 720/2;
-let heightSize = 550/2;
+window.resizeTo(396,588);
+let widthSize = 396/2;
+let heightSize = 588/2;
 window.moveTo(window.screen.width/2-widthSize, window.screen.height/2-heightSize);
 let ws;
 
