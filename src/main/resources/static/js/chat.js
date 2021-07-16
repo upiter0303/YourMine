@@ -205,15 +205,6 @@ function chatOut() {
         });
     }
 }
-function chatTime(time) {
-    const fulTime = new Date(time);
-
-    const ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
-    const hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
-    const min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
-    return ampm + " " + hour + ":" + min;
-}
-
 function LoadChatTime(time) {
     const now = new Date();
     if (now.getDate() === time.date.day) {
@@ -236,7 +227,6 @@ function LoadChatTime(time) {
         return month + '월 ' + day + '일';
     }
 }
-
 wsOpen();
 readCheck();
 textLoad();

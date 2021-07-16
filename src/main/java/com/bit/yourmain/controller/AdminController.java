@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static com.bit.yourmain.controller.MainController.indexPage;
@@ -23,12 +21,14 @@ public class AdminController {
     private final PostsService postsService;
 
     @GetMapping("/adminPage")
-    public String admin(HttpSession session, Model model, HttpServletResponse response) {
-
+    public String admin(Model model) {
         final Long cursor = 0L;
         List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage, cursor);
         model.addAttribute("posts", postsList);
-        model.addAttribute("allUsers", adminService.findAll());
+        List<UsersResponseDto> usersResponseDtoList = adminService.getResponseDtoList(indexPage);
+        model.addAttribute("allUsers", usersResponseDtoList);
+        int page = usersResponseDtoList.size() / 8 + 1;
+        model.addAttribute("page", page);
 
         return "admin/adminPage";
     }

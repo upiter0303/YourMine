@@ -1,6 +1,5 @@
 package com.bit.yourmain.dto.posts;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

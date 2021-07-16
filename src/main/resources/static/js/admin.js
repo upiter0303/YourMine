@@ -1,5 +1,3 @@
-const numTest = /^\d{3}-\d{3,4}-\d{4}$/;
-
 function usersModify() {
     const data = {
         name: $('#name').val(),
@@ -51,6 +49,63 @@ function usersDelete(no, role) {
     }
 }
 
+function getUsersPage(no) {
+    $('#now').val(no);
+    $.ajax({
+        url: "/request/users/" + no,
+        type: "post",
+        contentType: 'application/json; charset=UTF-8',
+        success: function(result) {
+            let obj = JSON.parse(result);
+            $("#tbody").empty();
+            obj.forEach(function (item) {
+                $("#tbody").append("<tr>\n" +
+                    "                            <td>" + item.no + "</td>\n" +
+                    "                            <td>" + item.name + "</td>\n" +
+                    "                            <td>" + item.id + "</td>\n" +
+                    "                            <td>" + item.phone + "</td>\n" +
+                    "                            <td>" + item.address + "</td>\n" +
+                    "                            <td>" + item.detailAddress + "</td>\n" +
+                    "                            <td>" + item.email + "</td>\n" +
+                    "                            <td>" + item.score + "</td>\n" +
+                    "                            <td>" + item.role + "</td>\n" +
+                    "                            <td>\n" +
+                    "                                <a href=\"/adminPage/users/modify/" + item.no + "\" role=\"button\" class=\"btn btn-secondary\">회원정보 수정</a>\n" +
+                    "                                <button type=\"button\" class=\"btn btn-danger\" onclick=\"usersDelete(\'" + item.no + "\', \'" + item.role + "\');\">회원탈퇴</button>\n" +
+                    "                            </td>\n" +
+                    "                        </tr>");
+            })
+            pageNum(no);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
+
+function pageNum(number) {
+    const max = $('#max').val();
+    const now = Number(number);
+    let count;
+    $('#pageNum').empty();
+    if (now > 0) {
+        $('#pageNum').empty("<li class=\"page-item\">" +
+            "<a class=\"page-link\" href=\"#\" aria-label=\"Previous\" onClick=\"getUsersPage(" + 0 + ")\"> <span aria-hidden=\"true\">&laquo;</span> </a>" +
+            "</li>");
+    }
+    for (let i = -2; i < 3; i++) {
+        count = now + i;
+        if (count >= 0 && count <= max) {
+            $('#pageNum').append("<li class=\"page-item\"><a href=\"#\" class=\"pageNum page-link\" onClick=\"getUsersPage(" + count + ")\">" + (count+1) + "</a></li>");
+        }
+    }
+    if (count < max) {
+        $('#pageNum').empty("<li class=\"page-item\">" +
+            "<a class=\"page-link\" href=\"#\" aria-label=\"Next\" onClick=\"getUsersPage(" + max + ")\"> <span aria-hidden=\"true\">&raquo;</span></a>" +
+            "</a></li>");
+    }
+}
+
 function postCode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -96,3 +151,11 @@ function postCode() {
         }
     }).open();
 }
+(function () {
+    const now = $('#now').val();
+    pageNum(now);
+
+    $('#more').onclick(function () {
+       getter();
+    });
+})();

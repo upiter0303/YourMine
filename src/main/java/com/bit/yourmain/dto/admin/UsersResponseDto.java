@@ -9,7 +9,6 @@ public class UsersResponseDto {
     private Long no;
     private String name;
     private String id;
-    private String password;
     private String phone;
     private String address;
     private String detailAddress;
@@ -21,7 +20,6 @@ public class UsersResponseDto {
         this.no = entity.getNo();
         this.name = entity.getName();
         this.id = entity.getId();
-        this.password = entity.getPassword();
         this.phone = entity.getPhone();
         this.address = entity.getAddress();
         this.detailAddress = entity.getDetailAddress();

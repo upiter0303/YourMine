@@ -66,14 +66,6 @@ public class PostsService {
         postsRepository.delete(posts);
     }
 
-    // Posts Searching only in Title
-//    @Transactional
-//    public List<Posts> search(String keyword) {
-//        List<Posts> postsList = postsRepository.findByTitleContaining(keyword);
-//        return postsList;
-//    }
-
-    // Posts Searching in Title and Content
     @Transactional
     public List<PostsResponseDto> search(String keyword, Pageable pageable, Long cursor) {
         return postsRepository.findAllSearch(keyword, pageable, cursor, wait).stream()
@@ -93,9 +85,6 @@ public class PostsService {
                 .map(PostsResponseDto::new)
                 .collect(Collectors.toList());
     }
-//    public List<Posts> findAllDesc() {
-//        return postsRepository.findAllDesc();
-//    }
 
     @Transactional
     public void hitUpdate(Long id) {

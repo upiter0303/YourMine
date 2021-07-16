@@ -17,7 +17,7 @@ let search = function search() {
     window.location.href="/request/search/0/" + $('#keyword').val();
 }
 let getter = function getter() {
-    let data = {
+    const data = {
         kind: $('#kind').val(),
         value: $('#value').val(),
         cursor: $('#cursor').val(),
@@ -104,7 +104,7 @@ function getMessage() {
                         "                <img src=\"" + item.profile + "\">\n" +
                         "                <div class=\"content\">\n" +
                         "                    <span class=\"mes-title\">" + item.title + "</span>\n" +
-                        "                    <span class=\"mes-time\">" + item.lastTime + "</span>\n" +
+                        "                    <span class=\"mes-time\">" + dateFormat(item.lastTime) + "</span>\n" +
                         "                    <div class=\"sub\">" + item.lastChat + "</div>\n" +
                         "                </div>\n" +
                         "            </div>" +
@@ -116,11 +116,11 @@ function getMessage() {
                         count = 99;
                     }
                     $('#messageBox').append(
-                        "              <div class=\"out-box\" onclick=\"closeOff(\'"+ item.url1 + "\'," + "\'"+ item.url2 + "\')\">\n" +
+                        "              <div class=\"out-box new-chat\" onclick=\"closeOff(\'"+ item.url1 + "\'," + "\'"+ item.url2 + "\')\">\n" +
                         "                <img src=\"" + item.profile + "\">\n" +
                         "                <div class=\"content\">\n" +
                         "                    <span class=\"mes-title\">" + item.title + "</span>\n" +
-                        "                    <span class=\"mes-time\">" + item.lastTime + "</span>\n" +
+                        "                    <span class=\"mes-time\">" + dateFormat(item.lastTime) + "</span>\n" +
                         "                    <div class=\"sub\">" + item.lastChat + "</div>\n" +
                         "                    <div class=\"mes-new\">" + count + "</div>" +
                         "                </div>\n" +
@@ -146,4 +146,29 @@ function chatOpen(url1, url2) {
 function logout() {
     const form = $('#logoutForm');
     form.submit();
+}
+function dateFormat(date) {
+    const now = new Date();
+    const time = new Date(date);
+    if (now.getDate() === time.getDate()) {
+        if ((now.getMonth()+1) === (time.getMonth()+1)) {
+            if (now.getFullYear() === time.getFullYear()) {
+                return chatTime(time);
+            }
+        }
+    } else {
+        let month = (time.getMonth()+1);
+        let day = time.getDay();
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        return month + '월 ' + day + '일';
+    }
+}
+function chatTime(time) {
+    const fulTime = new Date(time);
+
+    const ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
+    const hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
+    const min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
+    return ampm + " " + hour + ":" + min;
 }

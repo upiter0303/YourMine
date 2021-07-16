@@ -13,22 +13,16 @@
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
         <div class="carousel-item carousel-out active">
             <a href="/">
-                <img src="https://placeimg.com/1000/300/animals" class="d-block w-100" alt="...">
+                <img src="/img/main1.png" class="d-block w-100" alt="...">
             </a>
         </div>
         <div class="carousel-item carousel-out">
             <a href="/">
-                <img src="https://placeimg.com/900/300/arch" class="d-block w-100" alt="...">
-            </a>
-        </div>
-        <div class="carousel-item carousel-out">
-            <a href="/">
-                <img src="https://placeimg.com/1000/200/people" class="d-block w-100" alt="...">
+                <img src="/img/main2.png" class="d-block w-100" alt="...">
             </a>
         </div>
     </div>
@@ -72,8 +66,6 @@
 <input type="hidden" id="kind" value="{{page.kind}}">
 {{>layout/footer}}
 {{>layout/js}}
-<script src="/js/post.js"></script>
-<script src="/js/scripts.js"></script>
 <script>
     window.addEventListener('scroll', () => {
         let scrollLocation = document.documentElement.scrollTop;
