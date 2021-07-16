@@ -27,6 +27,10 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
     @Query("SELECT p FROM Posts p WHERE p.title LIKE %:keyword% AND p.id > :id AND p.status = :wait OR p.content LIKE %:keyword% AND p.id > :id AND p.status = :wait ORDER BY p.id")
     List<Posts> findAllSearch(String keyword, Pageable pageable, Long id, String wait);
 
+    // Posts on YourPage
+    @Query("Select p FROM Posts p WHERE p.users.no = :usersNo ORDER BY p.id")
+    List<Posts> findAllYour(Long usersNo);
+
     @Transactional
     @Modifying
     @Query("UPDATE Posts p SET p.hit = p.hit+1 WHERE p.id = :id")

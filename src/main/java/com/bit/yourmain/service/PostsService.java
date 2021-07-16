@@ -111,6 +111,13 @@ public class PostsService {
                 .collect(Collectors.toList());
     }
 
+    // Posts on YourPage
+    public List<PostsResponseDto> findAllYour(Long usersNo) {
+        return postsRepository.findAllYour(usersNo).stream()
+                .map(PostsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
     public List<PostsResponseDto> findByAttention(List<Long> idList) {
         List<PostsResponseDto> responseDtos = new ArrayList<>();
         for (Long id: idList) {

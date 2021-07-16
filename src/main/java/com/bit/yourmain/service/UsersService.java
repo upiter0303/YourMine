@@ -4,6 +4,7 @@ import com.bit.yourmain.domain.users.Role;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.domain.users.UsersRepository;
+import com.bit.yourmain.dto.admin.UsersResponseDto;
 import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.dto.users.PasswordModifyDto;
 import com.bit.yourmain.dto.users.UserModifyDto;
@@ -170,5 +171,11 @@ public class UsersService implements UserDetailsService {
 
     public void leave(String id) {
         usersRepository.delete(getUsers(id));
+    }
+
+    // YourPage Service
+    public UsersResponseDto findByName(String name) {
+        Users entity = usersRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException("해당 유저 없음!"));
+        return new UsersResponseDto(entity);
     }
 }
