@@ -26,10 +26,6 @@ public class ReviewService {
         reviewRepository.save(requestDto.toEntity());
     }
 
-    public ReviewResponseDto getReviewByPostId(Long postId) {
-        return new ReviewResponseDto(reviewRepository.findByPostId(postId).get());
-    }
-
     public ReviewResponseDto getReviewPosition(Long no, String id) {
         ReviewResponseDto reviewResponseDto = new ReviewResponseDto(reviewRepository.findByNo(no).get());
         if (reviewResponseDto.getSeller().equals(id)) {
@@ -67,9 +63,9 @@ public class ReviewService {
     public void setScore(ReviewScoreSetDto scoreSetDto) {
         try {
             if (scoreSetDto.getPosition().equals("buyer")) {
-                reviewRepository.setBuyerScore(scoreSetDto.getNo(), scoreSetDto.getScore());
+                reviewRepository.setBuyerScore(scoreSetDto.getNo(), scoreSetDto.getScore(), scoreSetDto.getReviewContent());
             } else {
-                reviewRepository.setSellerScore(scoreSetDto.getNo(), scoreSetDto.getScore());
+                reviewRepository.setSellerScore(scoreSetDto.getNo(), scoreSetDto.getScore(), scoreSetDto.getReviewContent());
             }
             usersService.setScore(scoreSetDto);
         } catch (Exception e) {

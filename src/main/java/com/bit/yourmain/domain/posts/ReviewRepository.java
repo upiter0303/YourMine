@@ -16,17 +16,19 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findBuyReview(String id, Long postId);
 
     Optional<Review> findByNo(Long no);
-    Optional<Review> findByPostId(Long postId);
+
+    @Query("SELECT r FROM Review r WHERE r.buyer = :id AND r.buyerScore is Null")
     List<Review> findAllByBuyer(String id);
+    @Query("SELECT r FROM Review r WHERE r.seller = :id AND r.sellerScore is null")
     List<Review> findAllBySeller(String id);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Review r SET r.buyerScore = :score WHERE r.no = :no")
-    void setBuyerScore(Long no, Long score);
+    @Query("UPDATE Review r SET r.buyerScore = :score , r.reviewContent = :reviewContent WHERE r.no = :no")
+    void setBuyerScore(Long no, Long score, String reviewContent);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Review r SET r.sellerScore = :score WHERE r.no = :no")
-    void setSellerScore(Long no, Long score);
+    @Query("UPDATE Review r SET r.sellerScore = :score , r.reviewContent = :reviewContent WHERE r.no = :no")
+    void setSellerScore(Long no, Long score, String reviewContent);
 }

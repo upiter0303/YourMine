@@ -149,7 +149,7 @@ function setDone() {
             $('#statusDropdown').append("거래완료");
             $('#status').val("거래완료");
             putStatus("거래완료");
-            $('#statusDropdown').attr("disabled", true);
+            $('#dropdown-menu').empty();
         }
     }
 }
@@ -233,10 +233,11 @@ function LoadChatTime(time) {
 
 function sendReview() {
     const info = {
-        id: $('#id').val(),
+        id: $('#userName').val(),
         no: $('#no').val(),
         position: $('#position').val(),
-        score: $('#score').val()
+        score: $('input[id="battery1"]:checked').val(),
+        reviewContent: $('#reviewContent').val()
     };
     $.ajax({
         type: 'put',

@@ -12,6 +12,7 @@ public class ReviewScoreSetDto {
     private Long score;
     private String position;
     private String id;
+    private String reviewContent;
 
     public ReviewScoreSetDto(ReviewResponseDto reviewResponseDto) {
         this.no = reviewResponseDto.getNo();
