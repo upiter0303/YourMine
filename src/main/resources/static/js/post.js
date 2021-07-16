@@ -165,28 +165,6 @@ const postMain = {
             }
         }
         window.open("/chat/" + postNo + "/" + userId, "", "_blank");
-    },
-
-    setReview: function () {
-        const info = {
-            id: $('#id').val(),
-            no: $('#no').val(),
-            position: $('#position').val(),
-            score: $('#score').val()
-        };
-        $.ajax({
-            type: 'put',
-            url: '/review/set',
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(info)
-        }).done(function() {
-            alert("리뷰가 작성되었습니다");
-            window.close();
-        }).fail(function(error) {
-            console.error(JSON.stringify(error));
-            alert('다시 시도해주세요');
-        });
     }
-
 };
 postMain.init();

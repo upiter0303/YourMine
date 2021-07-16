@@ -5,8 +5,6 @@ import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.posts.PostPageDto;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
-import com.bit.yourmain.dto.reviews.ReviewResponseDto;
-import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
 import com.bit.yourmain.service.PostsService;
 import com.bit.yourmain.service.ReviewService;
 import com.bit.yourmain.service.UsersService;
@@ -114,38 +112,20 @@ public class MainController {
             }
         }
 
-        try {
-            model.addAttribute("sellReview", reviewService.getSellReview(sessionUser.getId(), no));
-        } catch (NullPointerException e) {
-            System.out.println("SellReview null");
-        }
-        try {
-            model.addAttribute("buyReview", reviewService.getBuyReview(sessionUser.getId(), no));
-        } catch (NullPointerException e) {
-            System.out.println("BuyReview null");
-        }
-
-        String status = postsService.findById(no).getStatus();
-        if(status.equals("거래완료")) {
-            ReviewResponseDto reviewResponseDto = reviewService.getReviewByPostId(no);
-            if (users.getId().equals(id)) {
-                reviewResponseDto.setPosition("buyer");
-            } else {
-                reviewResponseDto.setPosition("seller");
+        if (sessionUser.getId().equals(id)) {
+            try {
+                model.addAttribute("review", reviewService.getBuyReview(sessionUser.getId(), no));
+            } catch (NullPointerException e) {
+                System.out.println("BuyReview null");
             }
-
-            ReviewScoreSetDto scoreSetDto = new ReviewScoreSetDto(reviewResponseDto);
-            String position = reviewResponseDto.getPosition();
-            if (position.equals("buyer")) {
-                scoreSetDto.setId(reviewResponseDto.getSeller());
-            } else {
-                scoreSetDto.setId(reviewResponseDto.getBuyer());
-            }
-            model.addAttribute("review", scoreSetDto);
         } else {
-            ReviewScoreSetDto scoreSetDto = new ReviewScoreSetDto();
-            model.addAttribute("review", scoreSetDto);
+            try {
+                model.addAttribute("review", reviewService.getSellReview(sessionUser.getId(), no));
+            } catch (NullPointerException e) {
+                System.out.println("SellReview null");
+            }
         }
+
 
         return "chat/chat";
     }

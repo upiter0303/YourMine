@@ -117,7 +117,8 @@ function setStandby() {
     } else {
         const check = confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?");
         if (check) {
-            $('#statusDropdown').val("거래 대기");
+            $('#statusDropdown').empty();
+            $('#statusDropdown').append("거래대기");
             $('#status').val("거래대기");
             putStatus("거래대기");
         }
@@ -130,7 +131,8 @@ function setProgress() {
     } else {
         const check = confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?");
         if (check) {
-            $('#statusDropdown').val("거래 중");
+            $('#statusDropdown').empty();
+            $('#statusDropdown').append("거래중");
             $('#status').val("거래중");
             putStatus("거래중");
         }
@@ -143,7 +145,8 @@ function setDone() {
     } else {
         var check = confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?");
         if (check) {
-            $('#statusDropdown').val("거래 완료");
+            $('#statusDropdown').empty();
+            $('#statusDropdown').append("거래완료");
             $('#status').val("거래완료");
             putStatus("거래완료");
             $('#statusDropdown').attr("disabled", true);
@@ -191,7 +194,7 @@ function chatOut() {
     if (check) {
         const data = {
             identify: $('#roomId').val(),
-            position: $('#position').val()
+            id: $('#userName').val()
         }
         $.ajax({
             url: '/chatOut',
@@ -226,6 +229,27 @@ function LoadChatTime(time) {
         day = day >= 10 ? day : '0' + day;
         return month + '월 ' + day + '일';
     }
+}
+
+function sendReview() {
+    const info = {
+        id: $('#id').val(),
+        no: $('#no').val(),
+        position: $('#position').val(),
+        score: $('#score').val()
+    };
+    $.ajax({
+        type: 'put',
+        url: '/review/set',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(info)
+    }).done(function() {
+        alert("리뷰가 작성되었습니다");
+        window.close();
+    }).fail(function(error) {
+        console.error(JSON.stringify(error));
+        alert('다시 시도해주세요');
+    });
 }
 wsOpen();
 readCheck();

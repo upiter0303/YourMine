@@ -56,6 +56,11 @@ public class ChatApiController {
 
     @PutMapping("/chatOut")
     public void chatOut(@RequestBody ChatOutDto chatOutDto) {
+        if (chatOutDto.getId().equals(chatOutDto.getIdentify().substring(chatOutDto.getIdentify().indexOf("-")+1))) {
+            chatOutDto.setPosition("buyer");
+        } else {
+            chatOutDto.setPosition("seller");
+        }
         chatService.chatOut(chatOutDto);
     }
 }

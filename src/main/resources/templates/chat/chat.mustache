@@ -11,7 +11,7 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="#" id="modalBtn">리뷰쓰기</a></li>
                 {{#owner}}
-                <li class="dropdown-submenu"><a class="dropdown-item" tabindex="-1" href="#" id="statusDropdown" value="{{post.status}}">거래상태</a>
+                <li class="dropdown-submenu"><a class="dropdown-item" tabindex="-1" href="#" id="statusDropdown">{{post.status}}</a>
                     <input type="hidden" id="status" value="{{post.status}}">
                     <input type="hidden" id="postNo" value="{{post.id}}">
                     <ul class="dropdown-menu">
@@ -36,7 +36,6 @@
         <input type="hidden" id="listener" name="listener" value="{{listener}}">
 
         <div class="sendForm">
-            <input type="hidden" value="{{userInfo.id}}" id="sender" name="sender">
             <textarea id="message" class="sendMessage" placeholder="메시지를 입력하세요."></textarea>
             <div class="button" onclick="send()"><p>전송</p></div>
             <div class="clear"></div>
@@ -44,7 +43,6 @@
     </div>
 </div>
 
-<!-- Review Modal -->
 <div id="reviewModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -58,7 +56,6 @@
 
 {{>layout/js}}
 <script src="/js/reviewModal.js"></script>
-<script src="/js/post.js"></script>
 <script src="/js/chat.js"></script>
 </body>
 </html>
