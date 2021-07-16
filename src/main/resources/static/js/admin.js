@@ -1,7 +1,7 @@
-var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
+const numTest = /^\d{3}-\d{3,4}-\d{4}$/;
 
 function usersModify() {
-    var data = {
+    const data = {
         name: $('#name').val(),
         phone: $('#phone').val(),
         address: $('#address').val(),
@@ -10,7 +10,7 @@ function usersModify() {
         score: $('#score').val()
     }
 
-    var no = $('#no').val();
+    const no = $('#no').val();
 
     $.ajax({
         type: 'PUT',
@@ -27,8 +27,8 @@ function usersModify() {
 }
 
 function usersDelete(no, role) {
-    var deleteNo = no;
-    var check = confirm('회원을 탈퇴시킵니다.');
+    const deleteNo = no;
+    const check = confirm('회원을 탈퇴시킵니다.');
 
     if (check == true) {
         if(role === "ADMIN") {
@@ -57,8 +57,8 @@ function postCode() {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var addr = ''; // 주소 변수
-            var extraAddr = ''; // 참고항목 변수
+            let addr = ''; // 주소 변수
+            let extraAddr = ''; // 참고항목 변수
 
             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우

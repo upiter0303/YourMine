@@ -1,9 +1,9 @@
-var idTest = /^[a-zA-z](?=.*[0-9]{1,16}).{7,16}/
-var pwTest = /(?=.*\d{1,30})(?=.*[~`!@#$%\^&*()-+=]{1,30})(?=.*[a-zA-Z]{1,30}).{8,30}$/;
-var numTest = /^\d{3}-\d{3,4}-\d{4}$/;
-var account = {
+const idTest = /^[a-zA-z](?=.*[0-9]{1,16}).{7,16}/
+const pwTest = /(?=.*\d{1,30})(?=.*[~`!@#$%\^&*()-+=]{1,30})(?=.*[a-zA-Z]{1,30}).{8,30}$/;
+const numTest = /^\d{3}-\d{3,4}-\d{4}$/;
+const account = {
     init: function () {
-        var func = this;
+        const func = this;
         $('#btn-signup').on('click', function () {
             func.save();
         });
@@ -58,7 +58,7 @@ var account = {
     },
 
     save: function () {
-        var data = {
+        const data = {
             name: $('#name').val(),
             id: $('#id').val(),
             password: $('#password').val(),
@@ -123,7 +123,7 @@ var account = {
     },
 
     idCheck: function () {
-        var data = {
+        const data = {
             id: $('#id').val()
         };
         if ($('#id').val().length == 0) {
@@ -170,8 +170,8 @@ var account = {
 
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
+                let addr = ''; // 주소 변수
+                let extraAddr = ''; // 참고항목 변수
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -232,7 +232,7 @@ var account = {
             alert("휴대폰번호 형식이 잘못되었습니다");
             return;
         }
-        var data = {
+        const data = {
             id: $('#id').val(),
             name: $('#name').val(),
             phone: $('#phone').val(),
@@ -253,7 +253,7 @@ var account = {
     },
 
     passwordModify: function () {
-        var data = {
+        const data = {
             id: $('#id').val(),
             password: $('#password').val()
         };
@@ -283,7 +283,7 @@ var account = {
     },
 
     findId: function () {
-        var data = {
+        const data = {
             email: $('#email').val()+"@"+$('#server').val()
         }
         $.ajax({
@@ -300,9 +300,9 @@ var account = {
     },
 
     leave: function () {
-        var check = confirm("정말 탈퇴하시겠습니까? 개인정보는 복구되지 않습니다");
+        const check = confirm("정말 탈퇴하시겠습니까? 개인정보는 복구되지 않습니다");
         if (check == true) {
-            var id = $('#id').val();
+            const id = $('#id').val();
             $.ajax({
                 type: 'get',
                 url: "/leave/"+id,
@@ -317,7 +317,7 @@ var account = {
     },
 
     emailCheck: function () {
-        var data = {
+        const data = {
             inputCode: $('#code').val(),
         }
         if ($('#code').val() == 0) {
@@ -343,7 +343,7 @@ var account = {
     },
 
     pwEmailCheck: function () {
-        var data = {
+        const data = {
             inputCode: $('#code').val(),
             id: $('#id').val()
         }
@@ -378,7 +378,7 @@ var account = {
     },
 
     email: function () {
-        var data = {
+        const data = {
             userEmail: $('#email').val() + "@" + $('#server').val(),
             find: "false"
         }
@@ -414,12 +414,12 @@ var account = {
     },
 
     sendCodeById: function () {
-        var id = $('#toFindId').val();
+        const id = $('#toFindId').val();
         if (id == null) {
             alert("아이디를 입력해주세요");
             return;
         }
-        var data = {
+        const data = {
             id: id
         }
         $.ajax({
@@ -457,9 +457,9 @@ account.init();
 
 function readImage(input) {
     if(input.files && input.files[0]) {
-        var reader = new FileReader()
+        const reader = new FileReader()
         reader.onload = e => {
-            var previewImage = document.getElementById("preview-image")
+            const previewImage = document.getElementById("preview-image")
             previewImage.src = e.target.result
         }
         reader.readAsDataURL(input.files[0])

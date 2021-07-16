@@ -1,6 +1,6 @@
 postModify = function postModify(att_zone) {
 
-    var attZone = document.getElementById(att_zone);
+    const attZone = document.getElementById(att_zone);
     $.ajax({
         type: "get",
         url: "/post/files/"+$('#id').val(),
@@ -16,19 +16,19 @@ postModify = function postModify(att_zone) {
     });
 
     let make = function make(img, item) {
-        var div = document.createElement('div')
+        const div = document.createElement('div')
         div.setAttribute('style', 'display:inline-block;position:relative;'
             + 'width:150px;height:120px;margin:5px;border:1px solid #00f;z-index:1')
 
-        var btn = document.createElement('input')
+        const btn = document.createElement('input')
         btn.setAttribute('type', 'button')
         btn.setAttribute('value', 'x')
         btn.setAttribute('style', 'width:30px;height:30px;position:absolute;font-size:24px;'
             + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00');
         let src = img;
         btn.onclick = function (ev) {
-            var ele = ev.srcElement;
-            var p = ele.parentNode;
+            const ele = ev.srcElement;
+            const p = ele.parentNode;
             attZone.removeChild(p)
             $("#toDelFile").val(function(i, val) {
                 return val + item + "/";

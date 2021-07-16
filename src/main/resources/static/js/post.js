@@ -1,7 +1,7 @@
-var numberTest = /[0-9]/g;
-var postMain = {
+const numberTest = /[0-9]/g;
+const postMain = {
     init: function() {
-        var func = this;
+        const func = this;
         $('#btn-save').on('click', function() {
             func.save();
         });
@@ -44,7 +44,7 @@ var postMain = {
             $('#price').focus();
             return;
         }
-        var checkList = "";
+        let checkList = "";
         if ($('#direct').is(':checked')) {
             checkList = "A";
         }
@@ -58,7 +58,7 @@ var postMain = {
         } else {
             $('#way').val(checkList);
         }
-        var ofSize = null;
+        let ofSize = null;
         if ($('#size3').val() !== "") {
             if ($('#size2').val() !== "") {
                 if ($('#size1').val() !== "") {
@@ -86,14 +86,14 @@ var postMain = {
                 return;
             }
         } else {
-            var ele = document.getElementById('att_zone');
-            var eleCount = ele.childElementCount;
+            const ele = document.getElementById('att_zone');
+            const eleCount = ele.childElementCount;
             if (!$('#formFileMultiple').val() && eleCount === 0) {
                 alert("사진을 하나 이상 첨부하셔야 합니다");
                 return;
             } else {
                 if ($('#toDelFile').val() !== "") {
-                    var fileName = $('#toDelFile').val();
+                    const fileName = $('#toDelFile').val();
                     $.ajax({
                         type: 'delete',
                         url: '/post/files/del',
@@ -109,14 +109,14 @@ var postMain = {
                 }
             }
         }
-        var form = $('#postForm');
+        const form = $('#postForm');
         form.submit();
     },
 
     postDelete: function () {
-        var check = confirm("정말 삭제하시겠습니까?");
+        const check = confirm("정말 삭제하시겠습니까?");
         if (check) {
-            var form = $('#deleteForm');
+            const form = $('#deleteForm');
             form.submit();
         } else {
 
@@ -124,12 +124,12 @@ var postMain = {
     },
 
     attention: function () {
-        var info = {
+        const info = {
             userId: $('#userId').val(),
             postNo: $('#postNo').val()
         };
         if (info.userId == "guest") {
-            var login = confirm("로그인한 사용자만 가능합니다. 로그인 하시겠습니까?");
+            const login = confirm("로그인한 사용자만 가능합니다. 로그인 하시겠습니까?");
             if (login) {
                 window.location.href="/loginPage";
             } else {
@@ -154,10 +154,10 @@ var postMain = {
     },
 
     chatOpen: function () {
-        var userId = $('#userId').val();
-        var postNo = $('#postNo').val();
+        const userId = $('#userId').val();
+        const postNo = $('#postNo').val();
         if (userId == "guest") {
-            var login = confirm("로그인한 사용자만 가능합니다. 로그인 하시겠습니까?");
+            const login = confirm("로그인한 사용자만 가능합니다. 로그인 하시겠습니까?");
             if (login) {
                 window.location.href="/loginPage";
             } else {
@@ -168,7 +168,7 @@ var postMain = {
     },
 
     setReview: function () {
-        var info = {
+        const info = {
             id: $('#id').val(),
             no: $('#no').val(),
             position: $('#position').val(),

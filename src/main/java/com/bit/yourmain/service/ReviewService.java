@@ -2,6 +2,8 @@ package com.bit.yourmain.service;
 
 import com.bit.yourmain.domain.posts.Review;
 import com.bit.yourmain.domain.posts.ReviewRepository;
+import com.bit.yourmain.dto.posts.PostsResponseDto;
+import com.bit.yourmain.dto.reviews.ReviewLinkDto;
 import com.bit.yourmain.dto.reviews.ReviewResponseDto;
 import com.bit.yourmain.dto.reviews.ReviewSaveRequestDto;
 import com.bit.yourmain.dto.reviews.ReviewScoreSetDto;
@@ -22,10 +24,6 @@ public class ReviewService {
 
     public void save(ReviewSaveRequestDto requestDto) {
         reviewRepository.save(requestDto.toEntity());
-    }
-
-    public ReviewResponseDto getReview(Long no) {
-        return new ReviewResponseDto(reviewRepository.findByNo(no).get());
     }
 
     public ReviewResponseDto getReviewByPostId(Long postId) {
@@ -77,5 +75,28 @@ public class ReviewService {
         } catch (Exception e) {
             System.out.println("review set score error");
         }
+    }
+
+    public List<ReviewLinkDto> myPageSellReviewList(String id) {
+        List<Review> reviewList = reviewRepository.findAllBySeller(id);
+        return getReviewList(reviewList);
+    }
+
+    public List<ReviewLinkDto> myPageBuyReviewList(String id) {
+        List<Review> reviewList = reviewRepository.findAllByBuyer(id);
+        return getReviewList(reviewList);
+    }
+
+    public List<ReviewLinkDto> getReviewList(List<Review> reviewList) {
+        List<ReviewLinkDto> reviewLink = new ArrayList<>();
+        for (Review review: reviewList) {
+            ReviewLinkDto linkDto = new ReviewLinkDto();
+            PostsResponseDto posts = postsService.findById(review.getPostId());
+            linkDto.setTitle(posts.getTitle());
+            linkDto.setPostId(String.valueOf(posts.getId()));
+            linkDto.setUserId(review.getBuyer());
+            reviewLink.add(linkDto);
+        }
+        return reviewLink;
     }
 }

@@ -75,6 +75,17 @@ public class UsersController {
             System.out.println("posts null");
         }
         try {
+            model.addAttribute("buyReview", reviewService.myPageBuyReviewList(users.getId()));
+        } catch (NullPointerException e) {
+            System.out.println("buyReview null");
+        }
+        try {
+            model.addAttribute("sellReview", reviewService.myPageSellReviewList(users.getId()));
+
+        } catch (NullPointerException e) {
+            System.out.println("sellReview null");
+        }
+        try {
             List<Long> longList = attentionService.findAllByUsersNo(sessionUser.getNo());
             List<PostsResponseDto> postsList = postsService.findByAttention(longList);
             model.addAttribute("attention", postsList);

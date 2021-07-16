@@ -1,6 +1,6 @@
 window.resizeTo(720,550);
-var widthSize = 720/2;
-var heightSize = 550/2;
+let widthSize = 720/2;
+let heightSize = 550/2;
 window.moveTo(window.screen.width/2-widthSize, window.screen.height/2-heightSize);
 let ws;
 
@@ -16,14 +16,14 @@ function wsEvt() {
 
     ws.onmessage = function(data) {
         //메시지를 받으면 동작
-        var msg = data.data;
+        const msg = data.data;
 
-        var chatContainer = document.getElementById("chatBoxTheme");
-        var chatContainerMessage = chatContainer.getElementsByClassName("chatting")[0];
+        const chatContainer = document.getElementById("chatBoxTheme");
+        const chatContainerMessage = chatContainer.getElementsByClassName("chatting")[0];
 
         if(msg != null && msg.trim() != ''){
-            var d = JSON.parse(msg);
-            var sendTime = chatTime(d.fulTime);
+            const d = JSON.parse(msg);
+            let sendTime = chatTime(d.fulTime);
             if(d.type == "getId"){
                 var si = d.sessionId != null ? d.sessionId : "";
                 if(si != ''){
@@ -52,9 +52,9 @@ function wsEvt() {
 }
 function send() {
     // Setting a sending time
-    var fulTime = new Date();
+    const fulTime = new Date();
 
-    var data = {
+    const data = {
         type: "message",
         roomId: $("#roomId").val(),
         sessionId : $("#sessionId").val(),
@@ -64,7 +64,7 @@ function send() {
         fulTime: fulTime
     }
     ws.send(JSON.stringify(data));
-    var chatDB = {
+    const chatDB = {
         speaker: data.userName,
         listener: data.listener,
         content: data.msg,
@@ -84,13 +84,13 @@ function send() {
     $('#message').val("");
 }
 function textLoad() {
-    var now = $('#status').val();
+    const now = $('#status').val();
     if (now === "거래완료") {
         $('#statusDropdown').attr("disabled", true);
     }
 
-    var roomId = $("#roomId").val();
-    var userName = $("#userName").val();
+    const roomId = $("#roomId").val();
+    const userName = $("#userName").val();
     $.ajax({
         url: "/chat/db/demand/"+roomId,
         type: "get",
@@ -112,10 +112,10 @@ function textLoad() {
 }
 
 function setStandby() {
-    var now = $('#status').val();
+    const now = $('#status').val();
     if (now === "거래대기") {
     } else {
-        var check = confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?");
+        const check = confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?");
         if (check) {
             $('#statusDropdown').val("거래 대기");
             $('#status').val("거래대기");
@@ -125,10 +125,10 @@ function setStandby() {
 }
 
 function setProgress() {
-    var now = $('#status').val();
+    const now = $('#status').val();
     if (now === "거래중") {
     } else {
-        var check = confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?");
+        const check = confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?");
         if (check) {
             $('#statusDropdown').val("거래 중");
             $('#status').val("거래중");
@@ -138,7 +138,7 @@ function setProgress() {
 }
 
 function setDone() {
-    var now = $('#status').val();
+    const now = $('#status').val();
     if (now === "거래완료") {
     } else {
         var check = confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?");
@@ -152,8 +152,8 @@ function setDone() {
 }
 
 function putStatus(item) {
-    var no = $('#postNo').val();
-    var data = {
+    const no = $('#postNo').val();
+    const data = {
         seller: $('#userName').val(),
         roomId: $('#roomId').val()
     }
@@ -170,7 +170,7 @@ function putStatus(item) {
 }
 
 function readCheck() {
-    var data = {
+    const data = {
         roomId: $('#roomId').val(),
         userName: $("#userName").val()
     }
@@ -187,9 +187,9 @@ function readCheck() {
 }
 
 function chatOut() {
-    var check = confirm("정말 채팅방을 나가시겠습니까?");
+    const check = confirm("정말 채팅방을 나가시겠습니까?");
     if (check) {
-        var data = {
+        const data = {
             identify: $('#roomId').val(),
             position: $('#position').val()
         }
@@ -206,52 +206,35 @@ function chatOut() {
     }
 }
 function chatTime(time) {
-    var now = new Date();
-    var fulTime = new Date(time);
+    const fulTime = new Date(time);
 
-    if (now.getDate() === fulTime.getDate()) {
-        if (now.getMonth() === fulTime.getMonth()) {
-            if (now.getFullYear() === fulTime.getFullYear()) {
-                var ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
-                var hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
-                var min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
-                return ampm + " " + hour + ":" + min;
-            }
-        }
-    } else {
-        return getDateFormat(fulTime);
-    }
+    const ampm = (fulTime.getHours()>12 ?  "PM" : "AM");
+    const hour = (fulTime.getHours()>12 ? fulTime.getHours()-12 : fulTime.getHours());
+    const min = (fulTime.getMinutes()>9 ? fulTime.getMinutes() : "0" + fulTime.getMinutes());
+    return ampm + " " + hour + ":" + min;
 }
 
 function LoadChatTime(time) {
-    var now = new Date();
+    const now = new Date();
     if (now.getDate() === time.date.day) {
         if ((now.getMonth()+1) === time.date.month) {
             if (now.getFullYear() === time.date.year) {
-                var korHour = time.time.hour + 9;
+                let korHour = time.time.hour + 9;
                 if(korHour > 23) { korHour -= 24; }
 
-                var ampm = (korHour>12 ?  "PM" : "AM");
-                var hour = (korHour>12 ? korHour-12 : korHour);
-                var min = (time.time.minute>9 ? time.time.minute : "0" + time.time.minute);
+                const ampm = (korHour>12 ?  "PM" : "AM");
+                const hour = (korHour>12 ? korHour-12 : korHour);
+                const min = (time.time.minute>9 ? time.time.minute : "0" + time.time.minute);
                 return ampm + " " + hour + ":" + min;
             }
         }
     } else {
-        var month = (1+ time.date.month);
-        var day = time.date.day;
+        let month = (time.date.month);
+        let day = time.date.day;
         month = month >= 10 ? month : '0' + month;
         day = day >= 10 ? day : '0' + day;
         return month + '월 ' + day + '일';
     }
-}
-
-function getDateFormat(time) {
-    var month = (1+ time.getMonth());
-    var day = time.getDate();
-    month = month >= 10 ? month : '0' + month;
-    day = day >= 10 ? day : '0' + day;
-    return month + '월 ' + day + '일';
 }
 
 wsOpen();

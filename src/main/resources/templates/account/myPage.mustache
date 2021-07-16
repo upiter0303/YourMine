@@ -21,19 +21,23 @@
         <div class="sell review-box">
             <h3>판매완료된 거래</h3>
             {{#sellReview}}
-                <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
+                <ul>
+                    <li><a href="#" onclick="chatOpen('{{postId}}','{{userId}}')">{{title}}</a></li>
+                </ul>
             {{/sellReview}}
             {{^sellReview}}
-                <p class="cloud">완료된 거래가 없습니다</p>
+                <p class="cloud">판매완료한 거래가 없습니다</p>
             {{/sellReview}}
         </div>
         <div class="buy review-box">
             <h3>구매완료한 거래</h3>
             {{#buyReview}}
-                <p><a href="/review/{{position}}/{{no}}">{{title}}</a></p>
+                <ul>
+                    <li><a href="#" onclick="chatOpen('{{postId}}','{{userId}}')">{{title}}</a></li>
+                </ul>
             {{/buyReview}}
             {{^buyReview}}
-                <p class="cloud">완료된 거래가 없습니다</p>
+                <p class="cloud">구매완료한 거래가 없습니다</p>
             {{/buyReview}}
         </div>
     </div>

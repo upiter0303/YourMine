@@ -13,22 +13,16 @@
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
         <div class="carousel-item carousel-out active">
             <a href="/">
-                <img src="https://placeimg.com/1000/300/animals" class="d-block w-100" alt="...">
+                <img src="/img/main1.png" class="d-block w-100" alt="...">
             </a>
         </div>
         <div class="carousel-item carousel-out">
             <a href="/">
-                <img src="https://placeimg.com/900/300/arch" class="d-block w-100" alt="...">
-            </a>
-        </div>
-        <div class="carousel-item carousel-out">
-            <a href="/">
-                <img src="https://placeimg.com/1000/200/people" class="d-block w-100" alt="...">
+                <img src="/img/main2.png" class="d-block w-100" alt="...">
             </a>
         </div>
     </div>
@@ -78,17 +72,16 @@
                     <div class="col mb-5">
                         <a href="/posts/{{id}}">
                         <div class="card h-100">
-                            <a href="/posts/{{id}}">
-                                <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
-                                <div class="card-body p-4">
-                                    <div class="text-center">
+                            <img src="/postImage/{{thumbnail}}" class="card-img-top" alt="{{title}}" width="200px" height="200px">
+                            <div class="card-body p-4">
+                                <div class="text-center">
                                     <h5 class="fw-bolder">{{title}}</h5>
                                     <p>{{price}}원</p>
                                     <p>{{status}}</p>
                                 </div>
                             </div>
-                            </a>
                         </div>
+                        </a>
                     </div>
                 {{/areaPost}}
                 {{^areaPost}}

@@ -1,10 +1,10 @@
-var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
-var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
+const offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
+const offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
     return new bootstrap.Offcanvas(offcanvasEl)
 })
 
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
 $(function () {
     $(document).ajaxSend(function (e, xhr, option) {
         xhr.setRequestHeader(header, token);
@@ -62,7 +62,7 @@ let getter = function getter() {
 }
 
 function alarm() {
-    var alarm = $('#alarm').val();
+    const alarm = $('#alarm').val();
     if (alarm !== null) {
         $.ajax({
             url: "/alarm/" + alarm,
@@ -86,7 +86,7 @@ function alarm() {
 }
 
 function getMessage() {
-    var id = $('#alarm').val();
+    const id = $('#alarm').val();
     $('#messageBox').empty();
     $.ajax({
         url: "/chat/db/list/"+id,
@@ -111,7 +111,7 @@ function getMessage() {
                         "          </a>"
                     );
                 } else {
-                    var count = item.newChatCount;
+                    let count = item.newChatCount;
                     if (count > 99) {
                         count = 99;
                     }
@@ -140,7 +140,10 @@ function closeOff(url1, url2) {
     document.getElementById("offcanvas").click();
     window.open("/chat/" + url1 + "/" + url2, "", "_blank");
 }
+function chatOpen(url1, url2) {
+    window.open("/chat/" + url1 + "/" + url2, "", "_blank");
+}
 function logout() {
-    var form = $('#logoutForm');
+    const form = $('#logoutForm');
     form.submit();
 }

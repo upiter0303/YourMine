@@ -43,12 +43,4 @@ public class Review {
         this.buyer = buyer;
         this.seller = seller;
     }
-
-    public void updateBuyerScore(Long score) {
-        this.buyerScore = score;
-    }
-
-    public void updateSellerScore(Long score) {
-        this.sellerScore = score;
-    }
 }
