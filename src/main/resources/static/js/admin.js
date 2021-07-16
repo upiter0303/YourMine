@@ -154,8 +154,7 @@ function postCode() {
 (function () {
     const now = $('#now').val();
     pageNum(now);
-
-    $('#more').onclick(function () {
-       getter();
+    $('#more').on('click', function () {
+        getter();
     });
 })();

@@ -39,6 +39,7 @@ public class ChatService {
 
     public void chatSave(String content, String speaker, String listener, LocalDateTime fulTime, String roomId) {
         dbRepository.save(new ChatDB(content, speaker, listener, fulTime, roomRepository.findByIdentify(roomId).get()));
+        roomUpdate(roomId);
     }
 
     public List<ChatResponseDto> chatResponse(String roomId) throws NoSuchElementException{
