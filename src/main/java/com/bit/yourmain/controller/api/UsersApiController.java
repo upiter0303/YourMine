@@ -54,6 +54,9 @@ public class UsersApiController {
 
     @PostMapping("/passwordModify")
     public void passwordModify(@RequestBody PasswordModifyDto modifyDto) {
+        System.out.println("------------------------작동");
+        System.out.println(modifyDto.getId());
+        System.out.println(modifyDto.getPassword());
         usersService.passwordModify(modifyDto);
     }
 
@@ -64,11 +67,23 @@ public class UsersApiController {
 
     @PostMapping("/findIdByEmail")
     public String findIdByEmail(@RequestBody Map<String,String> map) {
-        return usersService.findByEmail(map.get("email")).getId();
+        String id = "null";
+        try {
+            id = usersService.findByEmail(map.get("email")).getId();
+        } catch (NoSuchElementException e) {
+            System.out.println("id null");
+        }
+        return id;
     }
 
     @PostMapping("/findEmailById")
     public String findEmailById(@RequestBody Map<String,String> map) {
-        return usersService.getUsers(map.get("id")).getEmail();
+        String mail = "null";
+        try {
+            mail = usersService.getUsers(map.get("id")).getEmail();
+        } catch (NoSuchElementException e) {
+            System.out.println("id null");
+        }
+        return mail;
     }
 }

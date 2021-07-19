@@ -87,11 +87,11 @@ const account = {
             alert("이름을 입력해주세요");
             return;
         }
-        // if ($('#mailCheck').val() != "t"){
-        //     console.log($('#mailCheck').val())
-        //     alert("이메일 인증을 해주세요");
-        //     return;
-        // }
+        if ($('#mailCheck').val() != "t"){
+            console.log($('#mailCheck').val())
+            alert("이메일 인증을 해주세요");
+            return;
+        }
         if (data.address == "") {
             alert("주소를 입력해주세요");
             return;
@@ -113,7 +113,7 @@ const account = {
             type: 'POST',
             url: "/signup",
             contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
         }).done(function () {
             alert('회원가입 되었습니다');
             window.location.href = "/";
@@ -254,10 +254,10 @@ const account = {
 
     passwordModify: function () {
         const data = {
-            id: $('#id').val(),
-            password: $('#password').val()
+            id: $('#idModify').val(),
+            password: $('#passwordModify').val()
         };
-        if ($('#password').val() == "") {
+        if (data.password === "") {
             alert("비밀번호를 입력해주세요");
             return;
         }
@@ -265,7 +265,7 @@ const account = {
             alert("비밀번호는 영문, 숫자, 특수문자를 1회이상 사용한 8자리 이상이여야합니다");
             return;
         }
-        if ($('#password').val() != $('#password2').val()) {
+        if (data.password !== $('#passwordModify2').val()) {
             alert("비밀번호가 일치하지 않습니다");
             return;
         }
@@ -273,12 +273,14 @@ const account = {
             type: 'POST',
             url: "/passwordModify",
             contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(data)
-        }).done(function () {
-            alert('변경되었습니다');
-            window.location.href = "/myPage";
-        }).fail(function () {
-            alert('다시 시도해주세요');
+            data: JSON.stringify(data),
+            success: function() {
+                alert("변경되었습니다");
+                // window.location.href="/myPage";
+            },
+            error: function(error) {
+                console.error(error);
+            }
         });
     },
 
@@ -292,9 +294,12 @@ const account = {
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(data)
         }).done(function (result) {
-            alert("해당 번호로 가입된 아이디는 "+result+" 입니다");
+            if (result === "null") {
+                alert('가입 정보가 없습니다');
+            } else {
+                alert("해당 번호로 가입된 아이디는 "+result+" 입니다");
+            }
         }).fail(function (error) {
-            alert('가입 정보가 없습니다');
             console.error(JSON.stringify(error));
         });
     },
@@ -345,10 +350,8 @@ const account = {
     pwEmailCheck: function () {
         const data = {
             inputCode: $('#code').val(),
-            id: $('#id').val()
         }
         if ($('#code').val() == 0) {
-
             alert("인증 코드를 입력해주세요")
             return;
         }
@@ -359,20 +362,22 @@ const account = {
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(data),
             success : function (result) {
-                if (result == true) {
+                if (result === true) {
                     alert("인증완료! 비밀번호를 변경해주세요");
                     $('#attach').append("<div class=\"form-floating input-group mb-3\">\n" +
-                        "                        <input type=\"password\" class=\"form-control password\" id=\"password\" placeholder=\"비밀번호\">\n" +
-                        "                        <label for=\"password\">비밀번호</label>\n" +
-                        "                    </div>\n" +
-                        "                    <div class=\"form-floating input-group mb-3\">\n" +
-                        "                        <input type=\"password\" class=\"form-control password\" id=\"password2\" placeholder=\"비밀번호 확인\">\n" +
-                        "                        <label for=\"password2\">비밀번호 확인</label>\n" +
-                        "                    </div>\n" +
-                        "                    <input type=\"submit\" role=\"button\" class=\"btn btn-secondary\" id=\"btn-passwordModify\" value=\"비밀번호 변경\">");
-                    return;
+                        "<input type=\"hidden\" id=\"idModify\" value=\"" + $('#toFindId').val() + "\">" +
+                        "<input type=\"password\" class=\"form-control password\" id=\"passwordModify\" placeholder=\"비밀번호\">\n" +
+                        "<label for=\"password\">비밀번호</label>\n" +
+                        "</div>\n" +
+                        "<div class=\"form-floating input-group mb-3\">\n" +
+                        "<input type=\"password\" class=\"form-control password\" id=\"passwordModify2\" placeholder=\"비밀번호 확인\">\n" +
+                        "<label for=\"password2\">비밀번호 확인</label>\n" +
+                        "</div>\n");
+                    $('#button-attach').append("<button type=\"button\" class=\"btn btn-primary\" id=\"btn-passwordModify\">비밀번호 변경</button>");
+                    account.init();
+                } else {
+                    alert("인증번호 오류");
                 }
-                alert("인증번호 오류");
             }
         });
     },
@@ -429,24 +434,28 @@ const account = {
             data: JSON.stringify(data),
             success: function(result) {
                 alert("잠시만 기다려주세요");
-                var data2 = {
-                    userEmail: result,
-                    find: "find"
-                };
-                $.ajax({
-                    url: "/emailSend",
-                    type: "post",
-                    contentType: 'application/json; charset=UTF-8',
-                    data: JSON.stringify(data2)
-                }).done(function () {
-                    alert("가입시 입력한 이메일로 메일이 발송되었습니다");
-                }).fail(function (error) {
-                    alert("전송 실패");
-                    console.log(error);
-                })
+                if (result === "null") {
+                    alert("존재하지 않는 아이디입니다");
+                } else {
+                    const data2 = {
+                        userEmail: result,
+                        find: "find"
+                    };
+                    $.ajax({
+                        url: "/emailSend",
+                        type: "post",
+                        contentType: 'application/json; charset=UTF-8',
+                        data: JSON.stringify(data2)
+                    }).done(function () {
+                        alert("가입시 입력한 이메일로 메일이 발송되었습니다");
+                    }).fail(function (error) {
+                        alert("전송 실패");
+                        console.log(error);
+                    })
+                }
             },
-            error: function() {
-                alert("존재하지 않는 아이디입니다");
+            error: function(error) {
+                console.log(error);
             }
         });
     }

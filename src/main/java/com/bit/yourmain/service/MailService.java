@@ -33,11 +33,15 @@ public class MailService {
     public boolean emailAuth(HttpSession session, int inputCode) {
         try {
             int collectCode = (int) session.getAttribute("emailCodeInfo");
-            return collectCode == inputCode;
+            if (collectCode == inputCode) {
+                session.removeAttribute("emailCodeInfo");
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("MailService - emailAuth");
         }
-
         return false;
     }
 }

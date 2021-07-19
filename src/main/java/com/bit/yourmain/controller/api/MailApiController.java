@@ -40,7 +40,7 @@ public class MailApiController {
     }
 
     @PostMapping("/emailCheck")
-    public boolean emailCheck(HttpServletRequest request, @RequestBody Map<String, String> map, HttpSession session) {
+    public boolean emailCheck(@RequestBody Map<String, String> map, HttpSession session) {
         String Code = map.get("inputCode");
         int inputCode = 999999999;
 

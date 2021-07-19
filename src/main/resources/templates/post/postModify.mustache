@@ -32,20 +32,20 @@
             <div class="input-group mb-3" id="check1">
                 <input type="hidden" value="" id="way" name="way">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="delivery" id="delivery" name="delivery" {{#A}}checked{{/A}}>
+                    <input class="form-check-input" type="checkbox" value="delivery" id="delivery" name="delivery" {{#B}}checked{{/B}}>
                     <label class="form-check-label" for="delivery">
                         택배 거래
                     </label>
                 </div>
                 <br>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="direct" id="direct" name="direct" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false" {{#B}}checked{{/B}}>
+                    <input class="form-check-input" type="checkbox" value="direct" id="direct" name="direct" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false" {{#A}}checked{{/A}}>
                     <label class="form-check-label" for="direct">
                         직거래
                     </label>
                 </div>
             </div>
-            <div {{#B}}class="collapse show"{{/B}}{{^B}}class="collapse"{{/B}} id="collapseExample">
+            <div {{#A}}class="collapse show"{{/A}}{{^A}}class="collapse"{{/A}} id="collapseExample">
                 <div class="card card-body">
                     <p>직거래 장소 설정</p>
                     <div class="input-group mb-3">

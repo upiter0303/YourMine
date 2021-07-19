@@ -43,7 +43,7 @@ public class OAuthAttributes {
         String mail = (String) attributes.get("email");
 
         return OAuthAttributes.builder()
-                .id(mail.substring(0,mail.indexOf("@")))
+                .id(mail)
                 .name((String) attributes.get("name"))
                 .email(mail)
                 .attributes(attributes)
@@ -57,7 +57,7 @@ public class OAuthAttributes {
         String mail = (String) kakaoAccount.get("email");
 
         return OAuthAttributes.builder()
-                .id(mail.substring(0,mail.indexOf("@")))
+                .id(mail)
                 .name((String) properties.get("nickname"))
                 .email(mail)
                 .attributes(attributes)
@@ -70,7 +70,7 @@ public class OAuthAttributes {
         String mail = (String) response.get("email");
 
         return OAuthAttributes.builder()
-                .id(mail.substring(0,mail.indexOf("@")))
+                .id(mail)
                 .name((String) response.get("name"))
                 .email(mail)
                 .attributes(response)

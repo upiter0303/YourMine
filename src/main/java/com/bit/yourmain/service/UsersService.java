@@ -47,7 +47,6 @@ public class UsersService implements UserDetailsService {
         boolean check;
         check = checkUser == null;
 
-
         if (!check) {
             throw new IllegalArgumentException("sign up : un valid id");
         } else if (!Pattern.matches(idTest, users.getId())) {
@@ -62,10 +61,9 @@ public class UsersService implements UserDetailsService {
             throw new IllegalArgumentException("sign up : un valid address");
         } else if (users.getDetailAddress() == null) {
             throw new IllegalArgumentException("sign up : un valid detail address");
+        } else if (!pass.equals("pass")) {
+            throw new IllegalArgumentException("sign up : un valid email");
         }
-//        else if (!pass.equals("pass")) {
-//            throw new IllegalArgumentException("sign up : un valid email");
-//        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         users.setRole(Role.USER);
@@ -141,6 +139,9 @@ public class UsersService implements UserDetailsService {
     }
 
     public void passwordModify(PasswordModifyDto modifyDto) {
+        if (!Pattern.matches(pwTest, modifyDto.getPassword())) {
+            throw new IllegalArgumentException("sign up : un valid password");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Users users = getUsers(modifyDto.getId());
         users.setPassword(passwordEncoder.encode(modifyDto.getPassword()));
@@ -152,10 +153,6 @@ public class UsersService implements UserDetailsService {
         users.setProfile(null);
         usersRepository.save(users);
         return users;
-    }
-
-    public String findId(String email) {
-        return usersRepository.findByEmail(email).get().getId();
     }
 
     public void setScore(ReviewScoreSetDto scoreSetDto) {

@@ -19,7 +19,6 @@ public class UserSaveRequestDto {
     private String phone;
     private String address;
     private String detailAddress;
-    private String profile;
     private String email;
     private Long score;
     private Role role;
@@ -32,7 +31,6 @@ public class UserSaveRequestDto {
                     .phone(phone)
                     .address(address)
                     .detailAddress(detailAddress)
-                    .profile(profile)
                     .email(email)
                     .score(score)
                     .role(role)
