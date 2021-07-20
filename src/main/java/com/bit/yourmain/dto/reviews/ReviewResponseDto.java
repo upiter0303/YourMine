@@ -14,10 +14,20 @@ public class ReviewResponseDto {
     private String title;
     private String position;
 
+    private Long sellerScore;
+    private Long buyerScore;
+    private String sellerReviewContent;
+    private String buyerReviewContent;
+
     public ReviewResponseDto(Review review) {
         this.no = review.getNo();
         this.postId = review.getPostId();
         this.buyer = review.getBuyer();
         this.seller = review.getSeller();
+
+        this.sellerScore = review.getSellerScore();
+        this.buyerScore = review.getBuyerScore();
+        this.sellerReviewContent = review.getSellerReviewContent();
+        this.buyerReviewContent = review.getBuyerReviewContent();
     }
 }

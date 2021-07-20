@@ -32,7 +32,10 @@ public class Review {
     private String seller;
 
     @Column
-    private String reviewContent;
+    private String buyerReviewContent;
+
+    @Column
+    private String sellerReviewContent;
 
     @Column
     private Long buyerScore;

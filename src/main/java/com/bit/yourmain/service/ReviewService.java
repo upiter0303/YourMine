@@ -44,6 +44,16 @@ public class ReviewService {
         return getList(reviewRepository.findBuyReview(id, postId), "buyer");
     }
 
+    // Sell Review on YourPage
+    public List<ReviewResponseDto> findAllSellReview(String seller) {
+        return getList(reviewRepository.findAllSellReview(seller), "seller");
+    }
+
+    // Buy Review on YourPage
+    public List<ReviewResponseDto> findAllBuyReview(String buyer) {
+        return getList(reviewRepository.findAllBuyReview(buyer), "buyer");
+    }
+
     public List<ReviewResponseDto> getList(List<Review> reviewList, String position) {
         List<ReviewResponseDto> responseDto = new ArrayList<>();
         try {
@@ -63,9 +73,9 @@ public class ReviewService {
     public void setScore(ReviewScoreSetDto scoreSetDto) {
         try {
             if (scoreSetDto.getPosition().equals("buyer")) {
-                reviewRepository.setBuyerScore(scoreSetDto.getNo(), scoreSetDto.getScore(), scoreSetDto.getReviewContent());
+                reviewRepository.setBuyerScore(scoreSetDto.getNo(), scoreSetDto.getScore(), scoreSetDto.getBuyerReviewContent());
             } else {
-                reviewRepository.setSellerScore(scoreSetDto.getNo(), scoreSetDto.getScore(), scoreSetDto.getReviewContent());
+                reviewRepository.setSellerScore(scoreSetDto.getNo(), scoreSetDto.getScore(), scoreSetDto.getSellerReviewContent());
             }
             usersService.setScore(scoreSetDto);
         } catch (Exception e) {

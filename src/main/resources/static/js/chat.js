@@ -236,9 +236,14 @@ function sendReview() {
         id: $('#userName').val(),
         no: $('#no').val(),
         position: $('#position').val(),
-        score: $('input[id="battery1"]:checked').val(),
-        reviewContent: $('#reviewContent').val()
+        score: $('input[id="battery1"]:checked').val()
     };
+
+    if($('#position').val() === 'buyer') {
+        info.buyerReviewContent = $('#reviewContent').val()
+    } else if($('#position').val() === 'seller') {
+        info.sellerReviewContent = $('#reviewContent').val()
+    }
     $.ajax({
         type: 'put',
         url: '/review/set',

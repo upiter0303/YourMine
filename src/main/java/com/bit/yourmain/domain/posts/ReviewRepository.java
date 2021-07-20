@@ -22,13 +22,25 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("SELECT r FROM Review r WHERE r.seller = :id AND r.sellerScore is null")
     List<Review> findAllBySeller(String id);
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE Review r SET r.buyerScore = :score , r.reviewContent = :reviewContent WHERE r.no = :no")
-    void setBuyerScore(Long no, Long score, String reviewContent);
+    // Sell Review on YourPage
+    @Query("SELECT r FROM Review r WHERE r.seller = :seller AND " +
+            "r.buyerScore is not null AND r.sellerScore is not null AND " +
+            "r.buyerReviewContent is not null AND r.sellerReviewContent is not null")
+    List<Review> findAllSellReview(String seller);
+
+    // Sell Review on YourPage
+    @Query("SELECT r FROM Review r WHERE r.buyer = :buyer AND " +
+            "r.buyerScore is not null AND r.sellerScore is not null AND " +
+            "r.buyerReviewContent is not null AND r.sellerReviewContent is not null")
+    List<Review> findAllBuyReview(String buyer);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Review r SET r.sellerScore = :score , r.reviewContent = :reviewContent WHERE r.no = :no")
-    void setSellerScore(Long no, Long score, String reviewContent);
+    @Query("UPDATE Review r SET r.buyerScore = :score , r.buyerReviewContent = :buyerReviewContent WHERE r.no = :no")
+    void setBuyerScore(Long no, Long score, String buyerReviewContent);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Review r SET r.sellerScore = :score , r.sellerReviewContent = :sellerReviewContent WHERE r.no = :no")
+    void setSellerScore(Long no, Long score, String sellerReviewContent);
 }

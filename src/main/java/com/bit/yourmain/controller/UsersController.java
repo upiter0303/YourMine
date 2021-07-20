@@ -4,6 +4,7 @@ import com.bit.yourmain.domain.posts.Posts;
 import com.bit.yourmain.domain.users.SessionUser;
 import com.bit.yourmain.domain.users.Users;
 import com.bit.yourmain.dto.posts.PostsResponseDto;
+import com.bit.yourmain.dto.reviews.ReviewResponseDto;
 import com.bit.yourmain.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -130,6 +131,12 @@ public class UsersController {
         Long userNo = usersService.getUsers(name).getNo();
         List<PostsResponseDto> yourList = postsService.findAllYour(userNo);
         model.addAttribute("yourPost", yourList);
+
+        List<ReviewResponseDto> sellerReviewList = reviewService.findAllSellReview(name);
+        model.addAttribute("sellerReviewList", sellerReviewList);
+
+        List<ReviewResponseDto> buyerReviewList = reviewService.findAllBuyReview(name);
+        model.addAttribute("buyerReviewList", buyerReviewList);
         return "account/yourPage";
     }
 }
