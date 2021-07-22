@@ -42,8 +42,7 @@ public class FileService {
 
             if(!profile.isEmpty())
             {
-                s3Service.upload(profile, saveFileName);
-                return saveFileName;
+                return s3Service.upload(profile, saveFileName);
             }
         }catch(Exception e)
         {

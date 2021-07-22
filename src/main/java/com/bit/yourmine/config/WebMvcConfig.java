@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RequiredArgsConstructor
@@ -16,22 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final CustomInterceptor customInterceptor;
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String resourcesUriPath = "/profile/**";
-        String resourcesLocation = "~/app/imageFile/profile/";
-
-        String resourcesUriPathPost = "/postImage/**";
-        String resourcesLocationPost = "~/app/imageFile/postImage/";
-
-        registry.addResourceHandler(resourcesUriPath)
-                .addResourceLocations(resourcesLocation);
-
-        registry.addResourceHandler(resourcesUriPathPost)
-                .addResourceLocations(resourcesLocationPost);
-
-    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
