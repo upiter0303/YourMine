@@ -35,7 +35,7 @@ public class FileService {
 
     public String fileSave(MultipartFile profile, String filePath) {
         try {
-            String savePath = "C:\\Users\\User\\Documents\\"+filePath;
+            String savePath = "~/app/imageFile/"+filePath;
             String origin = profile.getOriginalFilename();
             String nameCut = origin.substring(origin.lastIndexOf("."));
             String saveFileName = getSaveFileName(nameCut, filePath);

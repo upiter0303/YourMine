@@ -20,10 +20,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String resourcesUriPath = "/profile/**";
-        String resourcesLocation = "file:///C:/Users/User/Documents/profile/";
+        String resourcesLocation = "~/app/imageFile/profile/";
 
         String resourcesUriPathPost = "/postImage/**";
-        String resourcesLocationPost = "file:///C:/Users/User/Documents/postImage/";
+        String resourcesLocationPost = "~/app/imageFile/postImage/";
 
         registry.addResourceHandler(resourcesUriPath)
                 .addResourceLocations(resourcesLocation);
