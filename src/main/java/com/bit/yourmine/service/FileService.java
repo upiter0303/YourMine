@@ -2,11 +2,11 @@ package com.bit.yourmine.service;
 
 import com.bit.yourmine.domain.files.Files;
 import com.bit.yourmine.domain.files.FilesRepository;
+import com.bit.yourmine.service.s3.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileService {
 
+    private final S3Service s3Service;
     private final FilesRepository filesRepository;
 
     private String getSaveFileName(String extName, String rootName) {
@@ -35,15 +36,13 @@ public class FileService {
 
     public String fileSave(MultipartFile profile, String filePath) {
         try {
-            String savePath = "~/app/imageFile/"+filePath;
             String origin = profile.getOriginalFilename();
             String nameCut = origin.substring(origin.lastIndexOf("."));
             String saveFileName = getSaveFileName(nameCut, filePath);
 
             if(!profile.isEmpty())
             {
-                File file = new File(savePath, saveFileName);
-                profile.transferTo(file);
+                s3Service.upload(profile, saveFileName);
                 return saveFileName;
             }
         }catch(Exception e)
