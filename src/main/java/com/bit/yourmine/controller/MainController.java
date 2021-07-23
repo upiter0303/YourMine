@@ -43,6 +43,8 @@ public class MainController {
             model.addAttribute("areaPost", areaList);
         } catch (NullPointerException e) {
             System.out.println("guest in");
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("java.lang.StringIndexOutOfBoundsException");
         }
         Cookie cookie = new Cookie("hitCheck", null);
         cookie.setMaxAge(60*60*24);
