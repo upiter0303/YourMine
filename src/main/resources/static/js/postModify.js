@@ -9,7 +9,7 @@ postModify = function postModify(att_zone) {
             list.forEach(function (item) {
                 let img = document.createElement('img');
                 img.setAttribute('style', 'width:100%;height:100%;z-index:none');
-                img.src = "/postImage/"+item;
+                img.src = item;
                 attZone.appendChild(make(img, item));
             })
         }

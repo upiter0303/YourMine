@@ -9,6 +9,7 @@ import com.bit.yourmine.dto.chat.ChatOutDto;
 import com.bit.yourmine.dto.chat.ChatResponseDto;
 import com.bit.yourmine.dto.chat.ChatRoomListDto;
 import com.bit.yourmine.dto.chat.ReadCheckDto;
+import com.bit.yourmine.dto.posts.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -77,13 +78,24 @@ public class ChatService {
     }
 
     public ChatRoomListDto chatRoomToDto(ChatRoom chatRoom, String id) {
+        PostsResponseDto posts = postsService.findById(chatRoom.getPostId());
         ChatRoomListDto listDto = new ChatRoomListDto(chatRoom);
-        listDto.setTitle(postsService.findById(listDto.getPostId()).getTitle());
-        String profile = postsService.findById(chatRoom.getPostId()).getUsers().getProfile();
-        if (profile == null) {
-            listDto.setProfile("/img/default.jpeg");
+        listDto.setTitle(posts.getTitle());
+        if (id.equals(posts.getAuthor())) {
+            String profile = posts.getUsers().getProfile();
+            if (profile == null) {
+                listDto.setProfile("/img/default.jpeg");
+            } else {
+                listDto.setProfile(profile);
+            }
         } else {
-            listDto.setProfile("/profile/" + profile);
+            String room = chatRoom.getIdentify();
+            String profile = usersService.getUsers(room.substring(room.indexOf("-")+1)).getProfile();
+            if (profile == null) {
+                listDto.setProfile("/img/default.jpeg");
+            } else {
+                listDto.setProfile(profile);
+            }
         }
         Long count = 0L;
         for (ChatDB chatDB : chatRoom.getChatDBS()) {
