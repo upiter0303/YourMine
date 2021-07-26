@@ -16,4 +16,4 @@ script: "./gradlew clean build"
 notifications:
   email:
     recipients:
-      bitcampcommunity@gmail.com
+      yourmineService@gmail.com
