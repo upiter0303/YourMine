@@ -3,7 +3,10 @@ let widthSize = 396/2;
 let heightSize = 588/2;
 window.moveTo(window.screen.width/2-widthSize, window.screen.height/2-heightSize);
 let ws;
-
+let nowStatus = $('#status').val();
+if (nowStatus === "거래완료") {
+    $('#dropdown-menu').remove();
+}
 function wsOpen(){
     ws = new WebSocket("ws://" + location.host + "/chatsocket/" + $('#roomId').val());
     wsEvt();
@@ -84,11 +87,6 @@ function send() {
     $('#message').val("");
 }
 function textLoad() {
-    const now = $('#status').val();
-    if (now === "거래완료") {
-        $('#statusDropdown').attr("disabled", true);
-    }
-
     const roomId = $("#roomId").val();
     const userName = $("#userName").val();
     $.ajax({
@@ -96,7 +94,7 @@ function textLoad() {
         type: "get",
         contentType: 'application/json; charset=UTF-8',
         success: function(result) {
-            var obj = JSON.parse(result);
+            const obj = JSON.parse(result);
             obj.forEach(function (item) {
                 if (item.speaker === userName) {
                     $("#chatting").append("<div class='me'><div class='b'></div><div class='a'><p class='me'>" + item.content + "</p></div><div class='time'>" + LoadChatTime(item.fulTime) + "</div></div>");
@@ -112,45 +110,45 @@ function textLoad() {
 }
 
 function setStandby() {
-    const now = $('#status').val();
-    if (now === "거래대기") {
+    if (nowStatus === "거래대기") {
     } else {
-        const check = confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?");
-        if (check) {
-            $('#statusDropdown').empty();
-            $('#statusDropdown').append("거래대기");
-            $('#status').val("거래대기");
-            putStatus("거래대기");
-        }
+        $.confirm("거래 상태를 \"거래 대기\"으로 변경하시겠습니까?",{
+            callEvent:function(){
+                $('#statusDropdown').empty();
+                $('#statusDropdown').append("거래대기");
+                $('#status').val("거래대기");
+                putStatus("거래대기");
+            }
+        })
     }
 }
 
 function setProgress() {
-    const now = $('#status').val();
-    if (now === "거래중") {
+    if (nowStatus === "거래중") {
     } else {
-        const check = confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?");
-        if (check) {
-            $('#statusDropdown').empty();
-            $('#statusDropdown').append("거래중");
-            $('#status').val("거래중");
-            putStatus("거래중");
-        }
+        $.confirm("거래 상태를 \"거래 중\"으로 변경하시겠습니까?",{
+            callEvent:function(){
+                $('#statusDropdown').empty();
+                $('#statusDropdown').append("거래중");
+                $('#status').val("거래중");
+                putStatus("거래중");
+            }
+        })
     }
 }
 
 function setDone() {
-    const now = $('#status').val();
-    if (now === "거래완료") {
+    if (nowStatus === "거래완료") {
     } else {
-        var check = confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?");
-        if (check) {
-            $('#statusDropdown').empty();
-            $('#statusDropdown').append("거래완료");
-            $('#status').val("거래완료");
-            putStatus("거래완료");
-            $('#dropdown-menu').empty();
-        }
+        $.confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?", {
+            callEvent:function(){
+                $('#statusDropdown').empty();
+                $('#statusDropdown').append("거래완료");
+                $('#status').val("거래완료");
+                putStatus("거래완료");
+                $('#dropdown-menu').remove();
+            }
+        })
     }
 }
 
@@ -190,23 +188,25 @@ function readCheck() {
 }
 
 function chatOut() {
-    const check = confirm("정말 채팅방을 나가시겠습니까?");
-    if (check) {
-        const data = {
-            identify: $('#roomId').val(),
-            id: $('#userName').val()
+    $.confirm("정말 나가시겠습니까?",{
+        callEvent:function(){
+            const data = {
+                identify: $('#roomId').val(),
+                id: $('#userName').val()
+            }
+            $.ajax({
+                url: '/chatOut',
+                type: 'put',
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(data)
+            }).done(function () {
+                window.close();
+            }).fail(function (error) {
+                console.error(error);
+            });
         }
-        $.ajax({
-            url: '/chatOut',
-            type: 'put',
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(data)
-        }).done(function () {
-            window.close();
-        }).fail(function (error) {
-            console.error(error);
-        });
-    }
+    })
+
 }
 function LoadChatTime(time) {
     const now = new Date();
@@ -238,7 +238,14 @@ function sendReview() {
         position: $('#position').val(),
         score: $('input[id="battery1"]:checked').val()
     };
-
+    if (info.score === "") {
+        $.alert('점수를 입력해주세요');
+        return;
+    }
+    if ($('#reviewContent').val() === "") {
+        $.alert("점수를 입력해주세요");
+        return;
+    }
     if($('#position').val() === 'buyer') {
         info.buyerReviewContent = $('#reviewContent').val()
     } else if($('#position').val() === 'seller') {
@@ -250,11 +257,10 @@ function sendReview() {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(info)
     }).done(function() {
-        alert("리뷰가 작성되었습니다");
-        window.close();
+        $.alert("리뷰가 작성되었습니다",{callEvent:function(){window.close();}});
     }).fail(function(error) {
         console.error(JSON.stringify(error));
-        alert('다시 시도해주세요');
+        $.alert('다시 시도해주세요');
     });
 }
 wsOpen();
