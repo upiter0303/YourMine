@@ -22,12 +22,13 @@ public class SmsService {
         Message sms = new Message(key, secret);
         HashMap<String, String> params = new HashMap<String, String>();
         String cutPhone = phone.replace("-", "");
-        params.put(cutPhone, "수신 번호");
-        params.put(num, "발신 번호");
+        params.put("to", cutPhone);
+        params.put("from", num);
         params.put("type", "SMS");
         params.put("text", "YourMine에서 새로운 대화가 시작되었습니다!");
         params.put("app_version", "test app 1.2");
-        try { JSONObject obj = (JSONObject) sms.send(params);
+        try {
+            JSONObject obj = (JSONObject) sms.send(params);
             System.out.println(obj.toString());
         } catch (CoolsmsException e) {
             System.out.println(e.getMessage());
