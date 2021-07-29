@@ -31,8 +31,14 @@
     background-color: rgb(235, 235, 235);
 }
 .carousel-out {
+    max-height: 400px;
+    max-width: 400px;
     margin-top: 50%;
     transform: translate(0%, -50%);
+}
+img {
+    max-height: 400px;
+    max-width: 400px;
 }
 .carousel-out img {
     max-height: 400px;
