@@ -140,7 +140,7 @@ function setProgress() {
 function setDone() {
     if (nowStatus === "거래완료") {
     } else {
-        $.confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다. 정말 바꾸시겠습니까?", {
+        $.confirm("\"거래 완료\"상태로 변경하면 다시 거래 상태변경이 불가능합니다.", {
             callEvent:function(){
                 $('#statusDropdown').empty();
                 $('#statusDropdown').append("거래완료");
