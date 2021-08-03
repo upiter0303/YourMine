@@ -145,6 +145,8 @@ public class PostsService {
             throw new IllegalArgumentException("post save : Category");
         } else if (price == null) {
             throw new IllegalArgumentException("post save : Price");
+        } else if (price > 1000000000L) {
+            throw new IllegalArgumentException("post save : Price");
         } else if (way == null) {
             throw new IllegalArgumentException("post save : Way");
         } else if (content == null) {

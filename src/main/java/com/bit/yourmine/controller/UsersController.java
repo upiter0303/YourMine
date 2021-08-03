@@ -128,7 +128,11 @@ public class UsersController {
     // YourPage Controller
     @GetMapping("/user/{id}")
     public String yourPage(@PathVariable String id, Model model) {
-        Long userNo = usersService.getUsers(id).getNo();
+        Users user = usersService.getUsers(id);
+        Long userNo = user.getNo();
+        String name = user.getName();
+        model.addAttribute("name", name);
+
         List<PostsResponseDto> yourList = postsService.findAllYour(userNo);
         model.addAttribute("yourPost", yourList);
 

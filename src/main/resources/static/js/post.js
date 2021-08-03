@@ -1,4 +1,4 @@
-const numberTest = /[0-9]/g;
+const numberTest = /[0-9].{1,9}/g;
 const postMain = {
     init: function() {
         const func = this;
