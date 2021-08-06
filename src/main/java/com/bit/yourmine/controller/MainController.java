@@ -32,14 +32,13 @@ public class MainController {
 
     @GetMapping("/")
     public String index(HttpSession session, Model model, HttpServletResponse response) {
-        final Long cursor = 0L;
-        List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage, cursor);
+        List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage);
         model.addAttribute("posts", postsList);
-        List<PostsResponseDto> hitList = postsService.findByHit(indexPage, cursor);
+        List<PostsResponseDto> hitList = postsService.findByHit(indexPage);
         model.addAttribute("hitPost", hitList);
         try {
             SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
-            List<PostsResponseDto> areaList = postsService.findByAddress(sessionUser.getAddress(), indexPage, cursor);
+            List<PostsResponseDto> areaList = postsService.findByAddress(sessionUser.getAddress(), indexPage);
             model.addAttribute("areaPost", areaList);
         } catch (NullPointerException e) {
             System.out.println("guest in");
@@ -53,29 +52,29 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/request/{kind}/{cursor}/{value}")
-    public String requestPage(@PathVariable String kind, @PathVariable Long cursor, @PathVariable String value, Model model) {
+    @GetMapping("/request/{kind}/{value}")
+    public String requestPage(@PathVariable String kind, @PathVariable String value, Model model) {
         switch (kind) {
             case "category":
                 model.addAttribute("input", "해당 카테고리의 상품 목록");
-                model.addAttribute("Post", postsService.findByCategory(value, indexPage, cursor));
+                model.addAttribute("Post", postsService.findByCategory(value, indexPage));
                 break;
             case "hit":
                 System.out.println("request mapping");
                 model.addAttribute("input", "인기 상품 목록");
-                model.addAttribute("Post", postsService.findByHit(indexPage, cursor));
+                model.addAttribute("Post", postsService.findByHit(indexPage));
                 break;
             case "all":
                 model.addAttribute("input", "최근 상품 목록");
-                model.addAttribute("Post", postsService.findAllDesc(indexPage, cursor));
+                model.addAttribute("Post", postsService.findAllDesc(indexPage));
                 break;
             case "area":
                 model.addAttribute("input", "근처 상품 목록");
-                model.addAttribute("Post", postsService.findByAddress(value, indexPage, cursor));
+                model.addAttribute("Post", postsService.findByAddress(value, indexPage));
                 break;
             case "search":
                 model.addAttribute("input", "검색어 : " + value);
-                model.addAttribute("Post", postsService.search(value, indexPage, cursor));
+                model.addAttribute("Post", postsService.search(value, indexPage));
                 break;
         }
         PostPageDto pageDto = new PostPageDto();

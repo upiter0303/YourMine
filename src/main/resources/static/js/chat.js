@@ -56,7 +56,7 @@ function wsEvt() {
 function send() {
     // Setting a sending time
     const fulTime = new Date();
-
+    readCheck();
     const data = {
         type: "message",
         roomId: $("#roomId").val(),
@@ -263,6 +263,18 @@ function sendReview() {
         $.alert('다시 시도해주세요');
     });
 }
+// const x = new MutationObserver(function (e) {
+//     if (e[0].addedNodes) {
+//         $('#chatting').ready(function () {
+//             readCheck();
+//         });
+//     }
+// });
+$('#chatting').on("DOMNodeInserted", function () {
+    setTimeout(function () {
+        readCheck();
+    }, 500);
+});
 wsOpen();
 readCheck();
 textLoad();

@@ -11,24 +11,24 @@ import java.util.Optional;
 
 public interface PostsRepository extends JpaRepository<Posts, Long> {
 
-    @Query("SELECT p FROM Posts p WHERE p.id > :id AND p.status = :wait ORDER BY p.id DESC")
-    List<Posts> findAllDesc(Pageable pageable, Long id, String wait);
+    @Query("SELECT p FROM Posts p WHERE p.status = :wait ORDER BY p.id DESC")
+    List<Posts> findAllDesc(Pageable pageable, String wait);
 
-    @Query("SELECT p FROM Posts p WHERE p.id > :id AND p.status = :wait ORDER BY p.hit DESC")
-    List<Posts> HitDesc(Pageable pageable, Long id, String wait);
+    @Query("SELECT p FROM Posts p WHERE p.status = :wait ORDER BY p.hit DESC, p.id DESC")
+    List<Posts> HitDesc(Pageable pageable, String wait);
 
-    @Query("SELECT p FROM Posts p WHERE p.category = :category AND p.id > :id AND p.status = :wait ORDER BY p.id")
-    List<Posts> findByCategory(String category, Pageable pageable, Long id, String wait);
+    @Query("SELECT p FROM Posts p WHERE p.category = :category AND p.status = :wait ORDER BY p.id DESC")
+    List<Posts> findByCategory(String category, Pageable pageable, String wait);
 
-    @Query("SELECT p FROM Posts p WHERE p.area LIKE :Area% AND p.id > :id AND p.status = :wait ORDER BY p.id")
-    List<Posts> findByAddress(String Area, Pageable pageable, Long id, String wait);
+    @Query("SELECT p FROM Posts p WHERE p.area LIKE :Area% AND p.status = :wait ORDER BY p.id DESC")
+    List<Posts> findByAddress(String Area, Pageable pageable, String wait);
 
     // Posts Searching in Title and Content
-    @Query("SELECT p FROM Posts p WHERE p.title LIKE %:keyword% AND p.id > :id AND p.status = :wait OR p.content LIKE %:keyword% AND p.id > :id AND p.status = :wait ORDER BY p.id")
-    List<Posts> findAllSearch(String keyword, Pageable pageable, Long id, String wait);
+    @Query("SELECT p FROM Posts p WHERE p.title LIKE %:keyword% AND p.status = :wait OR p.content LIKE %:keyword% AND p.id < :id AND p.status = :wait ORDER BY p.id DESC")
+    List<Posts> findAllSearch(String keyword, Pageable pageable, String wait);
 
     // Posts on YourPage
-    @Query("Select p FROM Posts p WHERE p.users.no = :usersNo ORDER BY p.id")
+    @Query("Select p FROM Posts p WHERE p.users.no = :usersNo ORDER BY p.id DESC")
     List<Posts> findAllYour(Long usersNo);
 
     @Transactional

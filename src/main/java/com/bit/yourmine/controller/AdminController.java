@@ -23,7 +23,7 @@ public class AdminController {
     @GetMapping("/adminPage")
     public String admin(Model model) {
         final Long cursor = 0L;
-        List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage, cursor);
+        List<PostsResponseDto> postsList = postsService.findAllDesc(indexPage);
         model.addAttribute("posts", postsList);
         List<UsersResponseDto> usersResponseDtoList = adminService.getResponseDtoList(indexPage);
         model.addAttribute("allUsers", usersResponseDtoList);

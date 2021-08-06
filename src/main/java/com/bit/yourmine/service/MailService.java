@@ -44,4 +44,8 @@ public class MailService {
         }
         return false;
     }
+
+    public void delMailSession(HttpSession session) {
+        session.removeAttribute("emailCodeInfo");
+    }
 }

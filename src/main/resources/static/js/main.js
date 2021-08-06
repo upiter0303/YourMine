@@ -14,14 +14,13 @@ $(function () {
 
 
 let search = function search() {
-    window.location.href="/request/search/0/" + $('#keyword').val();
+    window.location.href="/request/search/" + $('#keyword').val();
 }
 let getter = function getter() {
     const data = {
         kind: $('#kind').val(),
         value: $('#value').val(),
         cursor: $('#cursor').val(),
-        id: $('#id').val()
     }
     $.ajax({
         url: "/request/list",
@@ -29,17 +28,15 @@ let getter = function getter() {
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(data),
         success: function(result) {
-            $("#cursor").val(function(i, val) {
-                return val + 1;
-            });
+            let cur = Number($("#cursor").val());
+            $("#cursor").val(cur+1);
             let obj = JSON.parse(result);
-            let i = 1;
+            let i = 0;
             obj.forEach(function (item) {
                 $("#board").append("<div class=\"col mb-5\">\n" +
+                    "                        <a href=\"/posts/" + item.id + "\">\n" +
                     "                        <div class=\"card h-100\">\n" +
-                    "                            <a href=\"/posts/" + item.id + "\">\n" +
                     "                                <img src=\"" + item.thumbnail + "\" class=\"card-img-top\" alt=\"" + item.title + "\" width=\"200px\" height=\"200px\">\n" +
-                    "                            </a>\n" +
                     "                            <div class=\"card-body p-4\">\n" +
                     "                                <div class=\"text-center\">\n" +
                     "                                    <h5 class=\"fw-bolder\">" + item.title + "</h5>\n" +
@@ -48,9 +45,10 @@ let getter = function getter() {
                     "                                </div>\n" +
                     "                            </div>\n" +
                     "                        </div>\n" +
+                    "                        </a>\n" +
                     "                    </div>");
                 i++;
-                if (result.length === i) {
+                if (obj.length === i) {
                     $('#id').val(item.id);
                 }
             })
@@ -93,9 +91,6 @@ function getMessage() {
         type: "get",
         contentType: 'application/json; charset=UTF-8',
         success: function(result) {
-            $("#cursor").val(function(i, val) {
-                return val + 1;
-            });
             let obj = JSON.parse(result);
             obj.forEach(function (item) {
                 if (item.newChatCount === 0) {

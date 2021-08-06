@@ -46,23 +46,22 @@ public class PostsApiController {
     public String getMorePosts(@RequestBody PostPageDto pageDto) {
         PageRequest newPage = PageRequest.of(pageDto.getCursor(), 8);
         List<PostsResponseDto> responseDtoList = new ArrayList<>();
-        Long id = pageDto.getId();
         String kind = pageDto.getKind();
         switch (kind) {
             case "category":
-                responseDtoList = postsService.findByCategory(pageDto.getValue(), newPage, id);
+                responseDtoList = postsService.findByCategory(pageDto.getValue(), newPage);
                 break;
             case "hit":
-                responseDtoList = postsService.findByHit(newPage, id);
+                responseDtoList = postsService.findByHit(newPage);
                 break;
             case "all":
-                responseDtoList = postsService.findAllDesc(newPage, id);
+                responseDtoList = postsService.findAllDesc(newPage);
                 break;
             case "area":
-                responseDtoList = postsService.findByAddress(pageDto.getValue(), newPage, id);
+                responseDtoList = postsService.findByAddress(pageDto.getValue(), newPage);
                 break;
             case "search":
-                responseDtoList = postsService.search(pageDto.getValue(), newPage, id);
+                responseDtoList = postsService.search(pageDto.getValue(), newPage);
                 break;
         }
         List<PostPageResponseDto> postPageResponseDto = new ArrayList<>();

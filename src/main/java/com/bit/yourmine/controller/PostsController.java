@@ -75,7 +75,7 @@ public class PostsController {
         model.addAttribute("post", post);
         SessionUser sessionUser = (SessionUser) session.getAttribute("userInfo");
         final Long cursor = 0L;
-        List<PostsResponseDto> hitList = postsService.findByHit(indexPage, cursor);
+        List<PostsResponseDto> hitList = postsService.findByHit(indexPage);
         model.addAttribute("hitPost", hitList);
         String way = post.getWay();
         String wayToString = "";
